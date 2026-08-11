@@ -1,0 +1,65 @@
+{
+  "id": "mockarty.ats-kit",
+  "name": "Recruiting/ATS API mock kit",
+  "version": "1.0.0",
+  "description": "An applicant-tracking contour (jobs, candidates, applications) — mock a recruiting backend.",
+  "author": {
+    "name": "Mockarty",
+    "url": "https://mockarty.ru"
+  },
+  "homepage": "https://mockarty.ru/docs/plugins-authoring",
+  "license": "MIT",
+  "contributes": {
+    "mock_kits": [
+      {
+        "key": "ats_api",
+        "name": "ATS API",
+        "description": "Jobs, candidates and applications.",
+        "mocks": [
+          {
+            "route": "/jobs",
+            "method": "GET",
+            "status_code": 200,
+            "description": "Open jobs",
+            "body": {
+              "jobs": [
+                {
+                  "id": "$.fake.UUID",
+                  "title": "$.fake.JobTitle",
+                  "department": "$.fake.Word",
+                  "location": "$.fake.City"
+                }
+              ]
+            }
+          },
+          {
+            "route": "/candidates",
+            "method": "POST",
+            "status_code": 201,
+            "description": "Add candidate",
+            "body": {
+              "id": "$.fake.UUID",
+              "name": "$.fake.Name",
+              "email": "$.fake.Email"
+            }
+          },
+          {
+            "route": "/applications",
+            "method": "GET",
+            "status_code": 200,
+            "description": "Applications",
+            "body": {
+              "applications": [
+                {
+                  "id": "$.fake.UUID",
+                  "stage": "$.fake.Word",
+                  "candidate": "$.fake.Name"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

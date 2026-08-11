@@ -1,0 +1,58 @@
+{
+  "id": "mockarty.translation-kit",
+  "name": "Translation API mock kit",
+  "version": "1.0.0",
+  "description": "A machine-translation contour (translate, detect, languages) — mock a translation backend.",
+  "author": {
+    "name": "Mockarty",
+    "url": "https://mockarty.ru"
+  },
+  "homepage": "https://mockarty.ru/docs/plugins-authoring",
+  "license": "MIT",
+  "contributes": {
+    "mock_kits": [
+      {
+        "key": "translation_api",
+        "name": "Translation API",
+        "description": "Translate, detect language and list languages.",
+        "mocks": [
+          {
+            "route": "/translate",
+            "method": "POST",
+            "status_code": 200,
+            "description": "Translate text",
+            "body": {
+              "translated": "$.fake.Sentence",
+              "source_lang": "$.fake.CountryCode",
+              "target_lang": "$.fake.CountryCode"
+            }
+          },
+          {
+            "route": "/detect",
+            "method": "POST",
+            "status_code": 200,
+            "description": "Detect language",
+            "body": {
+              "language": "$.fake.CountryCode",
+              "confidence": "$.fake.IntBetween(50,100)"
+            }
+          },
+          {
+            "route": "/languages",
+            "method": "GET",
+            "status_code": 200,
+            "description": "Supported languages",
+            "body": {
+              "languages": [
+                {
+                  "code": "$.fake.CountryCode",
+                  "name": "$.fake.Country"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

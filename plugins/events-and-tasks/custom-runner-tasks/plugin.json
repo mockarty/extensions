@@ -1,0 +1,26 @@
+{
+  "id": "mockarty.custom-runner-tasks",
+  "name": "Custom runner task types",
+  "version": "1.0.0",
+  "description": "Declares runner task types (plugin-dbt-run, plugin-selenium-suite) so a vendor-shipped external runner advertising the matching capability can be dispatched jobs — the sidecar model, declaratively.",
+  "author": {
+    "name": "Mockarty",
+    "url": "https://mockarty.ru"
+  },
+  "homepage": "https://mockarty.ru/docs/plugins-authoring",
+  "license": "MIT",
+  "contributes": {
+    "task_types": [
+      {
+        "type": "plugin-dbt-run",
+        "name": "dbt run",
+        "description": "Execute a dbt model run on an external runner."
+      },
+      {
+        "type": "plugin-selenium",
+        "name": "Selenium suite",
+        "description": "Run a Selenium test suite on an external runner."
+      }
+    ]
+  }
+}

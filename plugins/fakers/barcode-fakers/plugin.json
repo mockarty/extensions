@@ -1,0 +1,14 @@
+{
+  "id": "mockarty.barcode-fakers",
+  "name": "Barcode fakers (EAN/UPC/ISBN)",
+  "version": "1.0.0",
+  "description": "Adds $.fake.ean13, $.fake.upc and $.fake.isbn13 — retail barcodes with correct GS1 check digits. Sandboxed WASM.",
+  "author": {"name": "Mockarty", "url": "https://mockarty.ru"},
+  "homepage": "https://mockarty.ru/docs/plugins-authoring",
+  "license": "MIT",
+  "contributes": {
+    "wasm": [
+      {"point": "faker-provider", "module": "faker.wasm", "fn": "faker", "exports": ["ean13", "upc", "isbn13"]}
+    ]
+  }
+}

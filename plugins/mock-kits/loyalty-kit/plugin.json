@@ -1,0 +1,59 @@
+{
+  "id": "mockarty.loyalty-kit",
+  "name": "Loyalty/rewards API mock kit",
+  "version": "1.0.0",
+  "description": "A loyalty-program contour (members, points, rewards) — mock a rewards backend.",
+  "author": {
+    "name": "Mockarty",
+    "url": "https://mockarty.ru"
+  },
+  "homepage": "https://mockarty.ru/docs/plugins-authoring",
+  "license": "MIT",
+  "contributes": {
+    "mock_kits": [
+      {
+        "key": "loyalty_api",
+        "name": "Loyalty API",
+        "description": "Members, points and rewards.",
+        "mocks": [
+          {
+            "route": "/members/:id",
+            "method": "GET",
+            "status_code": 200,
+            "description": "Member",
+            "body": {
+              "id": "$.fake.UUID",
+              "tier": "$.fake.Word",
+              "points": "$.fake.IntBetween(0,100000)"
+            }
+          },
+          {
+            "route": "/members/:id/earn",
+            "method": "POST",
+            "status_code": 200,
+            "description": "Earn points",
+            "body": {
+              "points": "$.fake.IntBetween(1,1000)",
+              "balance": "$.fake.IntBetween(0,100000)"
+            }
+          },
+          {
+            "route": "/rewards",
+            "method": "GET",
+            "status_code": 200,
+            "description": "Catalog",
+            "body": {
+              "rewards": [
+                {
+                  "id": "$.fake.UUID",
+                  "name": "$.fake.Word",
+                  "cost": "$.fake.IntBetween(100,50000)"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

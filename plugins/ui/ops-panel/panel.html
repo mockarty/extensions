@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Ops panel</title>
+<style>
+  :root { --bg:#ffffff; --fg:#1a1f26; --muted:#5b6472; --card:#f5f7fa; --border:#e2e8f0; --accent:#2f6fed; --accent-fg:#ffffff; --ok:#1f9d55; }
+  html[data-theme="dark"] { --bg:#0f141a; --fg:#e6edf3; --muted:#9aa4b2; --card:#161d26; --border:#232c38; --accent:#64b5ff; --accent-fg:#0b1017; --ok:#3ddc84; }
+  * { box-sizing:border-box; }
+  body { margin:0; font:14px/1.55 system-ui,-apple-system,sans-serif; background:var(--bg); color:var(--fg); }
+  .wrap { padding:28px; max-width:820px; margin:0 auto; }
+  h1 { font-size:20px; margin:0 0 4px; }
+  .sub { color:var(--muted); margin:0 0 20px; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:14px; }
+  .card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:16px; }
+  .card h2 { font-size:13px; text-transform:uppercase; letter-spacing:.04em; color:var(--muted); margin:0 0 8px; }
+  .metric { font-size:26px; font-weight:600; }
+  .row { display:flex; align-items:center; gap:8px; margin-top:8px; }
+  .dot { width:9px; height:9px; border-radius:50%; background:var(--ok); }
+  button { background:var(--accent); color:var(--accent-fg); border:0; border-radius:8px; padding:9px 16px; cursor:pointer; font:inherit; font-weight:500; }
+  code { background:var(--card); border:1px solid var(--border); border-radius:5px; padding:1px 5px; }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Ops panel</h1>
+    <p class="sub">An example UI-contribution plugin. This whole page ships inside the plugin bundle and renders in a sandboxed iframe.</p>
+    <div class="grid">
+      <div class="card">
+        <h2>Panel status</h2>
+        <div class="metric" id="clock">—</div>
+        <div class="row"><span class="dot"></span><span>rendering live</span></div>
+      </div>
+      <div class="card">
+        <h2>Isolation</h2>
+        <p>No <code>allow-same-origin</code>. This frame cannot read the host page or session — it talks to the host only via <code>postMessage</code>.</p>
+      </div>
+      <div class="card">
+        <h2>Host bridge</h2>
+        <button id="ping">Notify host</button>
+        <p class="sub" id="out" style="margin-top:10px"></p>
+      </div>
+    </div>
+  </div>
+  <script>
+    // Theme mirror (host appends ?theme=dark|light).
+    var t = new URLSearchParams(location.search).get('theme');
+    if (t) document.documentElement.setAttribute('data-theme', t);
+    var clockTimer = null;
+    function tick(){ document.getElementById('clock').textContent = new Date().toLocaleTimeString(); }
+    function startClock(sec){ if (clockTimer) clearInterval(clockTimer); tick(); clockTimer = setInterval(tick, (sec || 1) * 1000); }
+    startClock(1);
+    document.getElementById('ping').onclick = function(){
+      parent.postMessage({ type: 'plugin:ops-panel:notify', at: Date.now() }, '*');
+      document.getElementById('out').textContent = 'Posted a message to the host at ' + new Date().toLocaleTimeString();
+    };
+    // The host pushes this plugin's configured settings (it reads them in its
+    // authenticated context; a sandboxed panel cannot fetch them itself).
+    window.addEventListener('message', function(ev){
+      // Only trust messages from the host that embeds us.
+      if (ev.source !== window.parent) return;
+      var d = ev.data;
+      if (!d || d.type !== 'mockarty:settings') return;
+      var s = d.settings || {};
+      if (typeof s.heading === 'string' && s.heading) document.querySelector('h1').textContent = s.heading;
+      var clockCard = document.getElementById('clock').closest('.card');
+      if (s.show_clock === false) { if (clockTimer) clearInterval(clockTimer); if (clockCard) clockCard.style.display = 'none'; }
+      else if (typeof s.refresh_seconds === 'number') { startClock(s.refresh_seconds); }
+    });
+  </script>
+</body>
+</html>

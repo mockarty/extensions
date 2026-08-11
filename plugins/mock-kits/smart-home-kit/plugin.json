@@ -1,0 +1,59 @@
+{
+  "id": "mockarty.smart-home-kit",
+  "name": "Smart-home API mock kit",
+  "version": "1.0.0",
+  "description": "A smart-home contour (devices, scenes, energy) — mock a home-automation hub.",
+  "author": {
+    "name": "Mockarty",
+    "url": "https://mockarty.ru"
+  },
+  "homepage": "https://mockarty.ru/docs/plugins-authoring",
+  "license": "MIT",
+  "contributes": {
+    "mock_kits": [
+      {
+        "key": "smarthome_api",
+        "name": "Smart-home API",
+        "description": "Devices, scenes and energy.",
+        "mocks": [
+          {
+            "route": "/devices",
+            "method": "GET",
+            "status_code": 200,
+            "description": "Devices",
+            "body": {
+              "devices": [
+                {
+                  "id": "$.fake.UUID",
+                  "name": "$.fake.Word",
+                  "type": "$.fake.Word",
+                  "on": "$.fake.Bool"
+                }
+              ]
+            }
+          },
+          {
+            "route": "/scenes/:id/activate",
+            "method": "POST",
+            "status_code": 200,
+            "description": "Activate scene",
+            "body": {
+              "id": "$.fake.UUID",
+              "activated": true
+            }
+          },
+          {
+            "route": "/energy",
+            "method": "GET",
+            "status_code": 200,
+            "description": "Energy usage",
+            "body": {
+              "watts_now": "$.fake.IntBetween(50,5000)",
+              "kwh_today": "$.fake.IntBetween(1,50)"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

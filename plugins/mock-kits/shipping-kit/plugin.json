@@ -1,0 +1,67 @@
+{
+  "id": "mockarty.shipping-kit",
+  "name": "Shipping API mock kit",
+  "version": "1.0.0",
+  "description": "A shipping/logistics contour (rates, labels, tracking) — mock a carrier API for fulfillment flows.",
+  "author": {
+    "name": "Mockarty",
+    "url": "https://mockarty.ru"
+  },
+  "homepage": "https://mockarty.ru/docs/plugins-authoring",
+  "license": "MIT",
+  "contributes": {
+    "mock_kits": [
+      {
+        "key": "shipping_api",
+        "name": "Shipping API",
+        "description": "Rates, labels and tracking.",
+        "mocks": [
+          {
+            "route": "/rates",
+            "method": "POST",
+            "status_code": 200,
+            "description": "Get rates",
+            "body": {
+              "rates": [
+                {
+                  "carrier": "$.fake.Company",
+                  "service": "$.fake.Word",
+                  "amount": "$.fake.Price",
+                  "eta_days": "$.fake.IntBetween(1,10)"
+                }
+              ]
+            }
+          },
+          {
+            "route": "/labels",
+            "method": "POST",
+            "status_code": 201,
+            "description": "Buy label",
+            "body": {
+              "id": "$.fake.UUID",
+              "tracking_number": "$.fake.UUIDDigit",
+              "label_url": "$.fake.URL"
+            }
+          },
+          {
+            "route": "/tracking/:number",
+            "method": "GET",
+            "status_code": 200,
+            "description": "Track shipment",
+            "body": {
+              "number": "$.fake.UUIDDigit",
+              "status": "in_transit",
+              "events": [
+                {
+                  "at": "$.fake.Timestamp",
+                  "location": "$.fake.City",
+                  "status": "$.fake.Word"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

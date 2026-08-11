@@ -1,0 +1,65 @@
+{
+  "id": "mockarty.inventory-kit",
+  "name": "Inventory API mock kit",
+  "version": "1.0.0",
+  "description": "A warehouse/inventory contour (products, stock levels, warehouses) — mock an inventory backend for commerce flows.",
+  "author": {
+    "name": "Mockarty",
+    "url": "https://mockarty.ru"
+  },
+  "homepage": "https://mockarty.ru/docs/plugins-authoring",
+  "license": "MIT",
+  "contributes": {
+    "mock_kits": [
+      {
+        "key": "inventory_api",
+        "name": "Inventory API",
+        "description": "Products, stock levels and warehouses.",
+        "mocks": [
+          {
+            "route": "/inventory/products",
+            "method": "GET",
+            "status_code": 200,
+            "description": "List products",
+            "body": {
+              "products": [
+                {
+                  "sku": "$.fake.UUIDDigit",
+                  "name": "$.fake.Word",
+                  "price": "$.fake.Price",
+                  "in_stock": "$.fake.IntBetween(0,1000)"
+                }
+              ]
+            }
+          },
+          {
+            "route": "/inventory/products/:sku/stock",
+            "method": "GET",
+            "status_code": 200,
+            "description": "Stock for SKU",
+            "body": {
+              "sku": "$.fake.UUIDDigit",
+              "available": "$.fake.IntBetween(0,1000)",
+              "reserved": "$.fake.IntBetween(0,100)"
+            }
+          },
+          {
+            "route": "/inventory/warehouses",
+            "method": "GET",
+            "status_code": 200,
+            "description": "Warehouses",
+            "body": {
+              "warehouses": [
+                {
+                  "id": "$.fake.UUID",
+                  "city": "$.fake.City",
+                  "capacity": "$.fake.IntBetween(1000,100000)"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

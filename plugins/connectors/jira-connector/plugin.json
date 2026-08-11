@@ -1,0 +1,22 @@
+{
+  "id": "mockarty.jira-connector",
+  "name": "Jira connector",
+  "version": "1.0.0",
+  "description": "A ready-to-use Jira connector — an example of extending Mockarty toward an external tool with no code. It reuses Mockarty's built-in Jira adapter and ships sensible defaults, so installing it gives you a pre-configured Jira integration in a couple of clicks.",
+  "author": {"name": "Mockarty", "url": "https://mockarty.ru"},
+  "homepage": "https://mockarty.ru/docs/plugins-authoring",
+  "license": "MIT",
+  "contributes": {
+    "connectors": [
+      {
+        "key": "jira_cloud",
+        "name": "Jira Cloud",
+        "kind": "jira",
+        "description": "Link Mockarty issues, test cases and runs to Jira Cloud. Uses the built-in Jira adapter.",
+        "icon": "bug-ant",
+        "docs_url": "https://mockarty.ru/docs/integrations",
+        "config_template": { "base_url": "https://your-org.atlassian.net", "project_key": "QA" }
+      }
+    ]
+  }
+}

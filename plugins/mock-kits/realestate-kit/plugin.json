@@ -1,0 +1,61 @@
+{
+  "id": "mockarty.realestate-kit",
+  "name": "Real-estate API mock kit",
+  "version": "1.0.0",
+  "description": "A real-estate contour (listings, agents, inquiries) — mock a property-listings backend.",
+  "author": {
+    "name": "Mockarty",
+    "url": "https://mockarty.ru"
+  },
+  "homepage": "https://mockarty.ru/docs/plugins-authoring",
+  "license": "MIT",
+  "contributes": {
+    "mock_kits": [
+      {
+        "key": "realestate_api",
+        "name": "Real-estate API",
+        "description": "Listings, agents and inquiries.",
+        "mocks": [
+          {
+            "route": "/listings",
+            "method": "GET",
+            "status_code": 200,
+            "description": "Listings",
+            "body": {
+              "listings": [
+                {
+                  "id": "$.fake.UUID",
+                  "address": "$.fake.Address",
+                  "price": "$.fake.IntBetween(50000,2000000)",
+                  "beds": "$.fake.IntBetween(1,6)"
+                }
+              ]
+            }
+          },
+          {
+            "route": "/agents/:id",
+            "method": "GET",
+            "status_code": 200,
+            "description": "Agent",
+            "body": {
+              "id": "$.fake.UUID",
+              "name": "$.fake.Name",
+              "phone": "$.fake.PhoneNumber",
+              "email": "$.fake.Email"
+            }
+          },
+          {
+            "route": "/inquiries",
+            "method": "POST",
+            "status_code": 201,
+            "description": "Send inquiry",
+            "body": {
+              "id": "$.fake.UUID",
+              "status": "received"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "id": "mockarty.allure-connector",
+  "name": "Allure TestOps connector",
+  "version": "1.0.0",
+  "description": "A ready-to-use Allure TestOps connector — reuses the built-in Allure adapter to push launches and results.",
+  "author": {
+    "name": "Mockarty",
+    "url": "https://mockarty.ru"
+  },
+  "homepage": "https://mockarty.ru/docs/plugins-authoring",
+  "license": "MIT",
+  "contributes": {
+    "connectors": [
+      {
+        "key": "allure_testops",
+        "name": "Allure TestOps",
+        "kind": "allure",
+        "description": "Push Mockarty test runs and results to Allure TestOps.",
+        "icon": "chart-bar",
+        "docs_url": "https://mockarty.ru/docs/integrations",
+        "config_template": {
+          "base_url": "https://allure.your-org.com",
+          "project_id": "1"
+        }
+      }
+    ]
+  }
+}

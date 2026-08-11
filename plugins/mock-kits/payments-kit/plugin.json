@@ -1,0 +1,89 @@
+{
+  "id": "mockarty.payments-kit",
+  "name": "Payments API mock kit",
+  "version": "1.0.0",
+  "description": "A ready-made payment-processor contour (charges, refunds, customers, payment intents) — declarative content, no code. Instantiate to get a Stripe-style API you can point a client at.",
+  "author": {
+    "name": "Mockarty",
+    "url": "https://mockarty.ru"
+  },
+  "homepage": "https://mockarty.ru/docs/plugins-authoring",
+  "license": "MIT",
+  "contributes": {
+    "mock_kits": [
+      {
+        "key": "payments_api",
+        "name": "Payments API",
+        "description": "Charges, refunds, customers and payment intents.",
+        "mocks": [
+          {
+            "route": "/v1/customers",
+            "method": "POST",
+            "status_code": 201,
+            "description": "Create customer",
+            "body": {
+              "id": "$.fake.UUID",
+              "object": "customer",
+              "email": "$.fake.Email",
+              "name": "$.fake.Name",
+              "created": "$.fake.UnixTime"
+            }
+          },
+          {
+            "route": "/v1/customers/:id",
+            "method": "GET",
+            "status_code": 200,
+            "description": "Fetch customer",
+            "body": {
+              "id": "$.fake.UUID",
+              "object": "customer",
+              "email": "$.fake.Email",
+              "name": "$.fake.Name",
+              "delinquent": false
+            }
+          },
+          {
+            "route": "/v1/charges",
+            "method": "POST",
+            "status_code": 201,
+            "description": "Create charge",
+            "body": {
+              "id": "$.fake.UUID",
+              "object": "charge",
+              "amount": "$.fake.IntBetween(100,50000)",
+              "currency": "usd",
+              "paid": true,
+              "status": "succeeded"
+            }
+          },
+          {
+            "route": "/v1/charges/:id/refunds",
+            "method": "POST",
+            "status_code": 201,
+            "description": "Refund a charge",
+            "body": {
+              "id": "$.fake.UUID",
+              "object": "refund",
+              "status": "succeeded",
+              "amount": "$.fake.IntBetween(100,50000)"
+            }
+          },
+          {
+            "route": "/v1/payment_intents",
+            "method": "POST",
+            "status_code": 201,
+            "description": "Create payment intent",
+            "body": {
+              "id": "$.fake.UUID",
+              "object": "payment_intent",
+              "client_secret": "$.fake.Password",
+              "status": "requires_confirmation",
+              "amount": "$.fake.IntBetween(100,50000)",
+              "currency": "usd"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

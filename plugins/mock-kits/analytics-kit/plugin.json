@@ -1,0 +1,59 @@
+{
+  "id": "mockarty.analytics-kit",
+  "name": "Analytics API mock kit",
+  "version": "1.0.0",
+  "description": "An analytics contour (event ingest, funnels, metrics) — mock an analytics backend for dashboards.",
+  "author": {
+    "name": "Mockarty",
+    "url": "https://mockarty.ru"
+  },
+  "homepage": "https://mockarty.ru/docs/plugins-authoring",
+  "license": "MIT",
+  "contributes": {
+    "mock_kits": [
+      {
+        "key": "analytics_api",
+        "name": "Analytics API",
+        "description": "Event ingest, funnels and metrics.",
+        "mocks": [
+          {
+            "route": "/v1/events",
+            "method": "POST",
+            "status_code": 202,
+            "description": "Ingest event",
+            "body": {
+              "id": "$.fake.UUID",
+              "accepted": true
+            }
+          },
+          {
+            "route": "/v1/metrics",
+            "method": "GET",
+            "status_code": 200,
+            "description": "Metrics",
+            "body": {
+              "active_users": "$.fake.IntBetween(0,100000)",
+              "sessions": "$.fake.IntBetween(0,500000)",
+              "avg_duration_s": "$.fake.IntBetween(1,3600)"
+            }
+          },
+          {
+            "route": "/v1/funnels/:id",
+            "method": "GET",
+            "status_code": 200,
+            "description": "Funnel report",
+            "body": {
+              "id": "$.fake.UUID",
+              "steps": [
+                {
+                  "name": "$.fake.Word",
+                  "count": "$.fake.IntBetween(0,100000)"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

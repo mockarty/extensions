@@ -1,0 +1,65 @@
+{
+  "id": "mockarty.billing-kit",
+  "name": "Subscription billing API mock kit",
+  "version": "1.0.0",
+  "description": "A subscription-billing contour (plans, subscriptions, invoices) — mock a SaaS-billing backend.",
+  "author": {
+    "name": "Mockarty",
+    "url": "https://mockarty.ru"
+  },
+  "homepage": "https://mockarty.ru/docs/plugins-authoring",
+  "license": "MIT",
+  "contributes": {
+    "mock_kits": [
+      {
+        "key": "billing_api",
+        "name": "Billing API",
+        "description": "Plans, subscriptions and invoices.",
+        "mocks": [
+          {
+            "route": "/plans",
+            "method": "GET",
+            "status_code": 200,
+            "description": "Plans",
+            "body": {
+              "plans": [
+                {
+                  "id": "$.fake.UUID",
+                  "name": "$.fake.Word",
+                  "price_month": "$.fake.IntBetween(0,999)",
+                  "currency": "USD"
+                }
+              ]
+            }
+          },
+          {
+            "route": "/subscriptions",
+            "method": "POST",
+            "status_code": 201,
+            "description": "Subscribe",
+            "body": {
+              "id": "$.fake.UUID",
+              "status": "active",
+              "current_period_end": "$.fake.Date"
+            }
+          },
+          {
+            "route": "/invoices",
+            "method": "GET",
+            "status_code": 200,
+            "description": "Invoices",
+            "body": {
+              "invoices": [
+                {
+                  "id": "$.fake.UUID",
+                  "amount_due": "$.fake.IntBetween(0,99900)",
+                  "status": "paid"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

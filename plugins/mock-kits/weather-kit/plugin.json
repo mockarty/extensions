@@ -1,0 +1,54 @@
+{
+  "id": "mockarty.weather-kit",
+  "name": "Weather API mock kit",
+  "version": "1.0.0",
+  "description": "A weather-service contour (current conditions + multi-day forecast) with dynamic values — mock a weather provider for app development.",
+  "author": {
+    "name": "Mockarty",
+    "url": "https://mockarty.ru"
+  },
+  "homepage": "https://mockarty.ru/docs/plugins-authoring",
+  "license": "MIT",
+  "contributes": {
+    "mock_kits": [
+      {
+        "key": "weather_api",
+        "name": "Weather API",
+        "description": "Current conditions and forecast.",
+        "mocks": [
+          {
+            "route": "/v1/current",
+            "method": "GET",
+            "status_code": 200,
+            "description": "Current conditions",
+            "body": {
+              "city": "$.fake.City",
+              "temp_c": "$.fake.IntBetween(-20,40)",
+              "humidity": "$.fake.IntBetween(10,100)",
+              "wind_kph": "$.fake.IntBetween(0,80)",
+              "condition": "$.fake.Word",
+              "observed_at": "$.fake.Timestamp"
+            }
+          },
+          {
+            "route": "/v1/forecast",
+            "method": "GET",
+            "status_code": 200,
+            "description": "3-day forecast",
+            "body": {
+              "city": "$.fake.City",
+              "days": [
+                {
+                  "date": "$.fake.Date",
+                  "high_c": "$.fake.IntBetween(0,40)",
+                  "low_c": "$.fake.IntBetween(-10,20)",
+                  "condition": "$.fake.Word"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

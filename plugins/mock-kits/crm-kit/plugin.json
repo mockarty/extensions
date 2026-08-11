@@ -1,0 +1,83 @@
+{
+  "id": "mockarty.crm-kit",
+  "name": "CRM API mock kit",
+  "version": "1.0.0",
+  "description": "A CRM contour (contacts, companies, deals) — mock a Salesforce/HubSpot-style sales API.",
+  "author": {
+    "name": "Mockarty",
+    "url": "https://mockarty.ru"
+  },
+  "homepage": "https://mockarty.ru/docs/plugins-authoring",
+  "license": "MIT",
+  "contributes": {
+    "mock_kits": [
+      {
+        "key": "crm_api",
+        "name": "CRM API",
+        "description": "Contacts, companies and deals.",
+        "mocks": [
+          {
+            "route": "/crm/contacts",
+            "method": "GET",
+            "status_code": 200,
+            "description": "List contacts",
+            "body": {
+              "contacts": [
+                {
+                  "id": "$.fake.UUID",
+                  "name": "$.fake.Name",
+                  "email": "$.fake.Email",
+                  "company": "$.fake.Company",
+                  "title": "$.fake.JobTitle"
+                }
+              ]
+            }
+          },
+          {
+            "route": "/crm/contacts",
+            "method": "POST",
+            "status_code": 201,
+            "description": "Create contact",
+            "body": {
+              "id": "$.fake.UUID",
+              "created": true
+            }
+          },
+          {
+            "route": "/crm/companies",
+            "method": "GET",
+            "status_code": 200,
+            "description": "List companies",
+            "body": {
+              "companies": [
+                {
+                  "id": "$.fake.UUID",
+                  "name": "$.fake.Company",
+                  "domain": "$.fake.DomainName",
+                  "employees": "$.fake.IntBetween(1,50000)"
+                }
+              ]
+            }
+          },
+          {
+            "route": "/crm/deals",
+            "method": "GET",
+            "status_code": 200,
+            "description": "List deals",
+            "body": {
+              "deals": [
+                {
+                  "id": "$.fake.UUID",
+                  "name": "$.fake.Word",
+                  "amount": "$.fake.IntBetween(1000,1000000)",
+                  "stage": "$.fake.Word",
+                  "close_date": "$.fake.Date"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,77 @@
+{
+  "id": "mockarty.banking-kit",
+  "name": "Banking API mock kit",
+  "version": "1.0.0",
+  "description": "A retail-banking contour (accounts, transactions, cards, transfers) — mock a core-banking API for fintech development.",
+  "author": {
+    "name": "Mockarty",
+    "url": "https://mockarty.ru"
+  },
+  "homepage": "https://mockarty.ru/docs/plugins-authoring",
+  "license": "MIT",
+  "contributes": {
+    "mock_kits": [
+      {
+        "key": "banking_api",
+        "name": "Banking API",
+        "description": "Accounts, transactions, cards and transfers.",
+        "mocks": [
+          {
+            "route": "/accounts",
+            "method": "GET",
+            "status_code": 200,
+            "description": "List accounts",
+            "body": {
+              "accounts": [
+                {
+                  "id": "$.fake.UUID",
+                  "iban": "$.fake.UUIDDigit",
+                  "balance": "$.fake.IntBetween(0,1000000)",
+                  "currency": "EUR"
+                }
+              ]
+            }
+          },
+          {
+            "route": "/accounts/:id/transactions",
+            "method": "GET",
+            "status_code": 200,
+            "description": "Transactions",
+            "body": {
+              "transactions": [
+                {
+                  "id": "$.fake.UUID",
+                  "amount": "$.fake.IntBetween(-50000,50000)",
+                  "description": "$.fake.Sentence",
+                  "at": "$.fake.Timestamp"
+                }
+              ]
+            }
+          },
+          {
+            "route": "/cards",
+            "method": "POST",
+            "status_code": 201,
+            "description": "Issue card",
+            "body": {
+              "id": "$.fake.UUID",
+              "last4": "$.fake.IntBetween(1000,9999)",
+              "status": "active"
+            }
+          },
+          {
+            "route": "/transfers",
+            "method": "POST",
+            "status_code": 201,
+            "description": "Create transfer",
+            "body": {
+              "id": "$.fake.UUID",
+              "status": "pending",
+              "amount": "$.fake.IntBetween(1,100000)"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "id": "mockarty.contract-starter-pack",
+  "name": "Contract starter pack (OpenAPI/GraphQL)",
+  "version": "1.0.0",
+  "description": "A content pack for the Contract testing module: seeds ready-to-use API contracts into the registry (an OpenAPI orders service and a GraphQL users service). Instantiate it into a namespace to get starter specs your consumers/providers can verify against. Requires the contract testing feature. No code.",
+  "author": {
+    "name": "Mockarty",
+    "url": "https://mockarty.ru"
+  },
+  "homepage": "https://mockarty.ru/docs/plugins-authoring",
+  "license": "MIT",
+  "contributes": {
+    "content_packs": [
+      {
+        "key": "contract_starter",
+        "name": "Contract starter registry",
+        "kind": "contract",
+        "description": "An OpenAPI orders-api and a GraphQL users-api, published as active registry entries.",
+        "items": [
+          {
+            "serviceName": "orders-api",
+            "version": "1.0.0",
+            "specType": "openapi",
+            "description": "Starter orders service — list and create orders.",
+            "tags": ["core", "starter"],
+            "specContent": "openapi: 3.0.0\ninfo:\n  title: Orders API\n  version: 1.0.0\npaths:\n  /orders:\n    get:\n      summary: List orders\n      responses:\n        '200':\n          description: OK\n          content:\n            application/json:\n              schema:\n                type: array\n                items:\n                  $ref: '#/components/schemas/Order'\n    post:\n      summary: Create order\n      requestBody:\n        required: true\n        content:\n          application/json:\n            schema:\n              $ref: '#/components/schemas/Order'\n      responses:\n        '201':\n          description: Created\ncomponents:\n  schemas:\n    Order:\n      type: object\n      required: [id, total]\n      properties:\n        id:\n          type: string\n        total:\n          type: number\n"
+          },
+          {
+            "serviceName": "users-api",
+            "version": "1.0.0",
+            "specType": "graphql",
+            "description": "Starter users service — GraphQL schema.",
+            "tags": ["core", "starter"],
+            "specContent": "type Query {\n  me: User\n  user(id: ID!): User\n}\n\ntype Mutation {\n  updateUser(id: ID!, name: String!): User\n}\n\ntype User {\n  id: ID!\n  name: String!\n  email: String\n}\n"
+          }
+        ]
+      }
+    ]
+  }
+}

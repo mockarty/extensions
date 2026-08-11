@@ -1,0 +1,63 @@
+{
+  "id": "mockarty.iot-kit",
+  "name": "IoT API mock kit",
+  "version": "1.0.0",
+  "description": "An IoT device contour (devices, telemetry, commands) — mock a device-management backend for IoT dashboards.",
+  "author": {
+    "name": "Mockarty",
+    "url": "https://mockarty.ru"
+  },
+  "homepage": "https://mockarty.ru/docs/plugins-authoring",
+  "license": "MIT",
+  "contributes": {
+    "mock_kits": [
+      {
+        "key": "iot_api",
+        "name": "IoT API",
+        "description": "Devices, telemetry and commands.",
+        "mocks": [
+          {
+            "route": "/devices",
+            "method": "GET",
+            "status_code": 200,
+            "description": "List devices",
+            "body": {
+              "devices": [
+                {
+                  "id": "$.fake.UUID",
+                  "name": "$.fake.Word",
+                  "online": "$.fake.Bool",
+                  "ip": "$.fake.IPv4",
+                  "mac": "$.fake.MacAddress"
+                }
+              ]
+            }
+          },
+          {
+            "route": "/devices/:id/telemetry",
+            "method": "GET",
+            "status_code": 200,
+            "description": "Telemetry",
+            "body": {
+              "id": "$.fake.UUID",
+              "temperature": "$.fake.IntBetween(-40,120)",
+              "battery": "$.fake.IntBetween(0,100)",
+              "ts": "$.fake.Timestamp"
+            }
+          },
+          {
+            "route": "/devices/:id/commands",
+            "method": "POST",
+            "status_code": 202,
+            "description": "Send command",
+            "body": {
+              "id": "$.fake.UUID",
+              "command_id": "$.fake.UUID",
+              "accepted": true
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

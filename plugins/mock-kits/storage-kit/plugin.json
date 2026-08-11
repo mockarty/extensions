@@ -1,0 +1,73 @@
+{
+  "id": "mockarty.storage-kit",
+  "name": "Object storage mock kit",
+  "version": "1.0.0",
+  "description": "An S3-style object-storage contour (buckets, objects, presigned URLs) — mock a blob store for upload/download flows.",
+  "author": {
+    "name": "Mockarty",
+    "url": "https://mockarty.ru"
+  },
+  "homepage": "https://mockarty.ru/docs/plugins-authoring",
+  "license": "MIT",
+  "contributes": {
+    "mock_kits": [
+      {
+        "key": "object_storage",
+        "name": "Object storage",
+        "description": "Buckets, objects and presigned URLs.",
+        "mocks": [
+          {
+            "route": "/buckets",
+            "method": "GET",
+            "status_code": 200,
+            "description": "List buckets",
+            "body": {
+              "buckets": [
+                {
+                  "name": "$.fake.Word",
+                  "created": "$.fake.Timestamp"
+                }
+              ]
+            }
+          },
+          {
+            "route": "/buckets/:bucket/objects",
+            "method": "GET",
+            "status_code": 200,
+            "description": "List objects",
+            "body": {
+              "objects": [
+                {
+                  "key": "$.fake.Word",
+                  "size": "$.fake.IntBetween(1,10485760)",
+                  "etag": "$.fake.UUIDDigit",
+                  "last_modified": "$.fake.Timestamp"
+                }
+              ]
+            }
+          },
+          {
+            "route": "/buckets/:bucket/objects/:key",
+            "method": "PUT",
+            "status_code": 200,
+            "description": "Upload object",
+            "body": {
+              "etag": "$.fake.UUIDDigit",
+              "version_id": "$.fake.UUID"
+            }
+          },
+          {
+            "route": "/buckets/:bucket/presign",
+            "method": "POST",
+            "status_code": 200,
+            "description": "Presigned URL",
+            "body": {
+              "url": "$.fake.URL",
+              "expires_in": 900
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

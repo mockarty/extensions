@@ -1,0 +1,66 @@
+{
+  "id": "mockarty.healthcare-fhir-kit",
+  "name": "Healthcare (FHIR-lite) mock kit",
+  "version": "1.0.0",
+  "description": "A FHIR-style healthcare contour (Patient, Observation) — mock a health-records API for integration testing. Structure mirrors FHIR resources; values are synthetic.",
+  "author": {
+    "name": "Mockarty",
+    "url": "https://mockarty.ru"
+  },
+  "homepage": "https://mockarty.ru/docs/plugins-authoring",
+  "license": "MIT",
+  "contributes": {
+    "mock_kits": [
+      {
+        "key": "fhir_api",
+        "name": "FHIR-lite API",
+        "description": "Patient and Observation resources.",
+        "mocks": [
+          {
+            "route": "/fhir/Patient/:id",
+            "method": "GET",
+            "status_code": 200,
+            "description": "Patient resource",
+            "body": {
+              "resourceType": "Patient",
+              "id": "$.fake.UUID",
+              "name": [
+                {
+                  "family": "$.fake.LastName",
+                  "given": [
+                    "$.fake.FirstName"
+                  ]
+                }
+              ],
+              "gender": "$.fake.Gender",
+              "birthDate": "$.fake.Date"
+            }
+          },
+          {
+            "route": "/fhir/Observation",
+            "method": "GET",
+            "status_code": 200,
+            "description": "Observations",
+            "body": {
+              "resourceType": "Bundle",
+              "type": "searchset",
+              "entry": [
+                {
+                  "resource": {
+                    "resourceType": "Observation",
+                    "id": "$.fake.UUID",
+                    "status": "final",
+                    "valueQuantity": {
+                      "value": "$.fake.IntBetween(60,180)",
+                      "unit": "mmHg"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,91 @@
+{
+  "id": "mockarty.social-kit",
+  "name": "Social API mock kit",
+  "version": "1.0.0",
+  "description": "A social-network contour (posts, comments, likes, followers) — mock a social feed API for client development.",
+  "author": {
+    "name": "Mockarty",
+    "url": "https://mockarty.ru"
+  },
+  "homepage": "https://mockarty.ru/docs/plugins-authoring",
+  "license": "MIT",
+  "contributes": {
+    "mock_kits": [
+      {
+        "key": "social_api",
+        "name": "Social API",
+        "description": "Posts, comments, likes and followers.",
+        "mocks": [
+          {
+            "route": "/posts",
+            "method": "GET",
+            "status_code": 200,
+            "description": "Feed",
+            "body": {
+              "posts": [
+                {
+                  "id": "$.fake.UUID",
+                  "author": "$.fake.Username",
+                  "text": "$.fake.Sentence",
+                  "likes": "$.fake.IntBetween(0,9999)",
+                  "created": "$.fake.Timestamp"
+                }
+              ]
+            }
+          },
+          {
+            "route": "/posts",
+            "method": "POST",
+            "status_code": 201,
+            "description": "Create post",
+            "body": {
+              "id": "$.fake.UUID",
+              "created": true
+            }
+          },
+          {
+            "route": "/posts/:id/comments",
+            "method": "GET",
+            "status_code": 200,
+            "description": "Comments",
+            "body": {
+              "comments": [
+                {
+                  "id": "$.fake.UUID",
+                  "author": "$.fake.Username",
+                  "text": "$.fake.Sentence"
+                }
+              ]
+            }
+          },
+          {
+            "route": "/posts/:id/like",
+            "method": "POST",
+            "status_code": 200,
+            "description": "Like a post",
+            "body": {
+              "id": "$.fake.UUID",
+              "liked": true,
+              "likes": "$.fake.IntBetween(1,10000)"
+            }
+          },
+          {
+            "route": "/users/:id/followers",
+            "method": "GET",
+            "status_code": 200,
+            "description": "Followers",
+            "body": {
+              "count": "$.fake.IntBetween(0,100000)",
+              "followers": [
+                {
+                  "id": "$.fake.UUID",
+                  "username": "$.fake.Username"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

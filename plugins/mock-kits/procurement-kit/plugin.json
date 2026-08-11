@@ -1,0 +1,65 @@
+{
+  "id": "mockarty.procurement-kit",
+  "name": "Procurement API mock kit",
+  "version": "1.0.0",
+  "description": "A procurement contour (suppliers, purchase orders, invoices) — mock a P2P backend.",
+  "author": {
+    "name": "Mockarty",
+    "url": "https://mockarty.ru"
+  },
+  "homepage": "https://mockarty.ru/docs/plugins-authoring",
+  "license": "MIT",
+  "contributes": {
+    "mock_kits": [
+      {
+        "key": "procurement_api",
+        "name": "Procurement API",
+        "description": "Suppliers, purchase orders and invoices.",
+        "mocks": [
+          {
+            "route": "/suppliers",
+            "method": "GET",
+            "status_code": 200,
+            "description": "Suppliers",
+            "body": {
+              "suppliers": [
+                {
+                  "id": "$.fake.UUID",
+                  "name": "$.fake.Company",
+                  "country": "$.fake.Country"
+                }
+              ]
+            }
+          },
+          {
+            "route": "/purchase-orders",
+            "method": "POST",
+            "status_code": 201,
+            "description": "Create PO",
+            "body": {
+              "id": "$.fake.UUID",
+              "number": "$.fake.UUIDDigit",
+              "status": "approved",
+              "total": "$.fake.Price"
+            }
+          },
+          {
+            "route": "/invoices",
+            "method": "GET",
+            "status_code": 200,
+            "description": "Invoices",
+            "body": {
+              "invoices": [
+                {
+                  "id": "$.fake.UUID",
+                  "amount": "$.fake.Price",
+                  "status": "paid"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

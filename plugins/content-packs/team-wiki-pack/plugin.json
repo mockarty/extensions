@@ -1,0 +1,50 @@
+{
+  "id": "mockarty.team-wiki-pack",
+  "name": "Team wiki pack (runbooks/ADR/PRD)",
+  "version": "1.0.0",
+  "description": "A Confluence-style content pack for the Wiki module: incident runbook + postmortem, ADR, meeting notes, onboarding checklist and PRD templates. Instantiate it into a namespace to seed a ready-made team wiki. No code.",
+  "author": {
+    "name": "Mockarty",
+    "url": "https://mockarty.ru"
+  },
+  "homepage": "https://mockarty.ru/docs/plugins-authoring",
+  "license": "MIT",
+  "contributes": {
+    "content_packs": [
+      {
+        "key": "team_wiki",
+        "name": "Team wiki starter",
+        "kind": "wiki",
+        "description": "Runbook, ADR, meeting notes, onboarding and PRD pages.",
+        "items": [
+          {
+            "title": "Incident runbook",
+            "content": "# Incident runbook\n\n## Summary\n_What happened, one line._\n\n## Impact\n- Users affected:\n- Duration:\n\n## Timeline\n| Time | Event |\n|------|-------|\n\n## Root cause\n\n## Action items\n- [ ] \n",
+            "children": [
+              {
+                "title": "Postmortem template",
+                "content": "# Postmortem\n\n**Severity:**\n**Owner:**\n\n## What went well\n## What went wrong\n## Where we got lucky\n## Follow-ups\n"
+              }
+            ]
+          },
+          {
+            "title": "ADR — Architecture Decision Record",
+            "content": "# ADR-000: <title>\n\n**Status:** Proposed | Accepted | Superseded\n**Date:**\n\n## Context\n\n## Decision\n\n## Consequences\n"
+          },
+          {
+            "title": "Meeting notes",
+            "content": "# Meeting notes — <date>\n\n**Attendees:**\n**Agenda:**\n\n## Notes\n\n## Decisions\n\n## Action items\n- [ ] \n"
+          },
+          {
+            "title": "Onboarding checklist",
+            "content": "# Onboarding — <name>\n\n- [ ] Accounts & access\n- [ ] Dev environment\n- [ ] First task assigned\n- [ ] Buddy assigned\n- [ ] Read the architecture overview\n"
+          },
+          {
+            "title": "Product requirements (PRD)",
+            "content": "# PRD: <feature>\n\n## Problem\n## Goals / non-goals\n## Users & use cases\n## Requirements\n## Success metrics\n## Rollout plan\n"
+          }
+        ]
+      }
+    ]
+  }
+}

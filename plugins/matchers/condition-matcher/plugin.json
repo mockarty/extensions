@@ -1,0 +1,14 @@
+{
+  "id": "mockarty.matchers",
+  "name": "Request matchers (luhn/divisible)",
+  "version": "1.0.0",
+  "description": "Adds mock condition operators: plugin:luhn (value passes the Luhn checksum — card/IMEI numbers) and plugin:divisible_by (value is an integer divisible by the operand). Sandboxed WASM, runs only on mocks that use the operator.",
+  "author": {"name": "Mockarty", "url": "https://mockarty.ru"},
+  "homepage": "https://mockarty.ru/docs/plugins-authoring",
+  "license": "MIT",
+  "contributes": {
+    "wasm": [
+      {"point": "condition-matcher", "module": "match.wasm", "fn": "match", "exports": ["luhn", "divisible_by"]}
+    ]
+  }
+}

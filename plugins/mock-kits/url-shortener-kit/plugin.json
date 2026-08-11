@@ -1,0 +1,53 @@
+{
+  "id": "mockarty.url-shortener-kit",
+  "name": "URL shortener API mock kit",
+  "version": "1.0.0",
+  "description": "A URL-shortener contour (shorten, expand, stats) — mock a link-shortening backend.",
+  "author": {
+    "name": "Mockarty",
+    "url": "https://mockarty.ru"
+  },
+  "homepage": "https://mockarty.ru/docs/plugins-authoring",
+  "license": "MIT",
+  "contributes": {
+    "mock_kits": [
+      {
+        "key": "url_shortener_api",
+        "name": "URL shortener API",
+        "description": "Shorten, expand and stats.",
+        "mocks": [
+          {
+            "route": "/shorten",
+            "method": "POST",
+            "status_code": 201,
+            "description": "Shorten URL",
+            "body": {
+              "code": "$.fake.UUIDDigit",
+              "short_url": "$.fake.URL",
+              "long_url": "$.fake.URL"
+            }
+          },
+          {
+            "route": "/:code",
+            "method": "GET",
+            "status_code": 200,
+            "description": "Expand",
+            "body": {
+              "long_url": "$.fake.URL"
+            }
+          },
+          {
+            "route": "/:code/stats",
+            "method": "GET",
+            "status_code": 200,
+            "description": "Stats",
+            "body": {
+              "code": "$.fake.UUIDDigit",
+              "clicks": "$.fake.IntBetween(0,1000000)"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

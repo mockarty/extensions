@@ -1,0 +1,14 @@
+{
+  "id": "mockarty.response-envelope",
+  "name": "Response envelope transformer",
+  "version": "1.0.0",
+  "description": "A WASM response-transformer example: any mock tagged transform:envelope has its rendered body wrapped as {\"data\":<body>,\"transformedBy\":\"plugin\"}. Sandboxed WASM, runs inline on the response path.",
+  "author": {"name": "Mockarty", "url": "https://mockarty.ru"},
+  "homepage": "https://mockarty.ru/docs/plugins-authoring",
+  "license": "MIT",
+  "contributes": {
+    "wasm": [
+      {"point": "response-transformer", "module": "transform.wasm", "fn": "transform", "exports": ["envelope"]}
+    ]
+  }
+}

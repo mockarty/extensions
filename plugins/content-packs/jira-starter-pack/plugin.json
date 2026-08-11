@@ -1,0 +1,61 @@
+{
+  "id": "mockarty.jira-starter-pack",
+  "name": "Jira starter pack (project + issues)",
+  "version": "1.0.0",
+  "description": "A content pack for the Issue Tracker (Jira-style module): seeds a starter project with an epic, stories, a bug and a task. Instantiate it to bootstrap a namespace's tracker. No code.",
+  "author": {
+    "name": "Mockarty",
+    "url": "https://mockarty.ru"
+  },
+  "homepage": "https://mockarty.ru/docs/plugins-authoring",
+  "license": "MIT",
+  "contributes": {
+    "content_packs": [
+      {
+        "key": "jira_starter",
+        "name": "Jira starter",
+        "kind": "issue",
+        "description": "A sample project with epic/story/bug/task issues.",
+        "items": [
+          {
+            "name": "Sample Project",
+            "keyPrefix": "SAMPLE",
+            "description": "A starter project seeded from a content pack.",
+            "issues": [
+              {
+                "title": "[Epic] Onboard the team to Mockarty",
+                "type": "epic",
+                "description": "Umbrella epic for initial adoption.",
+                "priority": "high"
+              },
+              {
+                "title": "As a user I can create a mock in under a minute",
+                "type": "story",
+                "description": "Acceptance: create + hit a mock from the UI.",
+                "priority": "medium"
+              },
+              {
+                "title": "As a QA I can run a functional test plan",
+                "type": "story",
+                "description": "Acceptance: assemble and run a plan.",
+                "priority": "medium"
+              },
+              {
+                "title": "Login page shows a stale error after timeout",
+                "type": "bug",
+                "description": "Steps: idle 30m, submit → wrong message.",
+                "priority": "high"
+              },
+              {
+                "title": "Write onboarding runbook",
+                "type": "task",
+                "description": "Document the first-day setup.",
+                "priority": "low"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

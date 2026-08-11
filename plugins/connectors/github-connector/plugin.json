@@ -1,0 +1,22 @@
+{
+  "id": "mockarty.github-connector",
+  "name": "GitHub connector",
+  "version": "1.0.0",
+  "description": "A ready-to-use GitHub connector — reuses Mockarty's built-in GitHub adapter, no code. Link issues, pull requests and CI status to GitHub. A second connector example alongside jira-connector.",
+  "author": {"name": "Mockarty", "url": "https://mockarty.ru"},
+  "homepage": "https://mockarty.ru/docs/plugins-authoring",
+  "license": "MIT",
+  "contributes": {
+    "connectors": [
+      {
+        "key": "github_cloud",
+        "name": "GitHub",
+        "kind": "github",
+        "description": "Link Mockarty issues and test runs to GitHub. Uses the built-in GitHub adapter.",
+        "icon": "code-bracket",
+        "docs_url": "https://mockarty.ru/docs/integrations",
+        "config_template": {"base_url": "https://api.github.com", "owner": "your-org", "repo": "your-repo"}
+      }
+    ]
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "id": "mockarty.geocoding-kit",
+  "name": "Geocoding API mock kit",
+  "version": "1.0.0",
+  "description": "A geocoding contour (forward + reverse) returning coordinates and addresses — mock a maps/geocoding provider.",
+  "author": {
+    "name": "Mockarty",
+    "url": "https://mockarty.ru"
+  },
+  "homepage": "https://mockarty.ru/docs/plugins-authoring",
+  "license": "MIT",
+  "contributes": {
+    "mock_kits": [
+      {
+        "key": "geocoding_api",
+        "name": "Geocoding API",
+        "description": "Forward and reverse geocoding.",
+        "mocks": [
+          {
+            "route": "/v1/geocode",
+            "method": "GET",
+            "status_code": 200,
+            "description": "Address → coordinates",
+            "body": {
+              "query": "$.fake.StreetAddress",
+              "results": [
+                {
+                  "lat": "$.fake.Latitude",
+                  "lng": "$.fake.Longitude",
+                  "formatted": "$.fake.Address",
+                  "country": "$.fake.Country"
+                }
+              ]
+            }
+          },
+          {
+            "route": "/v1/reverse",
+            "method": "GET",
+            "status_code": 200,
+            "description": "Coordinates → address",
+            "body": {
+              "lat": "$.fake.Latitude",
+              "lng": "$.fake.Longitude",
+              "address": "$.fake.Address",
+              "city": "$.fake.City",
+              "zip": "$.fake.ZipCode"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

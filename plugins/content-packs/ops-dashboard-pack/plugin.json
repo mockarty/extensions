@@ -1,0 +1,72 @@
+{
+  "id": "mockarty.ops-dashboard-pack",
+  "name": "Ops dashboard pack",
+  "version": "1.0.0",
+  "description": "A content pack for the Dashboards module: a ready-made 'Mock traffic overview' widget dashboard (total/active mocks, requests, undefined). Instantiate it to seed a namespace's dashboards. No code.",
+  "author": {
+    "name": "Mockarty",
+    "url": "https://mockarty.ru"
+  },
+  "homepage": "https://mockarty.ru/docs/plugins-authoring",
+  "license": "MIT",
+  "contributes": {
+    "content_packs": [
+      {
+        "key": "ops_dashboards",
+        "name": "Ops dashboards",
+        "kind": "dashboard",
+        "description": "A mock-traffic overview dashboard.",
+        "items": [
+          {
+            "name": "Mock traffic overview",
+            "description": "At-a-glance mock counts and request volume.",
+            "widgets": [
+              {
+                "title": "Total mocks",
+                "widgetType": "stat",
+                "dataSourceId": "mock.total_count",
+                "x": 0,
+                "y": 0,
+                "w": 3,
+                "h": 2
+              },
+              {
+                "title": "Active mocks",
+                "widgetType": "stat",
+                "dataSourceId": "mock.active_count",
+                "x": 3,
+                "y": 0,
+                "w": 3,
+                "h": 2
+              },
+              {
+                "title": "Requests (7d)",
+                "widgetType": "stat",
+                "dataSourceId": "mock.requests_total",
+                "params": {
+                  "period_days": 7
+                },
+                "x": 6,
+                "y": 0,
+                "w": 3,
+                "h": 2
+              },
+              {
+                "title": "Undefined (7d)",
+                "widgetType": "stat",
+                "dataSourceId": "mock.undefined_count",
+                "params": {
+                  "period_days": 7
+                },
+                "x": 9,
+                "y": 0,
+                "w": 3,
+                "h": 2
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

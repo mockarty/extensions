@@ -1,0 +1,60 @@
+{
+  "id": "mockarty.helpdesk-kit",
+  "name": "Support/helpdesk API mock kit",
+  "version": "1.0.0",
+  "description": "A helpdesk contour (tickets, agents, replies) — mock a support-desk backend (Zendesk-style).",
+  "author": {
+    "name": "Mockarty",
+    "url": "https://mockarty.ru"
+  },
+  "homepage": "https://mockarty.ru/docs/plugins-authoring",
+  "license": "MIT",
+  "contributes": {
+    "mock_kits": [
+      {
+        "key": "helpdesk_api",
+        "name": "Helpdesk API",
+        "description": "Tickets, agents and replies.",
+        "mocks": [
+          {
+            "route": "/tickets",
+            "method": "GET",
+            "status_code": 200,
+            "description": "Tickets",
+            "body": {
+              "tickets": [
+                {
+                  "id": "$.fake.UUID",
+                  "subject": "$.fake.Sentence",
+                  "status": "open",
+                  "priority": "$.fake.Word"
+                }
+              ]
+            }
+          },
+          {
+            "route": "/tickets",
+            "method": "POST",
+            "status_code": 201,
+            "description": "Create ticket",
+            "body": {
+              "id": "$.fake.UUID",
+              "status": "open"
+            }
+          },
+          {
+            "route": "/tickets/:id/replies",
+            "method": "POST",
+            "status_code": 201,
+            "description": "Reply",
+            "body": {
+              "id": "$.fake.UUID",
+              "author": "$.fake.Name",
+              "created": "$.fake.Timestamp"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

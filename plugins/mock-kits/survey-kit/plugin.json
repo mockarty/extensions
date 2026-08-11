@@ -1,0 +1,63 @@
+{
+  "id": "mockarty.survey-kit",
+  "name": "Survey/forms API mock kit",
+  "version": "1.0.0",
+  "description": "A survey contour (forms, responses, results) — mock a form-builder backend.",
+  "author": {
+    "name": "Mockarty",
+    "url": "https://mockarty.ru"
+  },
+  "homepage": "https://mockarty.ru/docs/plugins-authoring",
+  "license": "MIT",
+  "contributes": {
+    "mock_kits": [
+      {
+        "key": "survey_api",
+        "name": "Survey API",
+        "description": "Forms, responses and results.",
+        "mocks": [
+          {
+            "route": "/forms",
+            "method": "GET",
+            "status_code": 200,
+            "description": "Forms",
+            "body": {
+              "forms": [
+                {
+                  "id": "$.fake.UUID",
+                  "title": "$.fake.Sentence",
+                  "responses": "$.fake.IntBetween(0,10000)"
+                }
+              ]
+            }
+          },
+          {
+            "route": "/forms/:id/responses",
+            "method": "POST",
+            "status_code": 201,
+            "description": "Submit response",
+            "body": {
+              "id": "$.fake.UUID",
+              "received": true
+            }
+          },
+          {
+            "route": "/forms/:id/results",
+            "method": "GET",
+            "status_code": 200,
+            "description": "Results",
+            "body": {
+              "total": "$.fake.IntBetween(0,10000)",
+              "questions": [
+                {
+                  "q": "$.fake.Sentence",
+                  "answers": "$.fake.IntBetween(0,10000)"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "id": "mockarty.insurance-kit",
+  "name": "Insurance API mock kit",
+  "version": "1.0.0",
+  "description": "An insurance contour (policies, quotes, claims) — mock an insurance backend.",
+  "author": {
+    "name": "Mockarty",
+    "url": "https://mockarty.ru"
+  },
+  "homepage": "https://mockarty.ru/docs/plugins-authoring",
+  "license": "MIT",
+  "contributes": {
+    "mock_kits": [
+      {
+        "key": "insurance_api",
+        "name": "Insurance API",
+        "description": "Policies, quotes and claims.",
+        "mocks": [
+          {
+            "route": "/quotes",
+            "method": "POST",
+            "status_code": 200,
+            "description": "Get a quote",
+            "body": {
+              "id": "$.fake.UUID",
+              "premium": "$.fake.IntBetween(100,5000)",
+              "currency": "USD",
+              "valid_until": "$.fake.Date"
+            }
+          },
+          {
+            "route": "/policies",
+            "method": "POST",
+            "status_code": 201,
+            "description": "Bind policy",
+            "body": {
+              "id": "$.fake.UUID",
+              "number": "$.fake.UUIDDigit",
+              "status": "active"
+            }
+          },
+          {
+            "route": "/claims",
+            "method": "POST",
+            "status_code": 201,
+            "description": "File claim",
+            "body": {
+              "id": "$.fake.UUID",
+              "status": "under_review",
+              "reference": "$.fake.UUIDDigit"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

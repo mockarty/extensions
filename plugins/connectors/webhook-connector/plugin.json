@@ -1,0 +1,27 @@
+{
+  "id": "mockarty.webhook-connector",
+  "name": "Generic webhook connector",
+  "version": "1.0.0",
+  "description": "A ready-to-use generic webhook connector — reuses the built-in webhook adapter to POST Mockarty events to any URL.",
+  "author": {
+    "name": "Mockarty",
+    "url": "https://mockarty.ru"
+  },
+  "homepage": "https://mockarty.ru/docs/plugins-authoring",
+  "license": "MIT",
+  "contributes": {
+    "connectors": [
+      {
+        "key": "generic_webhook",
+        "name": "Generic webhook",
+        "kind": "webhook_generic",
+        "description": "POST Mockarty events (scans, runs, issues) to any HTTP endpoint.",
+        "icon": "bell-alert",
+        "docs_url": "https://mockarty.ru/docs/integrations",
+        "config_template": {
+          "url": "https://hooks.your-org.com/mockarty"
+        }
+      }
+    ]
+  }
+}

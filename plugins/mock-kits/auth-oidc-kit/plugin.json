@@ -1,0 +1,79 @@
+{
+  "id": "mockarty.auth-oidc-kit",
+  "name": "OIDC auth mock kit",
+  "version": "1.0.0",
+  "description": "An OpenID-Connect provider contour (token, userinfo, jwks, discovery) — mock an identity provider for local auth flows without a real IdP.",
+  "author": {
+    "name": "Mockarty",
+    "url": "https://mockarty.ru"
+  },
+  "homepage": "https://mockarty.ru/docs/plugins-authoring",
+  "license": "MIT",
+  "contributes": {
+    "mock_kits": [
+      {
+        "key": "oidc_provider",
+        "name": "OIDC provider",
+        "description": "Token, userinfo, JWKS and discovery endpoints.",
+        "mocks": [
+          {
+            "route": "/.well-known/openid-configuration",
+            "method": "GET",
+            "status_code": 200,
+            "description": "Discovery document",
+            "body": {
+              "issuer": "https://mock.local",
+              "authorization_endpoint": "https://mock.local/authorize",
+              "token_endpoint": "https://mock.local/oauth/token",
+              "userinfo_endpoint": "https://mock.local/userinfo",
+              "jwks_uri": "https://mock.local/.well-known/jwks.json"
+            }
+          },
+          {
+            "route": "/oauth/token",
+            "method": "POST",
+            "status_code": 200,
+            "description": "Token exchange",
+            "body": {
+              "access_token": "$.fake.JWT",
+              "token_type": "Bearer",
+              "expires_in": 3600,
+              "refresh_token": "$.fake.Password",
+              "id_token": "$.fake.JWT"
+            }
+          },
+          {
+            "route": "/userinfo",
+            "method": "GET",
+            "status_code": 200,
+            "description": "User info",
+            "body": {
+              "sub": "$.fake.UUID",
+              "name": "$.fake.Name",
+              "email": "$.fake.Email",
+              "email_verified": true,
+              "preferred_username": "$.fake.Username"
+            }
+          },
+          {
+            "route": "/.well-known/jwks.json",
+            "method": "GET",
+            "status_code": 200,
+            "description": "JWK set",
+            "body": {
+              "keys": [
+                {
+                  "kty": "RSA",
+                  "use": "sig",
+                  "kid": "$.fake.UUIDDigit",
+                  "n": "$.fake.Password",
+                  "e": "AQAB"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

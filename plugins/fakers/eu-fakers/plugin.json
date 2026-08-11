@@ -1,0 +1,14 @@
+{
+  "id": "mockarty.eu-fakers",
+  "name": "EU fakers (IBAN/BIC/VAT)",
+  "version": "1.0.0",
+  "description": "Adds $.fake.iban (German-format IBAN with a valid mod-97 checksum), $.fake.bic and $.fake.vat_de. Sandboxed WASM.",
+  "author": {"name": "Mockarty", "url": "https://mockarty.ru"},
+  "homepage": "https://mockarty.ru/docs/plugins-authoring",
+  "license": "MIT",
+  "contributes": {
+    "wasm": [
+      {"point": "faker-provider", "module": "faker.wasm", "fn": "faker", "exports": ["iban", "bic", "vat_de"]}
+    ]
+  }
+}

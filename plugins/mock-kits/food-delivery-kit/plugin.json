@@ -1,0 +1,76 @@
+{
+  "id": "mockarty.food-delivery-kit",
+  "name": "Food delivery API mock kit",
+  "version": "1.0.0",
+  "description": "A food-delivery contour (restaurants, menus, orders, drivers) — mock a delivery-platform backend.",
+  "author": {
+    "name": "Mockarty",
+    "url": "https://mockarty.ru"
+  },
+  "homepage": "https://mockarty.ru/docs/plugins-authoring",
+  "license": "MIT",
+  "contributes": {
+    "mock_kits": [
+      {
+        "key": "food_delivery_api",
+        "name": "Food delivery API",
+        "description": "Restaurants, menus, orders and driver tracking.",
+        "mocks": [
+          {
+            "route": "/restaurants",
+            "method": "GET",
+            "status_code": 200,
+            "description": "Nearby restaurants",
+            "body": {
+              "restaurants": [
+                {
+                  "id": "$.fake.UUID",
+                  "name": "$.fake.Company",
+                  "rating": "$.fake.IntBetween(1,5)",
+                  "eta_min": "$.fake.IntBetween(10,60)"
+                }
+              ]
+            }
+          },
+          {
+            "route": "/restaurants/:id/menu",
+            "method": "GET",
+            "status_code": 200,
+            "description": "Menu",
+            "body": {
+              "items": [
+                {
+                  "id": "$.fake.UUID",
+                  "name": "$.fake.Word",
+                  "price": "$.fake.Price"
+                }
+              ]
+            }
+          },
+          {
+            "route": "/orders",
+            "method": "POST",
+            "status_code": 201,
+            "description": "Place order",
+            "body": {
+              "id": "$.fake.UUID",
+              "status": "confirmed",
+              "total": "$.fake.Price"
+            }
+          },
+          {
+            "route": "/orders/:id/driver",
+            "method": "GET",
+            "status_code": 200,
+            "description": "Driver location",
+            "body": {
+              "driver": "$.fake.Name",
+              "lat": "$.fake.Latitude",
+              "lng": "$.fake.Longitude"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

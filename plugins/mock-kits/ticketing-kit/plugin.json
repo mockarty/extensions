@@ -1,0 +1,65 @@
+{
+  "id": "mockarty.ticketing-kit",
+  "name": "Events/ticketing API mock kit",
+  "version": "1.0.0",
+  "description": "An events-and-ticketing contour (events, tickets, orders) — mock a ticketing-platform backend.",
+  "author": {
+    "name": "Mockarty",
+    "url": "https://mockarty.ru"
+  },
+  "homepage": "https://mockarty.ru/docs/plugins-authoring",
+  "license": "MIT",
+  "contributes": {
+    "mock_kits": [
+      {
+        "key": "ticketing_api",
+        "name": "Ticketing API",
+        "description": "Events, tickets and orders.",
+        "mocks": [
+          {
+            "route": "/events",
+            "method": "GET",
+            "status_code": 200,
+            "description": "Events",
+            "body": {
+              "events": [
+                {
+                  "id": "$.fake.UUID",
+                  "name": "$.fake.Sentence",
+                  "venue": "$.fake.City",
+                  "date": "$.fake.Date"
+                }
+              ]
+            }
+          },
+          {
+            "route": "/events/:id/tickets",
+            "method": "GET",
+            "status_code": 200,
+            "description": "Ticket tiers",
+            "body": {
+              "tiers": [
+                {
+                  "name": "$.fake.Word",
+                  "price": "$.fake.Price",
+                  "available": "$.fake.IntBetween(0,500)"
+                }
+              ]
+            }
+          },
+          {
+            "route": "/orders",
+            "method": "POST",
+            "status_code": 201,
+            "description": "Buy tickets",
+            "body": {
+              "id": "$.fake.UUID",
+              "status": "paid",
+              "qr": "$.fake.UUIDDigit"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "id": "mockarty.network-fakers",
+  "name": "Network fakers (CIDR/MAC/port)",
+  "version": "1.0.0",
+  "description": "Adds $.fake.cidr, $.fake.private_ip, $.fake.port and $.fake.mac_oui — synthetic network identifiers for test data. Sandboxed WASM.",
+  "author": {"name": "Mockarty", "url": "https://mockarty.ru"},
+  "homepage": "https://mockarty.ru/docs/plugins-authoring",
+  "license": "MIT",
+  "contributes": {
+    "wasm": [
+      {"point": "faker-provider", "module": "faker.wasm", "fn": "faker", "exports": ["cidr", "private_ip", "port", "mac_oui"]}
+    ]
+  }
+}

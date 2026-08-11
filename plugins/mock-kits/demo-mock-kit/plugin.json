@@ -1,0 +1,26 @@
+{
+  "id": "mockarty.demo-mock-kit",
+  "name": "Demo API mock kit",
+  "version": "1.0.0",
+  "description": "A ready-made contour of mocks for a tiny users API — the simplest kind of plugin (declarative content, no code). Enable it, then instantiate the kit into any namespace to get working /users endpoints instantly.",
+  "author": {"name": "Mockarty", "url": "https://mockarty.ru"},
+  "homepage": "https://mockarty.ru/docs/plugins-authoring",
+  "license": "MIT",
+  "contributes": {
+    "mock_kits": [
+      {
+        "key": "demo_users_api",
+        "name": "Users API (demo)",
+        "description": "List, fetch and create users — a starter contour with dynamic fakers.",
+        "mocks": [
+          {"route": "/users", "method": "GET", "status_code": 200, "description": "List users",
+            "body": {"users": [{"id": "$.fake.UUID", "name": "$.fake.Name", "email": "$.fake.Email"}], "total": 1}},
+          {"route": "/users/:id", "method": "GET", "status_code": 200, "description": "Fetch one user",
+            "body": {"id": "$.fake.UUID", "name": "$.fake.Name", "email": "$.fake.Email", "active": true}},
+          {"route": "/users", "method": "POST", "status_code": 201, "description": "Create a user",
+            "body": {"id": "$.fake.UUID", "created": true}}
+        ]
+      }
+    ]
+  }
+}

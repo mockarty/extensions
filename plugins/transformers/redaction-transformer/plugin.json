@@ -1,0 +1,15 @@
+{
+  "id": "mockarty.redaction-transformer",
+  "name": "Redaction transformers (mask/base64)",
+  "version": "1.0.0",
+  "description": "Response transformers: tag a mock transform:mask_digits to star out every digit (PAN/SSN redaction) or transform:base64_wrap to base64-encode the body. Sandboxed WASM.",
+  "author": {"name": "Mockarty", "url": "https://mockarty.ru"},
+  "homepage": "https://mockarty.ru/docs/plugins-authoring",
+  "license": "MIT",
+  "contributes": {
+    "wasm": [
+      {"point": "response-transformer", "module": "transform.wasm", "fn": "mask_digits", "exports": ["mask_digits"]},
+      {"point": "response-transformer", "module": "transform.wasm", "fn": "base64_wrap", "exports": ["base64_wrap"]}
+    ]
+  }
+}

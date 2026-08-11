@@ -1,0 +1,28 @@
+{
+  "id": "mockarty.testrail-connector",
+  "name": "TestRail connector",
+  "version": "1.0.0",
+  "description": "A ready-to-use TestRail connector — reuses the built-in TestRail adapter to sync cases and runs.",
+  "author": {
+    "name": "Mockarty",
+    "url": "https://mockarty.ru"
+  },
+  "homepage": "https://mockarty.ru/docs/plugins-authoring",
+  "license": "MIT",
+  "contributes": {
+    "connectors": [
+      {
+        "key": "testrail_project",
+        "name": "TestRail",
+        "kind": "testrail",
+        "description": "Sync Mockarty test cases and runs with TestRail.",
+        "icon": "clipboard-document-check",
+        "docs_url": "https://mockarty.ru/docs/integrations",
+        "config_template": {
+          "base_url": "https://your-org.testrail.io",
+          "project_id": "1"
+        }
+      }
+    ]
+  }
+}

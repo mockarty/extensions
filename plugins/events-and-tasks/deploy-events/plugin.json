@@ -1,0 +1,34 @@
+{
+  "id": "mockarty.deploy-events",
+  "name": "Deploy events",
+  "version": "1.0.0",
+  "description": "Adds deploy lifecycle event types (plugin.deploy.started / finished / failed) to the notification catalogue — subscribe to them per channel like any built-in event. Declarative, no code.",
+  "author": {
+    "name": "Mockarty",
+    "url": "https://mockarty.ru"
+  },
+  "homepage": "https://mockarty.ru/docs/plugins-authoring",
+  "license": "MIT",
+  "contributes": {
+    "event_types": [
+      {
+        "type": "plugin.deploy.started",
+        "title": "Deploy started",
+        "description": "A deployment began.",
+        "severity": "info"
+      },
+      {
+        "type": "plugin.deploy.finished",
+        "title": "Deploy finished",
+        "description": "A deployment completed successfully.",
+        "severity": "success"
+      },
+      {
+        "type": "plugin.deploy.failed",
+        "title": "Deploy failed",
+        "description": "A deployment failed and needs attention.",
+        "severity": "error"
+      }
+    ]
+  }
+}

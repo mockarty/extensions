@@ -1,0 +1,14 @@
+{
+  "id": "mockarty.identifier-fakers",
+  "name": "Identifier fakers (ULID/nanoid/hex)",
+  "version": "1.0.0",
+  "description": "Adds $.fake.ulid, $.fake.nanoid and $.fake.hex_token — common modern identifiers. Sandboxed WASM.",
+  "author": {"name": "Mockarty", "url": "https://mockarty.ru"},
+  "homepage": "https://mockarty.ru/docs/plugins-authoring",
+  "license": "MIT",
+  "contributes": {
+    "wasm": [
+      {"point": "faker-provider", "module": "faker.wasm", "fn": "faker", "exports": ["ulid", "nanoid", "hex_token"]}
+    ]
+  }
+}

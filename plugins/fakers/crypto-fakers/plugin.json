@@ -1,0 +1,14 @@
+{
+  "id": "mockarty.crypto-fakers",
+  "name": "Crypto fakers (ETH/BTC/tx)",
+  "version": "1.0.0",
+  "description": "Adds $.fake.eth_address, $.fake.tx_hash and $.fake.btc_address — synthetic blockchain identifiers for test data. Sandboxed WASM.",
+  "author": {"name": "Mockarty", "url": "https://mockarty.ru"},
+  "homepage": "https://mockarty.ru/docs/plugins-authoring",
+  "license": "MIT",
+  "contributes": {
+    "wasm": [
+      {"point": "faker-provider", "module": "faker.wasm", "fn": "faker", "exports": ["eth_address", "tx_hash", "btc_address"]}
+    ]
+  }
+}

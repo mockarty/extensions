@@ -1,0 +1,59 @@
+{
+  "id": "mockarty.booking-kit",
+  "name": "Booking API mock kit",
+  "version": "1.0.0",
+  "description": "A reservations contour (availability, create/cancel reservation) — mock a booking backend for calendar/hotel/restaurant apps.",
+  "author": {
+    "name": "Mockarty",
+    "url": "https://mockarty.ru"
+  },
+  "homepage": "https://mockarty.ru/docs/plugins-authoring",
+  "license": "MIT",
+  "contributes": {
+    "mock_kits": [
+      {
+        "key": "booking_api",
+        "name": "Booking API",
+        "description": "Availability and reservations.",
+        "mocks": [
+          {
+            "route": "/availability",
+            "method": "GET",
+            "status_code": 200,
+            "description": "Availability",
+            "body": {
+              "slots": [
+                {
+                  "start": "$.fake.Timestamp",
+                  "end": "$.fake.Timestamp",
+                  "available": "$.fake.Bool"
+                }
+              ]
+            }
+          },
+          {
+            "route": "/reservations",
+            "method": "POST",
+            "status_code": 201,
+            "description": "Create reservation",
+            "body": {
+              "id": "$.fake.UUID",
+              "status": "confirmed",
+              "code": "$.fake.UUIDDigit"
+            }
+          },
+          {
+            "route": "/reservations/:id",
+            "method": "DELETE",
+            "status_code": 200,
+            "description": "Cancel reservation",
+            "body": {
+              "id": "$.fake.UUID",
+              "status": "cancelled"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

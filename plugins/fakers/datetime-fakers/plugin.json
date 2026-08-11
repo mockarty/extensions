@@ -1,0 +1,14 @@
+{
+  "id": "mockarty.datetime-fakers",
+  "name": "Date/time fakers (ISO/cron/duration)",
+  "version": "1.0.0",
+  "description": "Adds $.fake.iso_date, $.fake.iso_datetime, $.fake.cron and $.fake.duration — date/time shapes with no built-in equivalent. Sandboxed WASM.",
+  "author": {"name": "Mockarty", "url": "https://mockarty.ru"},
+  "homepage": "https://mockarty.ru/docs/plugins-authoring",
+  "license": "MIT",
+  "contributes": {
+    "wasm": [
+      {"point": "faker-provider", "module": "faker.wasm", "fn": "faker", "exports": ["iso_date", "iso_datetime", "cron", "duration"]}
+    ]
+  }
+}

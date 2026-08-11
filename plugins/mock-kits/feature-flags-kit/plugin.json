@@ -1,0 +1,50 @@
+{
+  "id": "mockarty.feature-flags-kit",
+  "name": "Feature flags mock kit",
+  "version": "1.0.0",
+  "description": "A feature-flag service contour (list flags, evaluate) — mock LaunchDarkly/Unleash-style flag evaluation.",
+  "author": {
+    "name": "Mockarty",
+    "url": "https://mockarty.ru"
+  },
+  "homepage": "https://mockarty.ru/docs/plugins-authoring",
+  "license": "MIT",
+  "contributes": {
+    "mock_kits": [
+      {
+        "key": "feature_flags",
+        "name": "Feature flags",
+        "description": "List and evaluate feature flags.",
+        "mocks": [
+          {
+            "route": "/flags",
+            "method": "GET",
+            "status_code": 200,
+            "description": "List flags",
+            "body": {
+              "flags": [
+                {
+                  "key": "$.fake.Word",
+                  "enabled": "$.fake.Bool",
+                  "rollout": "$.fake.IntBetween(0,100)"
+                }
+              ]
+            }
+          },
+          {
+            "route": "/flags/:key/evaluate",
+            "method": "POST",
+            "status_code": 200,
+            "description": "Evaluate flag",
+            "body": {
+              "key": "$.fake.Word",
+              "value": "$.fake.Bool",
+              "variant": "$.fake.Word",
+              "reason": "RULE_MATCH"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "id": "mockarty.hr-payroll-kit",
+  "name": "HR & payroll API mock kit",
+  "version": "1.0.0",
+  "description": "An HR/payroll contour (employees, payslips, time-off) — mock an HRIS backend.",
+  "author": {
+    "name": "Mockarty",
+    "url": "https://mockarty.ru"
+  },
+  "homepage": "https://mockarty.ru/docs/plugins-authoring",
+  "license": "MIT",
+  "contributes": {
+    "mock_kits": [
+      {
+        "key": "hr_api",
+        "name": "HR/payroll API",
+        "description": "Employees, payslips and time-off.",
+        "mocks": [
+          {
+            "route": "/employees",
+            "method": "GET",
+            "status_code": 200,
+            "description": "Employees",
+            "body": {
+              "employees": [
+                {
+                  "id": "$.fake.UUID",
+                  "name": "$.fake.Name",
+                  "title": "$.fake.JobTitle",
+                  "salary": "$.fake.IntBetween(30000,250000)"
+                }
+              ]
+            }
+          },
+          {
+            "route": "/employees/:id/payslips",
+            "method": "GET",
+            "status_code": 200,
+            "description": "Payslips",
+            "body": {
+              "payslips": [
+                {
+                  "period": "$.fake.Date",
+                  "gross": "$.fake.IntBetween(2000,20000)",
+                  "net": "$.fake.IntBetween(1500,15000)"
+                }
+              ]
+            }
+          },
+          {
+            "route": "/timeoff",
+            "method": "POST",
+            "status_code": 201,
+            "description": "Request time off",
+            "body": {
+              "id": "$.fake.UUID",
+              "status": "pending"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

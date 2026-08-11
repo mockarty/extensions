@@ -1,0 +1,27 @@
+{
+  "id": "mockarty.linear-connector",
+  "name": "Linear connector",
+  "version": "1.0.0",
+  "description": "A ready-to-use Linear connector — reuses the built-in Linear adapter to link Mockarty issues/tests to Linear.",
+  "author": {
+    "name": "Mockarty",
+    "url": "https://mockarty.ru"
+  },
+  "homepage": "https://mockarty.ru/docs/plugins-authoring",
+  "license": "MIT",
+  "contributes": {
+    "connectors": [
+      {
+        "key": "linear_team",
+        "name": "Linear",
+        "kind": "linear",
+        "description": "Link Mockarty issues and test runs to a Linear team.",
+        "icon": "bolt",
+        "docs_url": "https://mockarty.ru/docs/integrations",
+        "config_template": {
+          "team_key": "ENG"
+        }
+      }
+    ]
+  }
+}

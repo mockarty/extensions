@@ -1,0 +1,60 @@
+{
+  "id": "mockarty.gaming-kit",
+  "name": "Gaming API mock kit",
+  "version": "1.0.0",
+  "description": "A gaming-backend contour (players, leaderboards, matches) — mock a game-services API.",
+  "author": {
+    "name": "Mockarty",
+    "url": "https://mockarty.ru"
+  },
+  "homepage": "https://mockarty.ru/docs/plugins-authoring",
+  "license": "MIT",
+  "contributes": {
+    "mock_kits": [
+      {
+        "key": "gaming_api",
+        "name": "Gaming API",
+        "description": "Players, leaderboards and matches.",
+        "mocks": [
+          {
+            "route": "/players/:id",
+            "method": "GET",
+            "status_code": 200,
+            "description": "Player profile",
+            "body": {
+              "id": "$.fake.UUID",
+              "handle": "$.fake.Username",
+              "level": "$.fake.IntBetween(1,100)",
+              "xp": "$.fake.IntBetween(0,1000000)"
+            }
+          },
+          {
+            "route": "/leaderboard",
+            "method": "GET",
+            "status_code": 200,
+            "description": "Leaderboard",
+            "body": {
+              "top": [
+                {
+                  "rank": "$.fake.IntBetween(1,100)",
+                  "handle": "$.fake.Username",
+                  "score": "$.fake.IntBetween(0,999999)"
+                }
+              ]
+            }
+          },
+          {
+            "route": "/matches",
+            "method": "POST",
+            "status_code": 201,
+            "description": "Create match",
+            "body": {
+              "id": "$.fake.UUID",
+              "status": "in_progress"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

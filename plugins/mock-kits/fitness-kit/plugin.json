@@ -1,0 +1,60 @@
+{
+  "id": "mockarty.fitness-kit",
+  "name": "Fitness/health API mock kit",
+  "version": "1.0.0",
+  "description": "A fitness-tracking contour (workouts, activity, goals) — mock a health-tracking backend.",
+  "author": {
+    "name": "Mockarty",
+    "url": "https://mockarty.ru"
+  },
+  "homepage": "https://mockarty.ru/docs/plugins-authoring",
+  "license": "MIT",
+  "contributes": {
+    "mock_kits": [
+      {
+        "key": "fitness_api",
+        "name": "Fitness API",
+        "description": "Workouts, activity and goals.",
+        "mocks": [
+          {
+            "route": "/activity/today",
+            "method": "GET",
+            "status_code": 200,
+            "description": "Today's activity",
+            "body": {
+              "steps": "$.fake.IntBetween(0,30000)",
+              "calories": "$.fake.IntBetween(0,5000)",
+              "distance_km": "$.fake.IntBetween(0,42)"
+            }
+          },
+          {
+            "route": "/workouts",
+            "method": "POST",
+            "status_code": 201,
+            "description": "Log workout",
+            "body": {
+              "id": "$.fake.UUID",
+              "type": "$.fake.Word",
+              "duration_min": "$.fake.IntBetween(5,180)"
+            }
+          },
+          {
+            "route": "/goals",
+            "method": "GET",
+            "status_code": 200,
+            "description": "Goals",
+            "body": {
+              "goals": [
+                {
+                  "name": "$.fake.Word",
+                  "target": "$.fake.IntBetween(1000,20000)",
+                  "progress": "$.fake.IntBetween(0,20000)"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

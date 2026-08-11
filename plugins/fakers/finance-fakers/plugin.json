@@ -1,0 +1,14 @@
+{
+  "id": "mockarty.finance-fakers",
+  "name": "Finance fakers (card/IBAN)",
+  "version": "1.0.0",
+  "description": "Adds $.fake.credit_card (16 digits, valid Luhn — a test PAN, never a real card) and $.fake.iban. Sandboxed WASM. A second WASM-faker example alongside ru-fakers.",
+  "author": {"name": "Mockarty", "url": "https://mockarty.ru"},
+  "homepage": "https://mockarty.ru/docs/plugins-authoring",
+  "license": "MIT",
+  "contributes": {
+    "wasm": [
+      {"point": "faker-provider", "module": "faker.wasm", "fn": "fin_faker", "exports": ["credit_card", "iban"]}
+    ]
+  }
+}

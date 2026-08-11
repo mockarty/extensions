@@ -1,0 +1,28 @@
+{
+  "id": "mockarty.gitlab-connector",
+  "name": "GitLab connector",
+  "version": "1.0.0",
+  "description": "A ready-to-use GitLab connector — reuses the built-in GitLab adapter, no code. Links issues, merge requests and pipelines to Mockarty.",
+  "author": {
+    "name": "Mockarty",
+    "url": "https://mockarty.ru"
+  },
+  "homepage": "https://mockarty.ru/docs/plugins-authoring",
+  "license": "MIT",
+  "contributes": {
+    "connectors": [
+      {
+        "key": "gitlab_self",
+        "name": "GitLab",
+        "kind": "gitlab",
+        "description": "Link Mockarty issues/tests to GitLab (self-hosted or SaaS).",
+        "icon": "code-bracket-square",
+        "docs_url": "https://mockarty.ru/docs/integrations",
+        "config_template": {
+          "base_url": "https://gitlab.com",
+          "project": "group/project"
+        }
+      }
+    ]
+  }
+}

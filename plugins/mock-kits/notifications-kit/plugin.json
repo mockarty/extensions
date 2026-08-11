@@ -1,0 +1,60 @@
+{
+  "id": "mockarty.notifications-kit",
+  "name": "Notifications API mock kit",
+  "version": "1.0.0",
+  "description": "A notifications contour (send push/email/sms, templates) — mock a notification-service backend.",
+  "author": {
+    "name": "Mockarty",
+    "url": "https://mockarty.ru"
+  },
+  "homepage": "https://mockarty.ru/docs/plugins-authoring",
+  "license": "MIT",
+  "contributes": {
+    "mock_kits": [
+      {
+        "key": "notifications_api",
+        "name": "Notifications API",
+        "description": "Send notifications across channels and manage templates.",
+        "mocks": [
+          {
+            "route": "/notify/push",
+            "method": "POST",
+            "status_code": 202,
+            "description": "Send push",
+            "body": {
+              "id": "$.fake.UUID",
+              "status": "sent"
+            }
+          },
+          {
+            "route": "/notify/templates",
+            "method": "GET",
+            "status_code": 200,
+            "description": "List templates",
+            "body": {
+              "templates": [
+                {
+                  "id": "$.fake.UUID",
+                  "name": "$.fake.Word",
+                  "channel": "email",
+                  "subject": "$.fake.Sentence"
+                }
+              ]
+            }
+          },
+          {
+            "route": "/notify/status/:id",
+            "method": "GET",
+            "status_code": 200,
+            "description": "Delivery status",
+            "body": {
+              "id": "$.fake.UUID",
+              "status": "delivered",
+              "channel": "push"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

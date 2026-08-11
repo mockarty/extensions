@@ -1,0 +1,90 @@
+{
+  "id": "mockarty.ops-panel",
+  "name": "Ops panel",
+  "version": "1.0.0",
+  "description": "Adds a sidebar item opening a small operations panel — an example of a UI-contribution plugin. The panel ships inside the plugin and renders in a sandboxed iframe (strict CSP, no host-session access), theme-aware with the host.",
+  "author": {
+    "name": "Mockarty",
+    "url": "https://mockarty.ru"
+  },
+  "homepage": "https://mockarty.ru/docs/plugins-authoring",
+  "license": "MIT",
+  "settings_schema": {
+    "type": "object",
+    "properties": {
+      "heading": {
+        "type": "string",
+        "title": "Panel heading",
+        "description": "Shown at the top of the panel."
+      },
+      "refresh_seconds": {
+        "type": "integer",
+        "title": "Clock refresh (seconds)",
+        "minimum": 1,
+        "maximum": 60
+      },
+      "show_clock": {
+        "type": "boolean",
+        "title": "Show the live clock"
+      }
+    }
+  },
+  "contributes": {
+    "ui": [
+      {
+        "point": "sidebar",
+        "id": "ops_panel",
+        "title": "Ops panel",
+        "icon": "wrench-screwdriver",
+        "panel": "panel.html"
+      },
+      {
+        "point": "page-slot",
+        "id": "ops_dashboard_slot",
+        "title": "Ops panel",
+        "icon": "wrench-screwdriver",
+        "target": "dashboard",
+        "panel": "panel.html"
+      },
+      {
+        "point": "page-slot",
+        "id": "ops_mocks_slot",
+        "title": "Ops panel",
+        "icon": "wrench-screwdriver",
+        "target": "mocks",
+        "panel": "panel.html"
+      },
+      {
+        "point": "command",
+        "id": "ops_command",
+        "title": "Open Ops panel",
+        "icon": "wrench-screwdriver",
+        "panel": "panel.html"
+      },
+      {
+        "point": "entity-tab",
+        "id": "ops_issue_tab",
+        "title": "Ops",
+        "icon": "wrench-screwdriver",
+        "target": "issue",
+        "panel": "panel.html"
+      },
+      {
+        "point": "entity-tab",
+        "id": "ops_mock_tab",
+        "title": "Ops",
+        "icon": "wrench-screwdriver",
+        "target": "mock",
+        "panel": "panel.html"
+      },
+      {
+        "point": "entity-tab",
+        "id": "ops_case_tab",
+        "title": "Ops",
+        "icon": "wrench-screwdriver",
+        "target": "case",
+        "panel": "panel.html"
+      }
+    ]
+  }
+}

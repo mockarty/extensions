@@ -1,0 +1,50 @@
+{
+  "id": "mockarty.esign-kit",
+  "name": "E-signature API mock kit",
+  "version": "1.0.0",
+  "description": "An e-signature contour (envelopes, signers, status) — mock a DocuSign-style backend.",
+  "author": {
+    "name": "Mockarty",
+    "url": "https://mockarty.ru"
+  },
+  "homepage": "https://mockarty.ru/docs/plugins-authoring",
+  "license": "MIT",
+  "contributes": {
+    "mock_kits": [
+      {
+        "key": "esign_api",
+        "name": "E-signature API",
+        "description": "Envelopes, signers and status.",
+        "mocks": [
+          {
+            "route": "/envelopes",
+            "method": "POST",
+            "status_code": 201,
+            "description": "Create envelope",
+            "body": {
+              "id": "$.fake.UUID",
+              "status": "sent"
+            }
+          },
+          {
+            "route": "/envelopes/:id",
+            "method": "GET",
+            "status_code": 200,
+            "description": "Envelope status",
+            "body": {
+              "id": "$.fake.UUID",
+              "status": "completed",
+              "signers": [
+                {
+                  "name": "$.fake.Name",
+                  "email": "$.fake.Email",
+                  "signed": true
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

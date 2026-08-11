@@ -1,0 +1,85 @@
+{
+  "id": "mockarty.ecommerce-kit",
+  "name": "E-commerce API mock kit",
+  "version": "1.0.0",
+  "description": "A ready-made contour for a typical e-commerce backend — products, a cart and orders — with dynamic fakers. Declarative content, no code. Enable it, then instantiate into any namespace for instant /products, /cart and /orders endpoints.",
+  "author": {
+    "name": "Mockarty",
+    "url": "https://mockarty.ru"
+  },
+  "homepage": "https://mockarty.ru/docs/plugins-authoring",
+  "license": "MIT",
+  "contributes": {
+    "mock_kits": [
+      {
+        "key": "ecommerce_api",
+        "name": "E-commerce API",
+        "description": "Products, cart and orders — a starter shop contour.",
+        "mocks": [
+          {
+            "route": "/products",
+            "method": "GET",
+            "status_code": 200,
+            "description": "List products",
+            "body": {
+              "products": [
+                {
+                  "id": "$.fake.UUID",
+                  "name": "$.fake.Word",
+                  "price": "$.fake.IntBetween(100, 9900)",
+                  "currency": "USD"
+                }
+              ],
+              "total": 1
+            }
+          },
+          {
+            "route": "/products/:id",
+            "method": "GET",
+            "status_code": 200,
+            "description": "Get a product",
+            "body": {
+              "id": "$.fake.UUID",
+              "name": "$.fake.Word",
+              "price": "$.fake.IntBetween(100, 9900)",
+              "inStock": true
+            }
+          },
+          {
+            "route": "/cart",
+            "method": "POST",
+            "status_code": 201,
+            "description": "Add to cart",
+            "body": {
+              "cartId": "$.fake.UUID",
+              "items": 1,
+              "subtotal": "$.fake.IntBetween(100, 9900)"
+            }
+          },
+          {
+            "route": "/orders",
+            "method": "POST",
+            "status_code": 201,
+            "description": "Create order",
+            "body": {
+              "orderId": "$.fake.UUID",
+              "status": "confirmed",
+              "total": "$.fake.IntBetween(100, 99000)"
+            }
+          },
+          {
+            "route": "/orders/:id",
+            "method": "GET",
+            "status_code": 200,
+            "description": "Order status",
+            "body": {
+              "orderId": "$.fake.UUID",
+              "status": "shipped",
+              "trackingNumber": "$.fake.UUID"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

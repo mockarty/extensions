@@ -1,0 +1,52 @@
+{
+  "id": "mockarty.api-collection-pack",
+  "name": "API collection pack (HTTP smoke)",
+  "version": "1.0.0",
+  "description": "A content pack for the API Tester module: a ready-made HTTP collection of sample requests (list/get/create). Instantiate it to seed a namespace's API Tester. No code.",
+  "author": {
+    "name": "Mockarty",
+    "url": "https://mockarty.ru"
+  },
+  "homepage": "https://mockarty.ru/docs/plugins-authoring",
+  "license": "MIT",
+  "contributes": {
+    "content_packs": [
+      {
+        "key": "http_smoke",
+        "name": "HTTP smoke collection",
+        "kind": "collection",
+        "description": "A sample HTTP collection of requests.",
+        "items": [
+          {
+            "name": "JSONPlaceholder smoke",
+            "description": "A starter HTTP collection hitting a public sample API.",
+            "protocol": "http",
+            "requests": [
+              {
+                "name": "List posts",
+                "method": "GET",
+                "url": "https://jsonplaceholder.typicode.com/posts"
+              },
+              {
+                "name": "Get post 1",
+                "method": "GET",
+                "url": "https://jsonplaceholder.typicode.com/posts/1"
+              },
+              {
+                "name": "Create post",
+                "method": "POST",
+                "url": "https://jsonplaceholder.typicode.com/posts",
+                "body": "{\"title\":\"foo\",\"body\":\"bar\",\"userId\":1}"
+              },
+              {
+                "name": "List users",
+                "method": "GET",
+                "url": "https://jsonplaceholder.typicode.com/users"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

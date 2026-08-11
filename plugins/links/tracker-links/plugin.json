@@ -1,0 +1,34 @@
+{
+  "id": "mockarty.tracker-links",
+  "name": "Tracker links (Jira/GitHub deep links)",
+  "version": "1.0.0",
+  "description": "Link types connecting Mockarty entities to external trackers: issue↔Jira ticket and mock↔GitHub issue, with URL templates that turn a stored key into a clickable deep link. Declarative, no code.",
+  "author": {
+    "name": "Mockarty",
+    "url": "https://mockarty.ru"
+  },
+  "homepage": "https://mockarty.ru/docs/plugins-authoring",
+  "license": "MIT",
+  "contributes": {
+    "links": [
+      {
+        "key": "jira_ticket",
+        "name": "Jira ticket",
+        "description": "Link an issue to its Jira counterpart.",
+        "from_entity": "issue",
+        "to_entity": "external",
+        "url_template": "https://your-org.atlassian.net/browse/{key}",
+        "icon": "bug-ant"
+      },
+      {
+        "key": "github_issue",
+        "name": "GitHub issue",
+        "description": "Link a mock to the GitHub issue that motivated it.",
+        "from_entity": "mock",
+        "to_entity": "external",
+        "url_template": "https://github.com/your-org/repo/issues/{key}",
+        "icon": "code-bracket"
+      }
+    ]
+  }
+}

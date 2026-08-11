@@ -1,0 +1,28 @@
+{
+  "id": "mockarty.jenkins-connector",
+  "name": "Jenkins connector",
+  "version": "1.0.0",
+  "description": "A ready-to-use Jenkins connector — reuses the built-in Jenkins adapter to trigger and read CI jobs from Mockarty.",
+  "author": {
+    "name": "Mockarty",
+    "url": "https://mockarty.ru"
+  },
+  "homepage": "https://mockarty.ru/docs/plugins-authoring",
+  "license": "MIT",
+  "contributes": {
+    "connectors": [
+      {
+        "key": "jenkins_ci",
+        "name": "Jenkins CI",
+        "kind": "jenkins",
+        "description": "Trigger and read Jenkins jobs from Mockarty test plans.",
+        "icon": "wrench-screwdriver",
+        "docs_url": "https://mockarty.ru/docs/integrations",
+        "config_template": {
+          "base_url": "https://jenkins.your-org.com",
+          "user": "ci-bot"
+        }
+      }
+    ]
+  }
+}

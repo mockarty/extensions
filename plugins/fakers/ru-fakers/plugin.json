@@ -1,0 +1,19 @@
+{
+  "id": "mockarty.ru-fakers",
+  "name": "Russian fakers (ИНН/СНИЛС/ОГРН/КПП)",
+  "version": "1.0.0",
+  "description": "Adds $.fake.ru_inn, $.fake.ru_snils, $.fake.ru_ogrn and $.fake.ru_kpp — valid Russian legal/personal identifiers with correct check digits, for realistic mock responses. Runs as a sandboxed WASM module: it can touch nothing but its own memory.",
+  "author": {"name": "Mockarty", "url": "https://mockarty.ru"},
+  "homepage": "https://mockarty.ru/docs/plugins-authoring",
+  "license": "MIT",
+  "contributes": {
+    "wasm": [
+      {
+        "point": "faker-provider",
+        "module": "faker.wasm",
+        "fn": "ru_faker",
+        "exports": ["ru_inn", "ru_snils", "ru_ogrn", "ru_kpp"]
+      }
+    ]
+  }
+}

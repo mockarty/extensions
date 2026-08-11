@@ -1,0 +1,96 @@
+{
+  "id": "mockarty.test-cases-pack",
+  "name": "Test cases pack (auth + mock smoke)",
+  "version": "1.0.0",
+  "description": "A content pack for the TCM module: ready-made manual test cases with steps (login happy/negative, create-a-mock smoke). Instantiate it to seed a namespace's test-case library. No code.",
+  "author": {
+    "name": "Mockarty",
+    "url": "https://mockarty.ru"
+  },
+  "homepage": "https://mockarty.ru/docs/plugins-authoring",
+  "license": "MIT",
+  "contributes": {
+    "content_packs": [
+      {
+        "key": "starter_cases",
+        "name": "Starter test cases",
+        "kind": "tcm",
+        "description": "Auth + mock smoke test cases with steps.",
+        "items": [
+          {
+            "name": "Login with valid credentials",
+            "priority": "high",
+            "description": "Verify a user can log in.",
+            "expectedResult": "User lands on the dashboard.",
+            "tags": [
+              "auth",
+              "smoke"
+            ],
+            "steps": [
+              {
+                "action": "Open the login page",
+                "expectedResult": "Login form is shown"
+              },
+              {
+                "action": "Enter valid username and password",
+                "expectedResult": "Fields accept input"
+              },
+              {
+                "action": "Click Sign in",
+                "expectedResult": "User is redirected to the dashboard"
+              }
+            ]
+          },
+          {
+            "name": "Login with invalid password",
+            "priority": "medium",
+            "description": "Verify login is rejected.",
+            "expectedResult": "An error message is shown.",
+            "tags": [
+              "auth",
+              "negative"
+            ],
+            "steps": [
+              {
+                "action": "Open the login page",
+                "expectedResult": "Login form is shown"
+              },
+              {
+                "action": "Enter a valid username and a wrong password",
+                "expectedResult": "Fields accept input"
+              },
+              {
+                "action": "Click Sign in",
+                "expectedResult": "Error 'invalid credentials' is shown, no redirect"
+              }
+            ]
+          },
+          {
+            "name": "Create a mock via the UI",
+            "priority": "medium",
+            "description": "Smoke test the core mock flow.",
+            "expectedResult": "The mock responds on its route.",
+            "tags": [
+              "mocks",
+              "smoke"
+            ],
+            "steps": [
+              {
+                "action": "Open Mocks and click New",
+                "expectedResult": "The mock editor opens"
+              },
+              {
+                "action": "Set route /ping and a 200 JSON body",
+                "expectedResult": "Fields are saved"
+              },
+              {
+                "action": "Save and hit the stub route",
+                "expectedResult": "The configured body is returned"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

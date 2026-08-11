@@ -1,0 +1,64 @@
+{
+  "id": "mockarty.streaming-kit",
+  "name": "Video streaming API mock kit",
+  "version": "1.0.0",
+  "description": "A video-streaming contour (catalog, playback, playlists) — mock a media-platform backend.",
+  "author": {
+    "name": "Mockarty",
+    "url": "https://mockarty.ru"
+  },
+  "homepage": "https://mockarty.ru/docs/plugins-authoring",
+  "license": "MIT",
+  "contributes": {
+    "mock_kits": [
+      {
+        "key": "streaming_api",
+        "name": "Streaming API",
+        "description": "Catalog, playback and playlists.",
+        "mocks": [
+          {
+            "route": "/videos",
+            "method": "GET",
+            "status_code": 200,
+            "description": "Catalog",
+            "body": {
+              "videos": [
+                {
+                  "id": "$.fake.UUID",
+                  "title": "$.fake.Sentence",
+                  "duration_s": "$.fake.IntBetween(60,7200)",
+                  "views": "$.fake.IntBetween(0,10000000)"
+                }
+              ]
+            }
+          },
+          {
+            "route": "/videos/:id/playback",
+            "method": "GET",
+            "status_code": 200,
+            "description": "Playback URL",
+            "body": {
+              "hls_url": "$.fake.URL",
+              "token": "$.fake.JWT"
+            }
+          },
+          {
+            "route": "/playlists",
+            "method": "GET",
+            "status_code": 200,
+            "description": "Playlists",
+            "body": {
+              "playlists": [
+                {
+                  "id": "$.fake.UUID",
+                  "name": "$.fake.Word",
+                  "count": "$.fake.IntBetween(0,500)"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "id": "mockarty.format-matchers",
+  "name": "Format matchers (jwt/e164/ipv4)",
+  "version": "1.0.0",
+  "description": "Condition operators: plugin:jwt (value is a JWT), plugin:e164 (E.164 phone), plugin:ipv4 (dotted-quad IPv4). Sandboxed WASM, runs only on mocks that use the operator.",
+  "author": {"name": "Mockarty", "url": "https://mockarty.ru"},
+  "homepage": "https://mockarty.ru/docs/plugins-authoring",
+  "license": "MIT",
+  "contributes": {
+    "wasm": [
+      {"point": "condition-matcher", "module": "match.wasm", "fn": "match", "exports": ["jwt", "e164", "ipv4"]}
+    ]
+  }
+}

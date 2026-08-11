@@ -1,0 +1,57 @@
+{
+  "id": "mockarty.messaging-kit",
+  "name": "Messaging API mock kit",
+  "version": "1.0.0",
+  "description": "A messaging-provider contour (send SMS/email, delivery status) — mock Twilio/SendGrid-style delivery for notification flows.",
+  "author": {
+    "name": "Mockarty",
+    "url": "https://mockarty.ru"
+  },
+  "homepage": "https://mockarty.ru/docs/plugins-authoring",
+  "license": "MIT",
+  "contributes": {
+    "mock_kits": [
+      {
+        "key": "messaging_api",
+        "name": "Messaging API",
+        "description": "Send SMS/email and query delivery status.",
+        "mocks": [
+          {
+            "route": "/v1/sms",
+            "method": "POST",
+            "status_code": 202,
+            "description": "Send SMS",
+            "body": {
+              "id": "$.fake.UUID",
+              "to": "$.fake.PhoneNumber",
+              "status": "queued",
+              "segments": 1
+            }
+          },
+          {
+            "route": "/v1/email",
+            "method": "POST",
+            "status_code": 202,
+            "description": "Send email",
+            "body": {
+              "id": "$.fake.UUID",
+              "to": "$.fake.Email",
+              "status": "queued"
+            }
+          },
+          {
+            "route": "/v1/messages/:id",
+            "method": "GET",
+            "status_code": 200,
+            "description": "Delivery status",
+            "body": {
+              "id": "$.fake.UUID",
+              "status": "delivered",
+              "delivered_at": "$.fake.Timestamp"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

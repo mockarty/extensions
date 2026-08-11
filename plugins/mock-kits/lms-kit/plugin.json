@@ -1,0 +1,64 @@
+{
+  "id": "mockarty.lms-kit",
+  "name": "Education/LMS API mock kit",
+  "version": "1.0.0",
+  "description": "A learning-management contour (courses, students, enrollments, grades) — mock an LMS backend.",
+  "author": {
+    "name": "Mockarty",
+    "url": "https://mockarty.ru"
+  },
+  "homepage": "https://mockarty.ru/docs/plugins-authoring",
+  "license": "MIT",
+  "contributes": {
+    "mock_kits": [
+      {
+        "key": "lms_api",
+        "name": "LMS API",
+        "description": "Courses, students, enrollments and grades.",
+        "mocks": [
+          {
+            "route": "/courses",
+            "method": "GET",
+            "status_code": 200,
+            "description": "Courses",
+            "body": {
+              "courses": [
+                {
+                  "id": "$.fake.UUID",
+                  "title": "$.fake.Sentence",
+                  "credits": "$.fake.IntBetween(1,6)"
+                }
+              ]
+            }
+          },
+          {
+            "route": "/students",
+            "method": "POST",
+            "status_code": 201,
+            "description": "Enroll student",
+            "body": {
+              "id": "$.fake.UUID",
+              "name": "$.fake.Name",
+              "email": "$.fake.Email"
+            }
+          },
+          {
+            "route": "/grades",
+            "method": "GET",
+            "status_code": 200,
+            "description": "Grades",
+            "body": {
+              "grades": [
+                {
+                  "student": "$.fake.Name",
+                  "course": "$.fake.Word",
+                  "score": "$.fake.IntBetween(0,100)"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  }
+}
