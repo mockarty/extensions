@@ -70,7 +70,7 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.barcode-fakers-1.0.0.zip",
-      "sha256": "48f040289d6c65432f408ca96ed5f783fa31cb20a4b8efd5b9764c4c0ad6a5a0"
+      "sha256": "cd04006a2c360b86866f7ceb56227b5366862b46148c975339f07ddfbee2e5cd"
     },
     {
       "id": "mockarty.billing-kit",
@@ -120,7 +120,7 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.crypto-fakers-1.0.0.zip",
-      "sha256": "13996e53dc466fb282e9e2ecfdc3d86bed546d81f80f7db30e1d5b2d24479284"
+      "sha256": "10af2b539f86460050c5d697b3e9c9d7588228ad33d9671672a1f100d0f00a97"
     },
     {
       "id": "mockarty.custom-runner-tasks",
@@ -140,7 +140,7 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.datetime-fakers-1.0.0.zip",
-      "sha256": "1c4c20ad3eb10131c795486d6e4d7da8302c5c99a9ec243384ebdcab57504a1e"
+      "sha256": "b8011d3527878477d980932d55c4f6e4d0ad84d7a5c7883347fe6c241266dccf"
     },
     {
       "id": "mockarty.demo-mock-kit",
@@ -190,7 +190,7 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.eu-fakers-1.0.0.zip",
-      "sha256": "ed0d0d84388ff4d3a1fbf513534a5cf372f9583a5b01e9be34931e4454bd9c84"
+      "sha256": "07c1f54a171392cfc526cfb5c4b823752b1fd3d240359e403d0cf8727387fcc6"
     },
     {
       "id": "mockarty.feature-flags-kit",
@@ -210,7 +210,7 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.finance-fakers-1.0.0.zip",
-      "sha256": "303ecb45e967751315bf2b6b2ebb327e3d6c5797218bb713e298a07d5a6d9e38"
+      "sha256": "51b24a30420ea336fb13149f2c41f681a438f562881035674e3ccf6513633ab3"
     },
     {
       "id": "mockarty.fitness-kit",
@@ -240,7 +240,7 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.format-matchers-1.0.0.zip",
-      "sha256": "7cf38f8d91b5e661814cec3651997eceaee3987f00480bcdda9781a6bdd709c5"
+      "sha256": "b759a506779dbfebe3094a609eff90aa6c186f9a3cedb6b8a6cb7fe8be3429a9"
     },
     {
       "id": "mockarty.gaming-kit",
@@ -320,7 +320,7 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.identifier-fakers-1.0.0.zip",
-      "sha256": "a34cdfabcb2286801d6cc8245016f904cd2074a272e1c574465aaa47cae569b0"
+      "sha256": "09b813a5fa6ad2d892d3434414e4aa7caf09f6495d052926a0deaf7a5e346944"
     },
     {
       "id": "mockarty.insurance-kit",
@@ -420,7 +420,7 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.matchers-1.0.0.zip",
-      "sha256": "5a3f66b31683a36adc04f1ce862375435429d6ea7f8dc64db1142330ad33e308"
+      "sha256": "9db544b8c0927b15a61eeb3e890fad9cca29248d2fc9d38f6b7e92424ee7924e"
     },
     {
       "id": "mockarty.messaging-kit",
@@ -440,7 +440,7 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.network-fakers-1.0.0.zip",
-      "sha256": "896c0a741ab01848872c086c27123c388389e2d9f994cb8d32ad67d24ffeffb2"
+      "sha256": "423f0e045dc2b21549c8fe581a4c2aa6398eab4d94135b4b3724c1d012667025"
     },
     {
       "id": "mockarty.notifications-kit",
@@ -510,7 +510,7 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.redaction-transformer-1.0.0.zip",
-      "sha256": "fb4c1bfa9f9f8f0e641d0d4a0e409c669b274b1450e5935a4ede4f28b9e50287"
+      "sha256": "1a13a7e26aba4ac196f418ab52d25d766664a735d5a924812d6069ff7095ae6c"
     },
     {
       "id": "mockarty.response-envelope",
@@ -520,7 +520,7 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.response-envelope-1.0.0.zip",
-      "sha256": "d021dff139fd79187b2364892baad785c011f9c299311da623d1fdc58077e08f"
+      "sha256": "a59b691cca76c2209d0d6431fb08bb74821a0b3fcb6729eeb5507a03437e9eee"
     },
     {
       "id": "mockarty.ru-fakers",
@@ -530,7 +530,7 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.ru-fakers-1.0.0.zip",
-      "sha256": "0d32c4f54314ca4f53ff1d2bb33849ff33b49b6415e95ab0ff3bbfdfddbb2613"
+      "sha256": "1be4a60c4081d617872dc3aba23f31ad5d440f519a3fcc47636230a65dcdd027"
     },
     {
       "id": "mockarty.shipping-kit",
@@ -670,7 +670,7 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.us-fakers-1.0.0.zip",
-      "sha256": "8a9b76eeb4ed027ba52abf77de8b033f8c86dc48acdcfa481e1f74a734ca2827"
+      "sha256": "f09258a76162b24c891e47817259a64269d6aeb0220616a0df8e75e4dec09b2f"
     },
     {
       "id": "mockarty.weather-kit",
