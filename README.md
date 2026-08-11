@@ -48,7 +48,6 @@ you use multi-tenancy.
 | [`plugins/links/`](plugins/links/) | Typed cross-entity link types with deep-link URL templates (mock↔GitHub issue, task↔Jira, …) |
 | [`plugins/events-and-tasks/`](plugins/events-and-tasks/) | Subscribable notification event types and dispatchable runner task types |
 | [`skills/`](skills/) | Agent skills for Claude Code / Cursor / OpenCode: drive Mockarty as an autonomous tester, author plugins end-to-end |
-| [`tools/`](tools/) | `reindex` — regenerates `index.json` from the plugin folders |
 
 Every plugin folder is self-contained: `plugin.json` (the manifest), assets, and
 a README. Folders are also valid `mockarty-cli plugin pack .` inputs — clone,
@@ -64,8 +63,7 @@ tweak, repack.
 4. Open a PR adding your plugin folder under the right category and the printed
    object to `index.json`; attach the zip to the release named in the URL.
 
-CI note: `index.json` sha256 values must match the exact release assets —
-regenerate with `go run ./tools/reindex` if you rebuild zips.
+Note: `index.json` sha256 values must match the exact release assets byte-for-byte — if you rebuild a zip, recompute its sha256 and update the entry.
 
 ## Agent skills
 
