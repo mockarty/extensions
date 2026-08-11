@@ -1,0 +1,86 @@
+{
+  "id": "community.n8n-connectors",
+  "name": "Community connectors (n8n import)",
+  "version": "1.0.0",
+  "description": "Nine integration presets (Slack, Telegram, Discord, Notion, GitHub, Jira, Trello, Asana, Mattermost) converted from n8n community nodes with 'mockarty-cli plugin import --from n8n'.",
+  "author": {},
+  "contributes": {
+    "connectors": [
+      {
+        "config_template": {
+          "url_template": "https://app.asana.com/api/1.0/{id}"
+        },
+        "key": "asana",
+        "name": "Asana",
+        "kind": "webhook_generic",
+        "description": "Consume Asana REST API Category: Productivity.",
+        "icon": "bolt",
+        "docs_url": "https://docs.n8n.io/integrations/builtin/app-nodes/n8n-nodes-base.asana/"
+      },
+      {
+        "key": "discord",
+        "name": "Discord",
+        "kind": "webhook_generic",
+        "description": "Sends data to Discord Category: Communication, HITL.",
+        "icon": "bolt",
+        "docs_url": "https://docs.n8n.io/integrations/builtin/app-nodes/n8n-nodes-base.discord/"
+      },
+      {
+        "key": "github",
+        "name": "GitHub",
+        "kind": "github",
+        "description": "Consume GitHub API Category: Development.",
+        "icon": "bolt",
+        "docs_url": "https://docs.n8n.io/integrations/builtin/app-nodes/n8n-nodes-base.github/"
+      },
+      {
+        "key": "jira",
+        "name": "Jira Software",
+        "kind": "jira",
+        "description": "Consume Jira Software API Category: Development, Productivity.",
+        "icon": "bolt",
+        "docs_url": "https://docs.n8n.io/integrations/builtin/app-nodes/n8n-nodes-base.jira/"
+      },
+      {
+        "key": "mattermost",
+        "name": "Mattermost",
+        "kind": "webhook_generic",
+        "description": "Sends data to Mattermost Category: Communication.",
+        "icon": "bolt",
+        "docs_url": "https://docs.n8n.io/integrations/builtin/app-nodes/n8n-nodes-base.mattermost/"
+      },
+      {
+        "key": "notion",
+        "name": "Notion",
+        "kind": "webhook_generic",
+        "description": "Consume Notion API Category: Productivity.",
+        "icon": "bolt",
+        "docs_url": "https://docs.n8n.io/integrations/builtin/app-nodes/n8n-nodes-base.notion/"
+      },
+      {
+        "key": "slack",
+        "name": "Slack",
+        "kind": "webhook_generic",
+        "description": "Consume Slack API Category: Communication, HITL.",
+        "icon": "bolt",
+        "docs_url": "https://docs.n8n.io/integrations/builtin/app-nodes/n8n-nodes-base.slack/"
+      },
+      {
+        "key": "telegram",
+        "name": "Telegram",
+        "kind": "webhook_generic",
+        "description": "Sends data to Telegram Category: Communication, HITL.",
+        "icon": "bolt",
+        "docs_url": "https://docs.n8n.io/integrations/builtin/app-nodes/n8n-nodes-base.telegram/"
+      },
+      {
+        "key": "trello",
+        "name": "Trello",
+        "kind": "webhook_generic",
+        "description": "Create, change and delete boards and cards Category: Productivity.",
+        "icon": "bolt",
+        "docs_url": "https://docs.n8n.io/integrations/builtin/app-nodes/n8n-nodes-base.trello/"
+      }
+    ]
+  }
+}

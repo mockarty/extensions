@@ -53,6 +53,23 @@ Every plugin folder is self-contained: `plugin.json` (the manifest), assets, and
 a README. Folders are also valid `mockarty-cli plugin pack .` inputs — clone,
 tweak, repack.
 
+## Migrate from other ecosystems
+
+Already have integrations or mocks elsewhere? `mockarty-cli plugin import`
+converts them into installable plugins:
+
+| Source | Command | Becomes |
+|---|---|---|
+| WireMock mappings | `plugin import ./mappings --from wiremock --id you.stubs` | mock kit |
+| Postman collection | `plugin import ./collection.json --from postman --id you.api` | mock kit |
+| Mockoon environment | `plugin import ./env.json --from mockoon --id you.env` | mock kit |
+| Atlassian Connect app | `plugin import ./atlassian-connect.json --from connect` | external UI panels + event types |
+| n8n community nodes | `plugin import ./nodes --from n8n` | integration presets |
+
+The [`community.n8n-connectors`](plugins/connectors/n8n-connectors) pack in
+this catalogue is the n8n converter's own output over nine real community
+nodes — a working reference for what your conversion will look like.
+
 ## Publish your own plugin here
 
 1. Author it — the fastest path is `mockarty-cli plugin create my-plugin`
