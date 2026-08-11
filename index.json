@@ -102,6 +102,17 @@
    "sha256": "ca9e3e2ace2b81c7a2a63bacd4fd18caf80758106554799efdad640c9748de71"
   },
   {
+   "id": "community.board-templates",
+   "name": "Board templates: retro + C4 sketch",
+   "version": "1.0.0",
+   "category": "content-packs",
+   "description": "Two ready-made whiteboard templates — a Start/Stop/Continue retrospective board and a C4-style container sketch. Instantiate the pack and the boards appear in your namespace, ready to edit.",
+   "author_name": "Mockarty",
+   "homepage": "https://mockarty.ru/docs/plugins-authoring",
+   "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/community.board-templates-1.0.0.zip",
+   "sha256": "7155c24902be16b8dc45545d83307937fd42a620f0ee18a859e0f3a75900b0b0"
+  },
+  {
    "id": "mockarty.api-collection-pack",
    "name": "API collection pack (HTTP smoke)",
    "version": "1.0.0",

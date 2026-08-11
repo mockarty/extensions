@@ -1,0 +1,337 @@
+{
+  "id": "community.board-templates",
+  "name": "Board templates: retro + C4 sketch",
+  "version": "1.0.0",
+  "description": "Two ready-made whiteboard templates — a Start/Stop/Continue retrospective board and a C4-style container sketch. Instantiate the pack and the boards appear in your namespace, ready to edit.",
+  "author": {
+    "name": "Mockarty"
+  },
+  "contributes": {
+    "content_packs": [
+      {
+        "key": "board_templates_starter",
+        "name": "Starter board templates",
+        "kind": "board",
+        "description": "Creates two whiteboards: 'Retrospective — Start / Stop / Continue' and 'C4 container sketch'.",
+        "items": [
+          {
+            "name": "Retrospective — Start / Stop / Continue",
+            "description": "Classic three-column retro. Add sticky notes into the columns.",
+            "tags": [
+              "retro",
+              "template"
+            ],
+            "scene": {
+              "elements": [
+                {
+                  "id": "col0",
+                  "type": "rectangle",
+                  "x": 0,
+                  "y": 0,
+                  "width": 320,
+                  "height": 60,
+                  "backgroundColor": "#b2f2bb",
+                  "fillStyle": "solid",
+                  "boundElements": [
+                    {
+                      "id": "colt0",
+                      "type": "text"
+                    }
+                  ]
+                },
+                {
+                  "id": "colt0",
+                  "type": "text",
+                  "containerId": "col0",
+                  "text": "Start",
+                  "x": 60,
+                  "y": 18,
+                  "width": 200,
+                  "height": 24,
+                  "fontSize": 20
+                },
+                {
+                  "id": "zone0",
+                  "type": "rectangle",
+                  "x": 0,
+                  "y": 70,
+                  "width": 320,
+                  "height": 620,
+                  "backgroundColor": "transparent"
+                },
+                {
+                  "id": "col1",
+                  "type": "rectangle",
+                  "x": 340,
+                  "y": 0,
+                  "width": 320,
+                  "height": 60,
+                  "backgroundColor": "#ffc9c9",
+                  "fillStyle": "solid",
+                  "boundElements": [
+                    {
+                      "id": "colt1",
+                      "type": "text"
+                    }
+                  ]
+                },
+                {
+                  "id": "colt1",
+                  "type": "text",
+                  "containerId": "col1",
+                  "text": "Stop",
+                  "x": 400,
+                  "y": 18,
+                  "width": 200,
+                  "height": 24,
+                  "fontSize": 20
+                },
+                {
+                  "id": "zone1",
+                  "type": "rectangle",
+                  "x": 340,
+                  "y": 70,
+                  "width": 320,
+                  "height": 620,
+                  "backgroundColor": "transparent"
+                },
+                {
+                  "id": "col2",
+                  "type": "rectangle",
+                  "x": 680,
+                  "y": 0,
+                  "width": 320,
+                  "height": 60,
+                  "backgroundColor": "#a5d8ff",
+                  "fillStyle": "solid",
+                  "boundElements": [
+                    {
+                      "id": "colt2",
+                      "type": "text"
+                    }
+                  ]
+                },
+                {
+                  "id": "colt2",
+                  "type": "text",
+                  "containerId": "col2",
+                  "text": "Continue",
+                  "x": 740,
+                  "y": 18,
+                  "width": 200,
+                  "height": 24,
+                  "fontSize": 20
+                },
+                {
+                  "id": "zone2",
+                  "type": "rectangle",
+                  "x": 680,
+                  "y": 70,
+                  "width": 320,
+                  "height": 620,
+                  "backgroundColor": "transparent"
+                }
+              ],
+              "appState": {},
+              "files": {}
+            }
+          },
+          {
+            "name": "C4 container sketch",
+            "description": "A starting point for a C4-style container diagram.",
+            "tags": [
+              "architecture",
+              "template"
+            ],
+            "scene": {
+              "elements": [
+                {
+                  "id": "user",
+                  "type": "rectangle",
+                  "x": 260,
+                  "y": 0,
+                  "width": 200,
+                  "height": 80,
+                  "backgroundColor": "#eebefa",
+                  "fillStyle": "solid",
+                  "boundElements": [
+                    {
+                      "id": "usert",
+                      "type": "text"
+                    }
+                  ]
+                },
+                {
+                  "id": "usert",
+                  "type": "text",
+                  "containerId": "user",
+                  "text": "User",
+                  "x": 300,
+                  "y": 25,
+                  "width": 200,
+                  "height": 24,
+                  "fontSize": 20
+                },
+                {
+                  "id": "app",
+                  "type": "rectangle",
+                  "x": 240,
+                  "y": 200,
+                  "width": 240,
+                  "height": 100,
+                  "backgroundColor": "#a5d8ff",
+                  "fillStyle": "solid",
+                  "boundElements": [
+                    {
+                      "id": "appt",
+                      "type": "text"
+                    }
+                  ]
+                },
+                {
+                  "id": "appt",
+                  "type": "text",
+                  "containerId": "app",
+                  "text": "Web application",
+                  "x": 270,
+                  "y": 240,
+                  "width": 200,
+                  "height": 24,
+                  "fontSize": 20
+                },
+                {
+                  "id": "db",
+                  "type": "rectangle",
+                  "x": 40,
+                  "y": 420,
+                  "width": 200,
+                  "height": 90,
+                  "backgroundColor": "#b2f2bb",
+                  "fillStyle": "solid",
+                  "boundElements": [
+                    {
+                      "id": "dbt",
+                      "type": "text"
+                    }
+                  ]
+                },
+                {
+                  "id": "dbt",
+                  "type": "text",
+                  "containerId": "db",
+                  "text": "Database",
+                  "x": 80,
+                  "y": 455,
+                  "width": 200,
+                  "height": 24,
+                  "fontSize": 20
+                },
+                {
+                  "id": "api",
+                  "type": "rectangle",
+                  "x": 480,
+                  "y": 420,
+                  "width": 200,
+                  "height": 90,
+                  "backgroundColor": "#ffec99",
+                  "fillStyle": "solid",
+                  "boundElements": [
+                    {
+                      "id": "apit",
+                      "type": "text"
+                    }
+                  ]
+                },
+                {
+                  "id": "apit",
+                  "type": "text",
+                  "containerId": "api",
+                  "text": "External API",
+                  "x": 510,
+                  "y": 455,
+                  "width": 200,
+                  "height": 24,
+                  "fontSize": 20
+                },
+                {
+                  "id": "a1",
+                  "type": "arrow",
+                  "x": 360,
+                  "y": 80,
+                  "width": 0,
+                  "height": 120,
+                  "points": [
+                    [
+                      0,
+                      0
+                    ],
+                    [
+                      0,
+                      120
+                    ]
+                  ],
+                  "startBinding": {
+                    "elementId": "user"
+                  },
+                  "endBinding": {
+                    "elementId": "app"
+                  }
+                },
+                {
+                  "id": "a2",
+                  "type": "arrow",
+                  "x": 300,
+                  "y": 300,
+                  "width": -140,
+                  "height": 120,
+                  "points": [
+                    [
+                      0,
+                      0
+                    ],
+                    [
+                      -140,
+                      120
+                    ]
+                  ],
+                  "startBinding": {
+                    "elementId": "app"
+                  },
+                  "endBinding": {
+                    "elementId": "db"
+                  }
+                },
+                {
+                  "id": "a3",
+                  "type": "arrow",
+                  "x": 420,
+                  "y": 300,
+                  "width": 140,
+                  "height": 120,
+                  "points": [
+                    [
+                      0,
+                      0
+                    ],
+                    [
+                      140,
+                      120
+                    ]
+                  ],
+                  "startBinding": {
+                    "elementId": "app"
+                  },
+                  "endBinding": {
+                    "elementId": "api"
+                  }
+                }
+              ],
+              "appState": {},
+              "files": {}
+            }
+          }
+        ]
+      }
+    ]
+  }
+}
