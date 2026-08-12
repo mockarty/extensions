@@ -63,6 +63,8 @@ converts them into installable plugins:
 | WireMock mappings | `plugin import ./mappings --from wiremock --id you.stubs` | mock kit |
 | Postman collection | `plugin import ./collection.json --from postman --id you.api` | mock kit |
 | Mockoon environment | `plugin import ./env.json --from mockoon --id you.env` | mock kit |
+| Bruno collection | `plugin import ./my-collection --from bruno --id you.api` | mock kit |
+| Insomnia export (v4 JSON/YAML) | `plugin import ./export.json --from insomnia --id you.api` | mock kit |
 | Atlassian Connect app | `plugin import ./atlassian-connect.json --from connect` | external UI panels + event types |
 | n8n community nodes | `plugin import ./nodes --from n8n` | integration presets |
 
