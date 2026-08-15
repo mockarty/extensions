@@ -1,0 +1,300 @@
+{
+  "id": "mockarty.mcp-memory",
+  "name": "MCP server: Memory (knowledge graph)",
+  "version": "1.0.0",
+  "description": "A mocked Memory MCP server: create entities and relations, add observations and search the graph. Gives an agent a deterministic memory contour to test recall logic against, with no shared state to reset between runs.",
+  "author": {
+    "name": "Mockarty",
+    "url": "https://mockarty.ru"
+  },
+  "homepage": "https://mockarty.ru/docs/plugins-authoring",
+  "license": "MIT",
+  "min_mockarty_version": "1.0.0",
+  "contributes": {
+    "mock_kits": [
+      {
+        "key": "mcp_memory",
+        "name": "Memory MCP server",
+        "description": "A persistent knowledge graph: entities, relations and observations. Reading a name that does not exist returns a real not-found error.",
+        "mocks": [
+          {
+            "protocol": "mcp",
+            "description": "Create entities in the knowledge graph",
+            "tags": [
+              "mcp"
+            ],
+            "mcp": {
+              "tool": "create_entities",
+              "description": "Create entities in the knowledge graph.",
+              "input_schema": {
+                "type": "object",
+                "properties": {
+                  "entities": {
+                    "type": "array",
+                    "description": "Entities to create",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string",
+                          "description": "Unique entity name"
+                        },
+                        "entityType": {
+                          "type": "string",
+                          "description": "Type, e.g. person or project"
+                        },
+                        "observations": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          },
+                          "description": "Facts about the entity"
+                        }
+                      },
+                      "required": [
+                        "name",
+                        "entityType"
+                      ]
+                    }
+                  }
+                },
+                "required": [
+                  "entities"
+                ]
+              }
+            },
+            "body": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Created 1 entity.\nGraph now holds 4 entities and 3 relations."
+                }
+              ]
+            }
+          },
+          {
+            "protocol": "mcp",
+            "description": "Relate entities to one another",
+            "tags": [
+              "mcp"
+            ],
+            "mcp": {
+              "tool": "create_relations",
+              "description": "Relate entities to one another.",
+              "input_schema": {
+                "type": "object",
+                "properties": {
+                  "relations": {
+                    "type": "array",
+                    "description": "Relations to create",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "from": {
+                          "type": "string",
+                          "description": "Source entity name"
+                        },
+                        "to": {
+                          "type": "string",
+                          "description": "Target entity name"
+                        },
+                        "relationType": {
+                          "type": "string",
+                          "description": "Relation in active voice, e.g. works_on"
+                        }
+                      },
+                      "required": [
+                        "from",
+                        "to",
+                        "relationType"
+                      ]
+                    }
+                  }
+                },
+                "required": [
+                  "relations"
+                ]
+              }
+            },
+            "body": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Created 1 relation."
+                }
+              ]
+            }
+          },
+          {
+            "protocol": "mcp",
+            "description": "not-found",
+            "tags": [
+              "mcp",
+              "scenario:not-found"
+            ],
+            "priority": 90,
+            "mcp_is_error": true,
+            "conditions": [
+              {
+                "path": "$.relations[0].from",
+                "assertAction": "equals",
+                "value": "unknown"
+              }
+            ],
+            "mcp": {
+              "tool": "create_relations",
+              "description": "Relate entities to one another."
+            },
+            "body": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Error: entity \"unknown\" not found — create it before relating to it."
+                }
+              ]
+            }
+          },
+          {
+            "protocol": "mcp",
+            "description": "Attach new facts to an existing entity",
+            "tags": [
+              "mcp"
+            ],
+            "mcp": {
+              "tool": "add_observations",
+              "description": "Attach new facts to an existing entity.",
+              "input_schema": {
+                "type": "object",
+                "properties": {
+                  "observations": {
+                    "type": "array",
+                    "description": "Observations to add",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "entityName": {
+                          "type": "string",
+                          "description": "Entity to extend"
+                        },
+                        "contents": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          },
+                          "description": "Facts to add"
+                        }
+                      },
+                      "required": [
+                        "entityName",
+                        "contents"
+                      ]
+                    }
+                  }
+                },
+                "required": [
+                  "observations"
+                ]
+              }
+            },
+            "body": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Added 2 observations to \"Checkout Service\"."
+                }
+              ]
+            }
+          },
+          {
+            "protocol": "mcp",
+            "description": "Search the graph by query",
+            "tags": [
+              "mcp"
+            ],
+            "mcp": {
+              "tool": "search_nodes",
+              "description": "Search the graph by query.",
+              "input_schema": {
+                "type": "object",
+                "properties": {
+                  "query": {
+                    "type": "string",
+                    "description": "Text to match against names, types and observations"
+                  }
+                },
+                "required": [
+                  "query"
+                ]
+              }
+            },
+            "body": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Matches for \"$.req.query\":\n\nCheckout Service (project)\n  - Handles orders and payments\n  - Owned by the Payments team\n\nDana Lee (person)\n  - works_on → Checkout Service"
+                }
+              ]
+            }
+          },
+          {
+            "protocol": "mcp",
+            "description": "Return the entire knowledge graph",
+            "tags": [
+              "mcp"
+            ],
+            "mcp": {
+              "tool": "read_graph",
+              "description": "Return the entire knowledge graph.",
+              "input_schema": {
+                "type": "object",
+                "properties": {}
+              }
+            },
+            "body": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Entities:\n  Checkout Service (project)\n  Dana Lee (person)\n  Payments Team (team)\n\nRelations:\n  Dana Lee —works_on→ Checkout Service\n  Payments Team —owns→ Checkout Service"
+                }
+              ]
+            }
+          },
+          {
+            "protocol": "mcp",
+            "description": "Remove entities and their relations",
+            "tags": [
+              "mcp"
+            ],
+            "mcp": {
+              "tool": "delete_entities",
+              "description": "Remove entities and their relations.",
+              "input_schema": {
+                "type": "object",
+                "properties": {
+                  "entityNames": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "Entity names to delete"
+                  }
+                },
+                "required": [
+                  "entityNames"
+                ]
+              }
+            },
+            "body": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Deleted 1 entity and 2 dependent relations."
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,156 @@
+{
+  "id": "mockarty.mcp-brave-search",
+  "name": "MCP server: Brave Search",
+  "version": "1.0.0",
+  "description": "A mocked Brave Search MCP server: web and local search with realistic result shapes, plus the quota error and the empty-result case an agent must handle gracefully. Test search-and-summarise flows deterministically, with no API key and no per-query cost.",
+  "author": {
+    "name": "Mockarty",
+    "url": "https://mockarty.ru"
+  },
+  "homepage": "https://mockarty.ru/docs/plugins-authoring",
+  "license": "MIT",
+  "min_mockarty_version": "1.0.0",
+  "contributes": {
+    "mock_kits": [
+      {
+        "key": "mcp_brave_search",
+        "name": "Brave Search MCP server",
+        "description": "Web and local search. A query containing \"ratelimit\" returns a quota error and one containing \"nohits\" returns an empty result set.",
+        "mocks": [
+          {
+            "protocol": "mcp",
+            "description": "Search the web",
+            "tags": [
+              "mcp"
+            ],
+            "mcp": {
+              "tool": "brave_web_search",
+              "description": "Search the web.",
+              "input_schema": {
+                "type": "object",
+                "properties": {
+                  "query": {
+                    "type": "string",
+                    "description": "Search query"
+                  },
+                  "count": {
+                    "type": "number",
+                    "description": "Results to return (max 20)"
+                  },
+                  "offset": {
+                    "type": "number",
+                    "description": "Pagination offset"
+                  }
+                },
+                "required": [
+                  "query"
+                ]
+              }
+            },
+            "body": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Web results for \"$.req.query\":\n\n1. Mockarty — Backend testing platform\n   https://mockarty.ru\n   API mocking, load testing, fuzzing and contract validation in one product.\n\n2. Mockarty documentation — Plugins\n   https://mockarty.ru/docs/plugins-authoring\n   How to author, pack and install a Mockarty plugin."
+                }
+              ]
+            }
+          },
+          {
+            "protocol": "mcp",
+            "description": "rate-limit",
+            "tags": [
+              "mcp",
+              "scenario:rate-limit"
+            ],
+            "priority": 90,
+            "mcp_is_error": true,
+            "conditions": [
+              {
+                "path": "$.query",
+                "assertAction": "contains",
+                "value": "ratelimit"
+              }
+            ],
+            "mcp": {
+              "tool": "brave_web_search",
+              "description": "Search the web."
+            },
+            "body": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Error: 429 Too Many Requests — the monthly quota for this subscription tier is exhausted."
+                }
+              ]
+            }
+          },
+          {
+            "protocol": "mcp",
+            "description": "no-results",
+            "tags": [
+              "mcp",
+              "scenario:no-results"
+            ],
+            "priority": 90,
+            "mcp_is_error": true,
+            "conditions": [
+              {
+                "path": "$.query",
+                "assertAction": "contains",
+                "value": "nohits"
+              }
+            ],
+            "mcp": {
+              "tool": "brave_web_search",
+              "description": "Search the web."
+            },
+            "body": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "No results found for \"$.req.query\". Try broader or differently-worded terms."
+                }
+              ]
+            }
+          },
+          {
+            "protocol": "mcp",
+            "description": "Search for local businesses and places",
+            "tags": [
+              "mcp"
+            ],
+            "mcp": {
+              "tool": "brave_local_search",
+              "description": "Search for local businesses and places.",
+              "input_schema": {
+                "type": "object",
+                "properties": {
+                  "query": {
+                    "type": "string",
+                    "description": "Local search query, e.g. 'coffee near Moscow City'"
+                  },
+                  "count": {
+                    "type": "number",
+                    "description": "Results to return (max 20)"
+                  }
+                },
+                "required": [
+                  "query"
+                ]
+              }
+            },
+            "body": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Local results for \"$.req.query\":\n\n1. Coffee Bean — 4.6★ (312 reviews)\n   Presnenskaya nab. 8, Moscow · Open until 22:00\n\n2. Double B — 4.4★ (198 reviews)\n   Testovskaya 10, Moscow · Open until 21:00"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

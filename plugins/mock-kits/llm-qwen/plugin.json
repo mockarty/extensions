@@ -1,0 +1,357 @@
+{
+  "id": "mockarty.llm-qwen",
+  "name": "LLM provider: Qwen (DashScope)",
+  "version": "1.0.0",
+  "description": "A mocked Qwen API in DashScope's OpenAI-compatible mode: chat with streaming, tool calling, embeddings and the failure paths. Test a Qwen integration without a key or a quota.",
+  "author": {
+    "name": "Mockarty",
+    "url": "https://mockarty.ru"
+  },
+  "homepage": "https://mockarty.ru/docs/plugins-authoring",
+  "license": "MIT",
+  "min_mockarty_version": "1.0.0",
+  "contributes": {
+    "mock_kits": [
+      {
+        "key": "llm_qwen",
+        "name": "Qwen (DashScope) API",
+        "description": "Chat plus the failures that break integrations. Streaming is automatic when the request sets stream:true. Ask for a failure by sending the model name mock/rate-limit, mock/unauthorized, mock/server-error, mock/context-length, mock/truncated, mock/content-filter, mock/slow.",
+        "mocks": [
+          {
+            "route": "/compatible-mode/v1/chat/completions",
+            "method": "POST",
+            "status_code": 429,
+            "description": "Rate limited (429)",
+            "tags": [
+              "llm",
+              "scenario:rate-limit"
+            ],
+            "priority": 90,
+            "conditions": [
+              {
+                "path": "$.model",
+                "assertAction": "equals",
+                "value": "mock/rate-limit"
+              }
+            ],
+            "body": {
+              "error": {
+                "message": "Rate limit reached. Please retry in 2s.",
+                "type": "requests",
+                "param": null,
+                "code": "rate_limit_exceeded"
+              }
+            },
+            "headers": {
+              "Content-Type": [
+                "application/json"
+              ],
+              "Retry-After": [
+                "2"
+              ],
+              "x-ratelimit-remaining-requests": [
+                "0"
+              ]
+            }
+          },
+          {
+            "route": "/compatible-mode/v1/chat/completions",
+            "method": "POST",
+            "status_code": 401,
+            "description": "Invalid API key (401)",
+            "tags": [
+              "llm",
+              "scenario:unauthorized"
+            ],
+            "priority": 90,
+            "conditions": [
+              {
+                "path": "$.model",
+                "assertAction": "equals",
+                "value": "mock/unauthorized"
+              }
+            ],
+            "body": {
+              "error": {
+                "message": "Invalid API key provided.",
+                "type": "invalid_request_error",
+                "param": null,
+                "code": "invalid_api_key"
+              }
+            }
+          },
+          {
+            "route": "/compatible-mode/v1/chat/completions",
+            "method": "POST",
+            "status_code": 500,
+            "description": "Upstream failure (500)",
+            "tags": [
+              "llm",
+              "scenario:server-error"
+            ],
+            "priority": 90,
+            "conditions": [
+              {
+                "path": "$.model",
+                "assertAction": "equals",
+                "value": "mock/server-error"
+              }
+            ],
+            "body": {
+              "error": {
+                "message": "Internal server error.",
+                "type": "server_error",
+                "param": null,
+                "code": null
+              }
+            }
+          },
+          {
+            "route": "/compatible-mode/v1/chat/completions",
+            "method": "POST",
+            "status_code": 400,
+            "description": "Context length exceeded (400)",
+            "tags": [
+              "llm",
+              "scenario:context-length"
+            ],
+            "priority": 90,
+            "conditions": [
+              {
+                "path": "$.model",
+                "assertAction": "equals",
+                "value": "mock/context-length"
+              }
+            ],
+            "body": {
+              "error": {
+                "message": "Input is too long for the requested model. Reduce the length of the messages.",
+                "type": "invalid_request_error",
+                "param": null,
+                "code": "context_length_exceeded"
+              }
+            }
+          },
+          {
+            "route": "/compatible-mode/v1/chat/completions",
+            "method": "POST",
+            "status_code": 401,
+            "description": "Invalid API key (401), by auth header",
+            "tags": [
+              "llm",
+              "scenario:unauthorized"
+            ],
+            "priority": 80,
+            "header_conditions": [
+              {
+                "path": "$.Authorization",
+                "assertAction": "equals",
+                "value": "Bearer invalid"
+              }
+            ],
+            "body": {
+              "error": {
+                "message": "Invalid API key provided.",
+                "type": "invalid_request_error",
+                "param": null,
+                "code": "invalid_api_key"
+              }
+            }
+          },
+          {
+            "route": "/compatible-mode/v1/chat/completions",
+            "method": "POST",
+            "status_code": 200,
+            "description": "Reply cut off at the token limit",
+            "tags": [
+              "llm",
+              "scenario:truncated"
+            ],
+            "priority": 90,
+            "conditions": [
+              {
+                "path": "$.model",
+                "assertAction": "equals",
+                "value": "mock/truncated"
+              }
+            ],
+            "llm": {
+              "provider": "openai",
+              "model": "qwen-max",
+              "content": "Here is the beginning of a long answer that stops mid-sen",
+              "finishReason": "length",
+              "promptTokens": 1200,
+              "completionTokens": 16,
+              "chunkChars": 8,
+              "chunkDelayMs": 20
+            }
+          },
+          {
+            "route": "/compatible-mode/v1/chat/completions",
+            "method": "POST",
+            "status_code": 200,
+            "description": "Blocked by the content filter",
+            "tags": [
+              "llm",
+              "scenario:content-filter"
+            ],
+            "priority": 90,
+            "conditions": [
+              {
+                "path": "$.model",
+                "assertAction": "equals",
+                "value": "mock/content-filter"
+              }
+            ],
+            "llm": {
+              "provider": "openai",
+              "model": "qwen-max",
+              "content": "I can't help with that request.",
+              "finishReason": "content_filter",
+              "promptTokens": 24,
+              "completionTokens": 8
+            }
+          },
+          {
+            "route": "/compatible-mode/v1/chat/completions",
+            "method": "POST",
+            "status_code": 200,
+            "description": "Slow upstream — 5s before the first byte",
+            "tags": [
+              "llm",
+              "scenario:slow"
+            ],
+            "priority": 90,
+            "delay": 5000,
+            "conditions": [
+              {
+                "path": "$.model",
+                "assertAction": "equals",
+                "value": "mock/slow"
+              }
+            ],
+            "llm": {
+              "provider": "openai",
+              "model": "qwen-max",
+              "content": "That took a while, but here is the answer.",
+              "finishReason": "stop",
+              "promptTokens": 18,
+              "completionTokens": 10
+            }
+          },
+          {
+            "route": "/compatible-mode/v1/chat/completions",
+            "method": "POST",
+            "status_code": 200,
+            "description": "Tool calling — the model asks for a function",
+            "tags": [
+              "llm",
+              "scenario:tool-calls"
+            ],
+            "conditions": [
+              {
+                "path": "$.tools",
+                "assertAction": "notEmpty"
+              }
+            ],
+            "llm": {
+              "provider": "openai",
+              "model": "qwen-max",
+              "content": "",
+              "finishReason": "tool_calls",
+              "toolCalls": [
+                {
+                  "name": "get_weather",
+                  "arguments": {
+                    "location": "Berlin",
+                    "unit": "celsius"
+                  }
+                }
+              ],
+              "promptTokens": 84,
+              "completionTokens": 19
+            }
+          },
+          {
+            "route": "/compatible-mode/v1/chat/completions",
+            "method": "POST",
+            "status_code": 200,
+            "description": "Chat completion — echoes the last user message",
+            "tags": [
+              "llm"
+            ],
+            "llm": {
+              "provider": "openai",
+              "model": "qwen-max",
+              "content": "You said: $.req.lastUserMessage",
+              "finishReason": "stop",
+              "promptTokens": 12,
+              "completionTokens": 24,
+              "chunkChars": 6,
+              "chunkDelayMs": 25
+            }
+          },
+          {
+            "route": "/compatible-mode/v1/embeddings",
+            "method": "POST",
+            "status_code": 200,
+            "description": "Embeddings",
+            "tags": [
+              "llm"
+            ],
+            "body": {
+              "object": "list",
+              "model": "text-embedding-v3",
+              "data": [
+                {
+                  "object": "embedding",
+                  "index": 0,
+                  "embedding": [
+                    0.014,
+                    -0.0072,
+                    0.0331,
+                    -0.0119,
+                    0.0045
+                  ]
+                }
+              ],
+              "usage": {
+                "prompt_tokens": 8,
+                "total_tokens": 8
+              }
+            }
+          },
+          {
+            "route": "/compatible-mode/v1/models",
+            "method": "GET",
+            "status_code": 200,
+            "description": "List models",
+            "tags": [
+              "llm"
+            ],
+            "body": {
+              "object": "list",
+              "data": [
+                {
+                  "id": "qwen-max",
+                  "object": "model",
+                  "owned_by": "system"
+                },
+                {
+                  "id": "qwen-plus",
+                  "object": "model",
+                  "owned_by": "system"
+                },
+                {
+                  "id": "qwen-turbo",
+                  "object": "model",
+                  "owned_by": "system"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

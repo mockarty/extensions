@@ -1,0 +1,320 @@
+{
+  "id": "mockarty.mcp-slack",
+  "name": "MCP server: Slack",
+  "version": "1.0.0",
+  "description": "A mocked Slack MCP server: list channels, post and reply to messages, add reactions and look up users — plus the errors a bot really hits (not in channel, channel archived, rate limited). Test a Slack agent without a workspace.",
+  "author": {
+    "name": "Mockarty",
+    "url": "https://mockarty.ru"
+  },
+  "homepage": "https://mockarty.ru/docs/plugins-authoring",
+  "license": "MIT",
+  "min_mockarty_version": "1.0.0",
+  "contributes": {
+    "mock_kits": [
+      {
+        "key": "mcp_slack",
+        "name": "Slack MCP server",
+        "description": "Channels, messages, threads and users. Use channel_id \"C_PRIVATE\" to exercise a not-in-channel error and \"C_ARCHIVED\" for an archived channel.",
+        "mocks": [
+          {
+            "protocol": "mcp",
+            "description": "List public channels in the workspace",
+            "tags": [
+              "mcp"
+            ],
+            "mcp": {
+              "tool": "slack_list_channels",
+              "description": "List public channels in the workspace.",
+              "input_schema": {
+                "type": "object",
+                "properties": {
+                  "limit": {
+                    "type": "number",
+                    "description": "How many channels to return (max 200)"
+                  }
+                }
+              }
+            },
+            "body": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Channels:\nC01ABCD1234  #general      (142 members)\nC01ABCD5678  #engineering  (38 members)\nC01ABCD9012  #incidents    (12 members)"
+                }
+              ]
+            }
+          },
+          {
+            "protocol": "mcp",
+            "description": "Post a message to a channel",
+            "tags": [
+              "mcp"
+            ],
+            "mcp": {
+              "tool": "slack_post_message",
+              "description": "Post a message to a channel.",
+              "input_schema": {
+                "type": "object",
+                "properties": {
+                  "channel_id": {
+                    "type": "string",
+                    "description": "Channel ID, e.g. C01ABCD1234"
+                  },
+                  "text": {
+                    "type": "string",
+                    "description": "Message text"
+                  }
+                },
+                "required": [
+                  "channel_id",
+                  "text"
+                ]
+              }
+            },
+            "body": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Message posted to $.req.channel_id\nts: 1786805716.001900"
+                }
+              ]
+            }
+          },
+          {
+            "protocol": "mcp",
+            "description": "not-in-channel",
+            "tags": [
+              "mcp",
+              "scenario:not-in-channel"
+            ],
+            "priority": 90,
+            "mcp_is_error": true,
+            "conditions": [
+              {
+                "path": "$.channel_id",
+                "assertAction": "equals",
+                "value": "C_PRIVATE"
+              }
+            ],
+            "mcp": {
+              "tool": "slack_post_message",
+              "description": "Post a message to a channel."
+            },
+            "body": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Error: not_in_channel — the bot must be invited to this channel before it can post."
+                }
+              ]
+            }
+          },
+          {
+            "protocol": "mcp",
+            "description": "archived",
+            "tags": [
+              "mcp",
+              "scenario:archived"
+            ],
+            "priority": 90,
+            "mcp_is_error": true,
+            "conditions": [
+              {
+                "path": "$.channel_id",
+                "assertAction": "equals",
+                "value": "C_ARCHIVED"
+              }
+            ],
+            "mcp": {
+              "tool": "slack_post_message",
+              "description": "Post a message to a channel."
+            },
+            "body": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Error: is_archived — cannot post to an archived channel."
+                }
+              ]
+            }
+          },
+          {
+            "protocol": "mcp",
+            "description": "Reply in a message thread",
+            "tags": [
+              "mcp"
+            ],
+            "mcp": {
+              "tool": "slack_reply_to_thread",
+              "description": "Reply in a message thread.",
+              "input_schema": {
+                "type": "object",
+                "properties": {
+                  "channel_id": {
+                    "type": "string",
+                    "description": "Channel ID"
+                  },
+                  "thread_ts": {
+                    "type": "string",
+                    "description": "Timestamp of the parent message"
+                  },
+                  "text": {
+                    "type": "string",
+                    "description": "Reply text"
+                  }
+                },
+                "required": [
+                  "channel_id",
+                  "thread_ts",
+                  "text"
+                ]
+              }
+            },
+            "body": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Reply posted in thread $.req.thread_ts\nts: 1786805801.002100"
+                }
+              ]
+            }
+          },
+          {
+            "protocol": "mcp",
+            "description": "Add an emoji reaction to a message",
+            "tags": [
+              "mcp"
+            ],
+            "mcp": {
+              "tool": "slack_add_reaction",
+              "description": "Add an emoji reaction to a message.",
+              "input_schema": {
+                "type": "object",
+                "properties": {
+                  "channel_id": {
+                    "type": "string",
+                    "description": "Channel ID"
+                  },
+                  "timestamp": {
+                    "type": "string",
+                    "description": "Message timestamp"
+                  },
+                  "reaction": {
+                    "type": "string",
+                    "description": "Emoji name without colons, e.g. white_check_mark"
+                  }
+                },
+                "required": [
+                  "channel_id",
+                  "timestamp",
+                  "reaction"
+                ]
+              }
+            },
+            "body": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Added :$.req.reaction: to the message"
+                }
+              ]
+            }
+          },
+          {
+            "protocol": "mcp",
+            "description": "invalid-emoji",
+            "tags": [
+              "mcp",
+              "scenario:invalid-emoji"
+            ],
+            "priority": 90,
+            "mcp_is_error": true,
+            "conditions": [
+              {
+                "path": "$.reaction",
+                "assertAction": "equals",
+                "value": "nope"
+              }
+            ],
+            "mcp": {
+              "tool": "slack_add_reaction",
+              "description": "Add an emoji reaction to a message."
+            },
+            "body": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Error: invalid_name — no emoji named \"nope\" in this workspace."
+                }
+              ]
+            }
+          },
+          {
+            "protocol": "mcp",
+            "description": "Read recent messages from a channel",
+            "tags": [
+              "mcp"
+            ],
+            "mcp": {
+              "tool": "slack_get_channel_history",
+              "description": "Read recent messages from a channel.",
+              "input_schema": {
+                "type": "object",
+                "properties": {
+                  "channel_id": {
+                    "type": "string",
+                    "description": "Channel ID"
+                  },
+                  "limit": {
+                    "type": "number",
+                    "description": "How many messages to return"
+                  }
+                },
+                "required": [
+                  "channel_id"
+                ]
+              }
+            },
+            "body": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "[10:02] @alice: deploy to staging is green\n[10:04] @bob: merging the templater fix\n[10:07] @mockarty-bot: build #482 passed (4m 12s)"
+                }
+              ]
+            }
+          },
+          {
+            "protocol": "mcp",
+            "description": "List workspace users",
+            "tags": [
+              "mcp"
+            ],
+            "mcp": {
+              "tool": "slack_get_users",
+              "description": "List workspace users.",
+              "input_schema": {
+                "type": "object",
+                "properties": {
+                  "limit": {
+                    "type": "number",
+                    "description": "How many users to return"
+                  }
+                }
+              }
+            },
+            "body": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "U01AAA  alice   Alice Ivanova   (Engineering)\nU01BBB  bob     Bob Petrov      (Engineering)\nU01CCC  carol   Carol Sidorova  (QA)"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

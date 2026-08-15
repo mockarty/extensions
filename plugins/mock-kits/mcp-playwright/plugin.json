@@ -1,0 +1,194 @@
+{
+  "id": "mockarty.mcp-playwright",
+  "name": "MCP server: Playwright (browser)",
+  "version": "1.0.0",
+  "description": "A mocked Playwright MCP server: navigate, snapshot, click, type, screenshot, evaluate and close — with real input schemas so an agent can drive it from tools/list alone. Includes failure cases (element not found, navigation timeout) so you can test how your agent recovers without launching a browser.",
+  "author": {"name": "Mockarty", "url": "https://mockarty.ru"},
+  "homepage": "https://mockarty.ru/docs/plugins-authoring",
+  "license": "MIT",
+  "min_mockarty_version": "1.0.0",
+  "contributes": {
+    "mock_kits": [
+      {
+        "key": "mcp_playwright",
+        "name": "Playwright MCP server",
+        "description": "Browser automation tools over MCP. Point an agent at /stubs/<namespace> and it discovers the tools; call browser_click with ref \"missing\" or browser_navigate with a url containing \"timeout\" to exercise the failure paths.",
+        "mocks": [
+          {
+            "protocol": "mcp",
+            "description": "Navigate to a URL",
+            "tags": ["mcp", "playwright"],
+            "mcp": {
+              "tool": "browser_navigate",
+              "description": "Navigate the browser to a URL and return the page title once loaded.",
+              "input_schema": {
+                "type": "object",
+                "properties": {
+                  "url": {"type": "string", "description": "Absolute URL to open, e.g. https://example.com"}
+                },
+                "required": ["url"]
+              }
+            },
+            "body": {
+              "content": [
+                {"type": "text", "text": "Navigated to $.req.url\nPage title: Example Domain\nLoad state: networkidle"}
+              ]
+            }
+          },
+          {
+            "protocol": "mcp",
+            "description": "Navigation timeout",
+            "tags": ["mcp", "playwright", "scenario:timeout"],
+            "priority": 90,
+            "delay": 1000,
+            "mcp_is_error": true,
+            "conditions": [{"path": "$.url", "assertAction": "contains", "value": "timeout"}],
+            "mcp": {
+              "tool": "browser_navigate",
+              "description": "Navigate the browser to a URL and return the page title once loaded."
+            },
+            "body": {
+              "content": [
+                {"type": "text", "text": "Error: page.goto: Timeout 30000ms exceeded.\nCall log:\n  - navigating to \"$.req.url\", waiting until \"load\""}
+              ]
+            }
+          },
+          {
+            "protocol": "mcp",
+            "description": "Accessibility snapshot of the page",
+            "tags": ["mcp", "playwright"],
+            "mcp": {
+              "tool": "browser_snapshot",
+              "description": "Capture an accessibility snapshot of the current page. Returns element refs usable by browser_click and browser_type.",
+              "input_schema": {"type": "object", "properties": {}}
+            },
+            "body": {
+              "content": [
+                {"type": "text", "text": "- document [ref=e1]\n  - heading \"Example Domain\" [level=1] [ref=e2]\n  - paragraph [ref=e3]\n  - textbox \"Search\" [ref=e4]\n  - button \"Submit\" [ref=e5]\n  - link \"More information\" [ref=e6]"}
+              ]
+            }
+          },
+          {
+            "protocol": "mcp",
+            "description": "Click an element",
+            "tags": ["mcp", "playwright"],
+            "mcp": {
+              "tool": "browser_click",
+              "description": "Click an element identified by a ref taken from browser_snapshot.",
+              "input_schema": {
+                "type": "object",
+                "properties": {
+                  "element": {"type": "string", "description": "Human-readable element description, used to obtain permission"},
+                  "ref": {"type": "string", "description": "Exact element ref from the page snapshot, e.g. e5"}
+                },
+                "required": ["element", "ref"]
+              }
+            },
+            "body": {
+              "content": [
+                {"type": "text", "text": "Clicked \"$.req.element\" (ref=$.req.ref)"}
+              ]
+            }
+          },
+          {
+            "protocol": "mcp",
+            "description": "Click a ref that is not on the page",
+            "tags": ["mcp", "playwright", "scenario:not-found"],
+            "priority": 90,
+            "mcp_is_error": true,
+            "conditions": [{"path": "$.ref", "assertAction": "equals", "value": "missing"}],
+            "mcp": {
+              "tool": "browser_click",
+              "description": "Click an element identified by a ref taken from browser_snapshot."
+            },
+            "body": {
+              "content": [
+                {"type": "text", "text": "Error: No element found for ref \"missing\". The page may have changed — take a fresh browser_snapshot and retry with a current ref."}
+              ]
+            }
+          },
+          {
+            "protocol": "mcp",
+            "description": "Type text into a field",
+            "tags": ["mcp", "playwright"],
+            "mcp": {
+              "tool": "browser_type",
+              "description": "Type text into an editable element identified by a ref.",
+              "input_schema": {
+                "type": "object",
+                "properties": {
+                  "element": {"type": "string", "description": "Human-readable element description"},
+                  "ref": {"type": "string", "description": "Exact element ref from the page snapshot"},
+                  "text": {"type": "string", "description": "Text to type"},
+                  "submit": {"type": "boolean", "description": "Press Enter after typing"}
+                },
+                "required": ["element", "ref", "text"]
+              }
+            },
+            "body": {
+              "content": [
+                {"type": "text", "text": "Typed \"$.req.text\" into \"$.req.element\" (ref=$.req.ref)"}
+              ]
+            }
+          },
+          {
+            "protocol": "mcp",
+            "description": "Screenshot",
+            "tags": ["mcp", "playwright"],
+            "mcp": {
+              "tool": "browser_take_screenshot",
+              "description": "Take a screenshot of the current page. Returns a PNG image.",
+              "input_schema": {
+                "type": "object",
+                "properties": {
+                  "fullPage": {"type": "boolean", "description": "Capture the full scrollable page instead of the viewport"}
+                }
+              }
+            },
+            "body": {
+              "content": [
+                {"type": "image", "mimeType": "image/png", "data": "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=="}
+              ]
+            }
+          },
+          {
+            "protocol": "mcp",
+            "description": "Evaluate JavaScript on the page",
+            "tags": ["mcp", "playwright"],
+            "mcp": {
+              "tool": "browser_evaluate",
+              "description": "Run a JavaScript function in the page and return its result as JSON.",
+              "input_schema": {
+                "type": "object",
+                "properties": {
+                  "function": {"type": "string", "description": "JavaScript function body, e.g. () => document.title"}
+                },
+                "required": ["function"]
+              }
+            },
+            "body": {
+              "content": [
+                {"type": "text", "text": "\"Example Domain\""}
+              ]
+            }
+          },
+          {
+            "protocol": "mcp",
+            "description": "Close the browser",
+            "tags": ["mcp", "playwright"],
+            "mcp": {
+              "tool": "browser_close",
+              "description": "Close the browser page and release the session.",
+              "input_schema": {"type": "object", "properties": {}}
+            },
+            "body": {
+              "content": [
+                {"type": "text", "text": "Browser closed."}
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

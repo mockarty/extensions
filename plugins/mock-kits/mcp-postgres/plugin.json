@@ -1,0 +1,275 @@
+{
+  "id": "mockarty.mcp-postgres",
+  "name": "MCP server: PostgreSQL",
+  "version": "1.0.0",
+  "description": "A mocked PostgreSQL MCP server: explore schemas and tables, describe columns and run read-only queries — including the refusals a safe server enforces (write statements rejected) and real SQL errors. Test a data agent without a database.",
+  "author": {
+    "name": "Mockarty",
+    "url": "https://mockarty.ru"
+  },
+  "homepage": "https://mockarty.ru/docs/plugins-authoring",
+  "license": "MIT",
+  "min_mockarty_version": "1.0.0",
+  "contributes": {
+    "mock_kits": [
+      {
+        "key": "mcp_postgres",
+        "name": "PostgreSQL MCP server",
+        "description": "Read-only SQL access: list schemas and tables, describe columns, run a SELECT. A query containing \"DROP\" is refused; one containing \"badcolumn\" returns a SQL error.",
+        "mocks": [
+          {
+            "protocol": "mcp",
+            "description": "List the database schemas",
+            "tags": [
+              "mcp"
+            ],
+            "mcp": {
+              "tool": "list_schemas",
+              "description": "List the database schemas.",
+              "input_schema": {
+                "type": "object",
+                "properties": {}
+              }
+            },
+            "body": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Schemas:\npublic\nanalytics\naudit"
+                }
+              ]
+            }
+          },
+          {
+            "protocol": "mcp",
+            "description": "List tables, views or sequences in a schema",
+            "tags": [
+              "mcp"
+            ],
+            "mcp": {
+              "tool": "list_objects",
+              "description": "List tables, views or sequences in a schema.",
+              "input_schema": {
+                "type": "object",
+                "properties": {
+                  "schema_name": {
+                    "type": "string",
+                    "description": "Schema to inspect"
+                  },
+                  "object_type": {
+                    "type": "string",
+                    "description": "One of: table, view, sequence, extension"
+                  }
+                },
+                "required": [
+                  "schema_name"
+                ]
+              }
+            },
+            "body": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Tables in $.req.schema_name:\nmocks\nnamespaces\nusers\naudit_logs\nplugins"
+                }
+              ]
+            }
+          },
+          {
+            "protocol": "mcp",
+            "description": "Describe a table: columns, types and constraints",
+            "tags": [
+              "mcp"
+            ],
+            "mcp": {
+              "tool": "get_object_details",
+              "description": "Describe a table: columns, types and constraints.",
+              "input_schema": {
+                "type": "object",
+                "properties": {
+                  "schema_name": {
+                    "type": "string",
+                    "description": "Schema name"
+                  },
+                  "object_name": {
+                    "type": "string",
+                    "description": "Table or view name"
+                  },
+                  "object_type": {
+                    "type": "string",
+                    "description": "One of: table, view, sequence, extension"
+                  }
+                },
+                "required": [
+                  "schema_name",
+                  "object_name"
+                ]
+              }
+            },
+            "body": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Table $.req.schema_name.$.req.object_name\n\nColumn        | Type         | Nullable | Default\nid            | uuid         | not null | gen_random_uuid()\nnamespace     | text         | not null |\nroute         | text         |          |\ncreated_at    | timestamptz  | not null | now()\n\nIndexes: PRIMARY KEY (id), INDEX ON (namespace, route)"
+                }
+              ]
+            }
+          },
+          {
+            "protocol": "mcp",
+            "description": "not-found",
+            "tags": [
+              "mcp",
+              "scenario:not-found"
+            ],
+            "priority": 90,
+            "mcp_is_error": true,
+            "conditions": [
+              {
+                "path": "$.object_name",
+                "assertAction": "equals",
+                "value": "missing"
+              }
+            ],
+            "mcp": {
+              "tool": "get_object_details",
+              "description": "Describe a table: columns, types and constraints."
+            },
+            "body": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Error: relation \"$.req.schema_name.$.req.object_name\" does not exist"
+                }
+              ]
+            }
+          },
+          {
+            "protocol": "mcp",
+            "description": "Run a read-only SQL statement and return the rows",
+            "tags": [
+              "mcp"
+            ],
+            "mcp": {
+              "tool": "execute_sql",
+              "description": "Run a read-only SQL statement and return the rows.",
+              "input_schema": {
+                "type": "object",
+                "properties": {
+                  "sql": {
+                    "type": "string",
+                    "description": "A SELECT statement; write statements are refused"
+                  }
+                },
+                "required": [
+                  "sql"
+                ]
+              }
+            },
+            "body": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "namespace | count\n----------+------\nsandbox   |   142\nacc       |    38\n\n(2 rows)"
+                }
+              ]
+            }
+          },
+          {
+            "protocol": "mcp",
+            "description": "read-only",
+            "tags": [
+              "mcp",
+              "scenario:read-only"
+            ],
+            "priority": 90,
+            "mcp_is_error": true,
+            "conditions": [
+              {
+                "path": "$.sql",
+                "assertAction": "contains",
+                "value": "DROP"
+              }
+            ],
+            "mcp": {
+              "tool": "execute_sql",
+              "description": "Run a read-only SQL statement and return the rows."
+            },
+            "body": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Error: refused — this server is read-only. Only SELECT and EXPLAIN statements are permitted."
+                }
+              ]
+            }
+          },
+          {
+            "protocol": "mcp",
+            "description": "sql-error",
+            "tags": [
+              "mcp",
+              "scenario:sql-error"
+            ],
+            "priority": 90,
+            "mcp_is_error": true,
+            "conditions": [
+              {
+                "path": "$.sql",
+                "assertAction": "contains",
+                "value": "badcolumn"
+              }
+            ],
+            "mcp": {
+              "tool": "execute_sql",
+              "description": "Run a read-only SQL statement and return the rows."
+            },
+            "body": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Error: column \"badcolumn\" does not exist\nLINE 1: SELECT badcolumn FROM mocks\n               ^"
+                }
+              ]
+            }
+          },
+          {
+            "protocol": "mcp",
+            "description": "Return the execution plan for a query",
+            "tags": [
+              "mcp"
+            ],
+            "mcp": {
+              "tool": "explain_query",
+              "description": "Return the execution plan for a query.",
+              "input_schema": {
+                "type": "object",
+                "properties": {
+                  "sql": {
+                    "type": "string",
+                    "description": "Statement to explain"
+                  },
+                  "analyze": {
+                    "type": "boolean",
+                    "description": "Actually run the query to collect real timings"
+                  }
+                },
+                "required": [
+                  "sql"
+                ]
+              }
+            },
+            "body": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Seq Scan on mocks  (cost=0.00..18.10 rows=142 width=64)\n  Filter: (namespace = 'sandbox'::text)\nPlanning Time: 0.084 ms"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,337 @@
+{
+  "id": "mockarty.llm-anthropic",
+  "name": "LLM provider: Anthropic",
+  "version": "1.0.0",
+  "description": "A mocked Anthropic Messages API: streaming in Anthropic's own SSE event format (message_start → content_block_delta → message_stop), tool use, token counting, and the failures that matter — 429 with retry-after, 401, 500, overlong input. Point ANTHROPIC_BASE_URL at the mock and test without a key.",
+  "author": {
+    "name": "Mockarty",
+    "url": "https://mockarty.ru"
+  },
+  "homepage": "https://mockarty.ru/docs/plugins-authoring",
+  "license": "MIT",
+  "min_mockarty_version": "1.0.0",
+  "contributes": {
+    "mock_kits": [
+      {
+        "key": "llm_anthropic",
+        "name": "Anthropic API",
+        "description": "Chat plus the failures that break integrations. Streaming is automatic when the request sets stream:true. Ask for a failure by sending the model name mock/rate-limit, mock/unauthorized, mock/server-error, mock/context-length, mock/truncated, mock/content-filter, mock/slow.",
+        "mocks": [
+          {
+            "route": "/v1/messages",
+            "method": "POST",
+            "status_code": 429,
+            "description": "Rate limited (429)",
+            "tags": [
+              "llm",
+              "scenario:rate-limit"
+            ],
+            "priority": 90,
+            "conditions": [
+              {
+                "path": "$.model",
+                "assertAction": "equals",
+                "value": "mock/rate-limit"
+              }
+            ],
+            "body": {
+              "type": "error",
+              "error": {
+                "type": "rate_limit_error",
+                "message": "Rate limit reached. Please retry in 2s."
+              }
+            },
+            "headers": {
+              "Content-Type": [
+                "application/json"
+              ],
+              "Retry-After": [
+                "2"
+              ],
+              "anthropic-ratelimit-requests-remaining": [
+                "0"
+              ],
+              "anthropic-ratelimit-requests-reset": [
+                "2026-01-01T00:00:02Z"
+              ]
+            }
+          },
+          {
+            "route": "/v1/messages",
+            "method": "POST",
+            "status_code": 401,
+            "description": "Invalid API key (401)",
+            "tags": [
+              "llm",
+              "scenario:unauthorized"
+            ],
+            "priority": 90,
+            "conditions": [
+              {
+                "path": "$.model",
+                "assertAction": "equals",
+                "value": "mock/unauthorized"
+              }
+            ],
+            "body": {
+              "type": "error",
+              "error": {
+                "type": "authentication_error",
+                "message": "Invalid API key provided."
+              }
+            }
+          },
+          {
+            "route": "/v1/messages",
+            "method": "POST",
+            "status_code": 500,
+            "description": "Upstream failure (500)",
+            "tags": [
+              "llm",
+              "scenario:server-error"
+            ],
+            "priority": 90,
+            "conditions": [
+              {
+                "path": "$.model",
+                "assertAction": "equals",
+                "value": "mock/server-error"
+              }
+            ],
+            "body": {
+              "type": "error",
+              "error": {
+                "type": "api_error",
+                "message": "Internal server error."
+              }
+            }
+          },
+          {
+            "route": "/v1/messages",
+            "method": "POST",
+            "status_code": 400,
+            "description": "Context length exceeded (400)",
+            "tags": [
+              "llm",
+              "scenario:context-length"
+            ],
+            "priority": 90,
+            "conditions": [
+              {
+                "path": "$.model",
+                "assertAction": "equals",
+                "value": "mock/context-length"
+              }
+            ],
+            "body": {
+              "type": "error",
+              "error": {
+                "type": "invalid_request_error",
+                "message": "Input is too long for the requested model. Reduce the length of the messages."
+              }
+            }
+          },
+          {
+            "route": "/v1/messages",
+            "method": "POST",
+            "status_code": 401,
+            "description": "Invalid API key (401), by auth header",
+            "tags": [
+              "llm",
+              "scenario:unauthorized"
+            ],
+            "priority": 80,
+            "header_conditions": [
+              {
+                "path": "$.x-api-key",
+                "assertAction": "equals",
+                "value": "invalid"
+              }
+            ],
+            "body": {
+              "type": "error",
+              "error": {
+                "type": "authentication_error",
+                "message": "Invalid API key provided."
+              }
+            }
+          },
+          {
+            "route": "/v1/messages",
+            "method": "POST",
+            "status_code": 200,
+            "description": "Reply cut off at the token limit",
+            "tags": [
+              "llm",
+              "scenario:truncated"
+            ],
+            "priority": 90,
+            "conditions": [
+              {
+                "path": "$.model",
+                "assertAction": "equals",
+                "value": "mock/truncated"
+              }
+            ],
+            "llm": {
+              "provider": "anthropic",
+              "model": "claude-sonnet-4-5",
+              "content": "Here is the beginning of a long answer that stops mid-sen",
+              "finishReason": "max_tokens",
+              "promptTokens": 1200,
+              "completionTokens": 16,
+              "chunkChars": 8,
+              "chunkDelayMs": 20
+            }
+          },
+          {
+            "route": "/v1/messages",
+            "method": "POST",
+            "status_code": 200,
+            "description": "Blocked by the content filter",
+            "tags": [
+              "llm",
+              "scenario:content-filter"
+            ],
+            "priority": 90,
+            "conditions": [
+              {
+                "path": "$.model",
+                "assertAction": "equals",
+                "value": "mock/content-filter"
+              }
+            ],
+            "llm": {
+              "provider": "anthropic",
+              "model": "claude-sonnet-4-5",
+              "content": "I can't help with that request.",
+              "finishReason": "refusal",
+              "promptTokens": 24,
+              "completionTokens": 8
+            }
+          },
+          {
+            "route": "/v1/messages",
+            "method": "POST",
+            "status_code": 200,
+            "description": "Slow upstream — 5s before the first byte",
+            "tags": [
+              "llm",
+              "scenario:slow"
+            ],
+            "priority": 90,
+            "delay": 5000,
+            "conditions": [
+              {
+                "path": "$.model",
+                "assertAction": "equals",
+                "value": "mock/slow"
+              }
+            ],
+            "llm": {
+              "provider": "anthropic",
+              "model": "claude-sonnet-4-5",
+              "content": "That took a while, but here is the answer.",
+              "finishReason": "end_turn",
+              "promptTokens": 18,
+              "completionTokens": 10
+            }
+          },
+          {
+            "route": "/v1/messages",
+            "method": "POST",
+            "status_code": 200,
+            "description": "Tool calling — the model asks for a function",
+            "tags": [
+              "llm",
+              "scenario:tool-calls"
+            ],
+            "conditions": [
+              {
+                "path": "$.tools",
+                "assertAction": "notEmpty"
+              }
+            ],
+            "llm": {
+              "provider": "anthropic",
+              "model": "claude-sonnet-4-5",
+              "content": "",
+              "finishReason": "tool_use",
+              "toolCalls": [
+                {
+                  "name": "get_weather",
+                  "arguments": {
+                    "location": "Berlin",
+                    "unit": "celsius"
+                  }
+                }
+              ],
+              "promptTokens": 84,
+              "completionTokens": 19
+            }
+          },
+          {
+            "route": "/v1/messages",
+            "method": "POST",
+            "status_code": 200,
+            "description": "Chat completion — echoes the last user message",
+            "tags": [
+              "llm"
+            ],
+            "llm": {
+              "provider": "anthropic",
+              "model": "claude-sonnet-4-5",
+              "content": "You said: $.req.lastUserMessage",
+              "finishReason": "end_turn",
+              "promptTokens": 12,
+              "completionTokens": 24,
+              "chunkChars": 6,
+              "chunkDelayMs": 25
+            }
+          },
+          {
+            "route": "/v1/messages/count_tokens",
+            "method": "POST",
+            "status_code": 200,
+            "description": "Count tokens",
+            "tags": [
+              "llm"
+            ],
+            "body": {
+              "input_tokens": 42
+            }
+          },
+          {
+            "route": "/v1/models",
+            "method": "GET",
+            "status_code": 200,
+            "description": "List models",
+            "tags": [
+              "llm"
+            ],
+            "body": {
+              "data": [
+                {
+                  "id": "claude-sonnet-4-5",
+                  "type": "model",
+                  "display_name": "Claude Sonnet 4.5"
+                },
+                {
+                  "id": "claude-opus-4-1",
+                  "type": "model",
+                  "display_name": "Claude Opus 4.1"
+                },
+                {
+                  "id": "claude-haiku-4-5",
+                  "type": "model",
+                  "display_name": "Claude Haiku 4.5"
+                }
+              ],
+              "has_more": false
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,400 @@
+{
+  "id": "mockarty.mcp-filesystem",
+  "name": "MCP server: Filesystem",
+  "version": "1.0.0",
+  "description": "A mocked Filesystem MCP server: read, write, edit, list and search files, with the sandbox refusals a real one enforces (path outside the allowed directories, file not found). Test an agent's file-handling logic without letting it near a real disk.",
+  "author": {
+    "name": "Mockarty",
+    "url": "https://mockarty.ru"
+  },
+  "homepage": "https://mockarty.ru/docs/plugins-authoring",
+  "license": "MIT",
+  "min_mockarty_version": "1.0.0",
+  "contributes": {
+    "mock_kits": [
+      {
+        "key": "mcp_filesystem",
+        "name": "Filesystem MCP server",
+        "description": "Read, write and list files inside allowed directories. Use a path containing \"denied\" to exercise the sandbox refusal and \"missing\" for a not-found error.",
+        "mocks": [
+          {
+            "protocol": "mcp",
+            "description": "Read the complete contents of a text file",
+            "tags": [
+              "mcp"
+            ],
+            "mcp": {
+              "tool": "read_text_file",
+              "description": "Read the complete contents of a text file.",
+              "input_schema": {
+                "type": "object",
+                "properties": {
+                  "path": {
+                    "type": "string",
+                    "description": "Absolute path to the file"
+                  },
+                  "head": {
+                    "type": "number",
+                    "description": "Return only the first N lines"
+                  },
+                  "tail": {
+                    "type": "number",
+                    "description": "Return only the last N lines"
+                  }
+                },
+                "required": [
+                  "path"
+                ]
+              }
+            },
+            "body": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Contents of $.req.path:\n\nversion: 1\nname: mockarty\nfeatures:\n  - mocking\n  - load-testing\n"
+                }
+              ]
+            }
+          },
+          {
+            "protocol": "mcp",
+            "description": "denied",
+            "tags": [
+              "mcp",
+              "scenario:denied"
+            ],
+            "priority": 90,
+            "mcp_is_error": true,
+            "conditions": [
+              {
+                "path": "$.path",
+                "assertAction": "contains",
+                "value": "denied"
+              }
+            ],
+            "mcp": {
+              "tool": "read_text_file",
+              "description": "Read the complete contents of a text file."
+            },
+            "body": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Error: Access denied — path outside allowed directories. The server is configured with a fixed allow-list; ask the operator to add this directory."
+                }
+              ]
+            }
+          },
+          {
+            "protocol": "mcp",
+            "description": "not-found",
+            "tags": [
+              "mcp",
+              "scenario:not-found"
+            ],
+            "priority": 90,
+            "mcp_is_error": true,
+            "conditions": [
+              {
+                "path": "$.path",
+                "assertAction": "contains",
+                "value": "missing"
+              }
+            ],
+            "mcp": {
+              "tool": "read_text_file",
+              "description": "Read the complete contents of a text file."
+            },
+            "body": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Error: ENOENT: no such file or directory, open '$.req.path'"
+                }
+              ]
+            }
+          },
+          {
+            "protocol": "mcp",
+            "description": "Create a file or overwrite an existing one",
+            "tags": [
+              "mcp"
+            ],
+            "mcp": {
+              "tool": "write_file",
+              "description": "Create a file or overwrite an existing one.",
+              "input_schema": {
+                "type": "object",
+                "properties": {
+                  "path": {
+                    "type": "string",
+                    "description": "Absolute path to write"
+                  },
+                  "content": {
+                    "type": "string",
+                    "description": "Full file contents"
+                  }
+                },
+                "required": [
+                  "path",
+                  "content"
+                ]
+              }
+            },
+            "body": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Successfully wrote to $.req.path"
+                }
+              ]
+            }
+          },
+          {
+            "protocol": "mcp",
+            "description": "denied",
+            "tags": [
+              "mcp",
+              "scenario:denied"
+            ],
+            "priority": 90,
+            "mcp_is_error": true,
+            "conditions": [
+              {
+                "path": "$.path",
+                "assertAction": "contains",
+                "value": "denied"
+              }
+            ],
+            "mcp": {
+              "tool": "write_file",
+              "description": "Create a file or overwrite an existing one."
+            },
+            "body": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Error: Access denied — path outside allowed directories."
+                }
+              ]
+            }
+          },
+          {
+            "protocol": "mcp",
+            "description": "Replace exact text in a file and return a diff",
+            "tags": [
+              "mcp"
+            ],
+            "mcp": {
+              "tool": "edit_file",
+              "description": "Replace exact text in a file and return a diff.",
+              "input_schema": {
+                "type": "object",
+                "properties": {
+                  "path": {
+                    "type": "string",
+                    "description": "Absolute path to edit"
+                  },
+                  "edits": {
+                    "type": "array",
+                    "description": "Edits to apply",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "oldText": {
+                          "type": "string",
+                          "description": "Exact text to find"
+                        },
+                        "newText": {
+                          "type": "string",
+                          "description": "Replacement text"
+                        }
+                      },
+                      "required": [
+                        "oldText",
+                        "newText"
+                      ]
+                    }
+                  },
+                  "dryRun": {
+                    "type": "boolean",
+                    "description": "Preview the diff without writing"
+                  }
+                },
+                "required": [
+                  "path",
+                  "edits"
+                ]
+              }
+            },
+            "body": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Applied 1 edit to $.req.path\n\n@@ -1,3 +1,3 @@\n-version: 1\n+version: 2\n name: mockarty"
+                }
+              ]
+            }
+          },
+          {
+            "protocol": "mcp",
+            "description": "List files and directories at a path",
+            "tags": [
+              "mcp"
+            ],
+            "mcp": {
+              "tool": "list_directory",
+              "description": "List files and directories at a path.",
+              "input_schema": {
+                "type": "object",
+                "properties": {
+                  "path": {
+                    "type": "string",
+                    "description": "Absolute directory path"
+                  }
+                },
+                "required": [
+                  "path"
+                ]
+              }
+            },
+            "body": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Listing of $.req.path:\n\n[DIR]  internal\n[DIR]  cmd\n[FILE] go.mod\n[FILE] README.md"
+                }
+              ]
+            }
+          },
+          {
+            "protocol": "mcp",
+            "description": "not-found",
+            "tags": [
+              "mcp",
+              "scenario:not-found"
+            ],
+            "priority": 90,
+            "mcp_is_error": true,
+            "conditions": [
+              {
+                "path": "$.path",
+                "assertAction": "contains",
+                "value": "missing"
+              }
+            ],
+            "mcp": {
+              "tool": "list_directory",
+              "description": "List files and directories at a path."
+            },
+            "body": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Error: ENOENT: no such file or directory, scandir '$.req.path'"
+                }
+              ]
+            }
+          },
+          {
+            "protocol": "mcp",
+            "description": "Recursively search for files matching a pattern",
+            "tags": [
+              "mcp"
+            ],
+            "mcp": {
+              "tool": "search_files",
+              "description": "Recursively search for files matching a pattern.",
+              "input_schema": {
+                "type": "object",
+                "properties": {
+                  "path": {
+                    "type": "string",
+                    "description": "Directory to search from"
+                  },
+                  "pattern": {
+                    "type": "string",
+                    "description": "Glob or substring to match"
+                  },
+                  "excludePatterns": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "Patterns to skip"
+                  }
+                },
+                "required": [
+                  "path",
+                  "pattern"
+                ]
+              }
+            },
+            "body": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Matches for \"$.req.pattern\" under $.req.path:\n\n$.req.path/internal/mockkit/mockkit.go\n$.req.path/internal/plugins/manifest.go"
+                }
+              ]
+            }
+          },
+          {
+            "protocol": "mcp",
+            "description": "Return metadata about a file or directory",
+            "tags": [
+              "mcp"
+            ],
+            "mcp": {
+              "tool": "get_file_info",
+              "description": "Return metadata about a file or directory.",
+              "input_schema": {
+                "type": "object",
+                "properties": {
+                  "path": {
+                    "type": "string",
+                    "description": "Absolute path"
+                  }
+                },
+                "required": [
+                  "path"
+                ]
+              }
+            },
+            "body": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "size: 4096\ncreated: 2026-01-04T10:00:00Z\nmodified: 2026-08-15T09:12:44Z\nisDirectory: false\nisFile: true\npermissions: 644"
+                }
+              ]
+            }
+          },
+          {
+            "protocol": "mcp",
+            "description": "List the directories this server may access",
+            "tags": [
+              "mcp"
+            ],
+            "mcp": {
+              "tool": "list_allowed_directories",
+              "description": "List the directories this server may access.",
+              "input_schema": {
+                "type": "object",
+                "properties": {}
+              }
+            },
+            "body": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Allowed directories:\n/Users/dev/projects\n/tmp/workspace"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

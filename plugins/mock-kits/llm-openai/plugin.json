@@ -1,0 +1,237 @@
+{
+  "id": "mockarty.llm-openai",
+  "name": "LLM provider: OpenAI",
+  "version": "1.0.0",
+  "description": "A complete OpenAI-compatible contour: chat completions (streaming and not), tool calling, embeddings, models — plus the failures that actually break integrations: 429 with Retry-After, 401, 500, context-length, truncation and content filtering. Point your client's base URL at the mock and test without a key or a bill.",
+  "author": {"name": "Mockarty", "url": "https://mockarty.ru"},
+  "homepage": "https://mockarty.ru/docs/plugins-authoring",
+  "license": "MIT",
+  "min_mockarty_version": "1.0.0",
+  "contributes": {
+    "mock_kits": [
+      {
+        "key": "openai_chat",
+        "name": "OpenAI API",
+        "description": "Chat completions, embeddings and models. Streaming is automatic when the request sets stream:true. Ask for a failure by sending the model name mock/rate-limit, mock/unauthorized, mock/server-error, mock/context-length, mock/truncated, mock/content-filter or mock/slow.",
+        "mocks": [
+          {
+            "route": "/v1/chat/completions",
+            "method": "POST",
+            "status_code": 429,
+            "description": "Rate limited (429)",
+            "tags": ["llm", "openai", "scenario:rate-limit"],
+            "priority": 90,
+            "conditions": [{"path": "$.model", "assertAction": "equals", "value": "mock/rate-limit"}],
+            "headers": {
+              "Content-Type": ["application/json"],
+              "Retry-After": ["2"],
+              "x-ratelimit-limit-requests": ["3"],
+              "x-ratelimit-remaining-requests": ["0"],
+              "x-ratelimit-reset-requests": ["2s"]
+            },
+            "body": {
+              "error": {
+                "message": "Rate limit reached for requests per min (RPM): Limit 3, Used 3, Requested 1. Please try again in 2s.",
+                "type": "requests",
+                "param": null,
+                "code": "rate_limit_exceeded"
+              }
+            }
+          },
+          {
+            "route": "/v1/chat/completions",
+            "method": "POST",
+            "status_code": 401,
+            "description": "Invalid API key (401), by model name",
+            "tags": ["llm", "openai", "scenario:unauthorized"],
+            "priority": 90,
+            "conditions": [{"path": "$.model", "assertAction": "equals", "value": "mock/unauthorized"}],
+            "body": {
+              "error": {
+                "message": "Incorrect API key provided. You can find your API key at https://platform.openai.com/account/api-keys.",
+                "type": "invalid_request_error",
+                "param": null,
+                "code": "invalid_api_key"
+              }
+            }
+          },
+          {
+            "route": "/v1/chat/completions",
+            "method": "POST",
+            "status_code": 401,
+            "description": "Invalid API key (401), by Authorization header",
+            "tags": ["llm", "openai", "scenario:unauthorized"],
+            "priority": 80,
+            "header_conditions": [{"path": "$.Authorization", "assertAction": "equals", "value": "Bearer invalid"}],
+            "body": {
+              "error": {
+                "message": "Incorrect API key provided.",
+                "type": "invalid_request_error",
+                "param": null,
+                "code": "invalid_api_key"
+              }
+            }
+          },
+          {
+            "route": "/v1/chat/completions",
+            "method": "POST",
+            "status_code": 500,
+            "description": "Upstream failure (500)",
+            "tags": ["llm", "openai", "scenario:server-error"],
+            "priority": 90,
+            "conditions": [{"path": "$.model", "assertAction": "equals", "value": "mock/server-error"}],
+            "body": {
+              "error": {
+                "message": "The server had an error while processing your request. Sorry about that!",
+                "type": "server_error",
+                "param": null,
+                "code": null
+              }
+            }
+          },
+          {
+            "route": "/v1/chat/completions",
+            "method": "POST",
+            "status_code": 400,
+            "description": "Context length exceeded (400)",
+            "tags": ["llm", "openai", "scenario:context-length"],
+            "priority": 90,
+            "conditions": [{"path": "$.model", "assertAction": "equals", "value": "mock/context-length"}],
+            "body": {
+              "error": {
+                "message": "This model's maximum context length is 128000 tokens. However, your messages resulted in 132145 tokens. Please reduce the length of the messages.",
+                "type": "invalid_request_error",
+                "param": "messages",
+                "code": "context_length_exceeded"
+              }
+            }
+          },
+          {
+            "route": "/v1/chat/completions",
+            "method": "POST",
+            "status_code": 200,
+            "description": "Reply cut off at the token limit (finish_reason: length)",
+            "tags": ["llm", "openai", "scenario:truncated"],
+            "priority": 90,
+            "conditions": [{"path": "$.model", "assertAction": "equals", "value": "mock/truncated"}],
+            "llm": {
+              "provider": "openai",
+              "model": "gpt-4o-mini",
+              "content": "Here is the beginning of a long answer that stops mid-sen",
+              "finishReason": "length",
+              "promptTokens": 1200,
+              "completionTokens": 16,
+              "chunkChars": 8,
+              "chunkDelayMs": 20
+            }
+          },
+          {
+            "route": "/v1/chat/completions",
+            "method": "POST",
+            "status_code": 200,
+            "description": "Blocked by the content filter",
+            "tags": ["llm", "openai", "scenario:content-filter"],
+            "priority": 90,
+            "conditions": [{"path": "$.model", "assertAction": "equals", "value": "mock/content-filter"}],
+            "llm": {
+              "provider": "openai",
+              "model": "gpt-4o-mini",
+              "content": "I can't help with that request.",
+              "finishReason": "content_filter",
+              "promptTokens": 24,
+              "completionTokens": 8
+            }
+          },
+          {
+            "route": "/v1/chat/completions",
+            "method": "POST",
+            "status_code": 200,
+            "description": "Slow upstream — 5s before the first byte",
+            "tags": ["llm", "openai", "scenario:slow"],
+            "priority": 90,
+            "delay": 5000,
+            "conditions": [{"path": "$.model", "assertAction": "equals", "value": "mock/slow"}],
+            "llm": {
+              "provider": "openai",
+              "model": "gpt-4o-mini",
+              "content": "That took a while, but here is the answer.",
+              "finishReason": "stop",
+              "promptTokens": 18,
+              "completionTokens": 10
+            }
+          },
+          {
+            "route": "/v1/chat/completions",
+            "method": "POST",
+            "status_code": 200,
+            "description": "Tool calling — the model asks for a function",
+            "tags": ["llm", "openai", "scenario:tool-calls"],
+            "conditions": [{"path": "$.tools", "assertAction": "notEmpty"}],
+            "llm": {
+              "provider": "openai",
+              "model": "gpt-4o-mini",
+              "content": "",
+              "finishReason": "tool_calls",
+              "toolCalls": [
+                {"name": "get_weather", "arguments": {"location": "Berlin", "unit": "celsius"}}
+              ],
+              "promptTokens": 84,
+              "completionTokens": 19
+            }
+          },
+          {
+            "route": "/v1/chat/completions",
+            "method": "POST",
+            "status_code": 200,
+            "description": "Chat completion — echoes the last user message",
+            "tags": ["llm", "openai"],
+            "llm": {
+              "provider": "openai",
+              "model": "gpt-4o-mini",
+              "content": "You said: $.req.lastUserMessage",
+              "finishReason": "stop",
+              "promptTokens": 12,
+              "completionTokens": 24,
+              "chunkChars": 6,
+              "chunkDelayMs": 25
+            }
+          },
+          {
+            "route": "/v1/embeddings",
+            "method": "POST",
+            "status_code": 200,
+            "description": "Embeddings",
+            "tags": ["llm", "openai"],
+            "body": {
+              "object": "list",
+              "model": "text-embedding-3-small",
+              "data": [
+                {
+                  "object": "embedding",
+                  "index": 0,
+                  "embedding": [0.0023064255, -0.009327292, 0.015797347, -0.0077780345, 0.004549618]
+                }
+              ],
+              "usage": {"prompt_tokens": 8, "total_tokens": 8}
+            }
+          },
+          {
+            "route": "/v1/models",
+            "method": "GET",
+            "status_code": 200,
+            "description": "List models",
+            "tags": ["llm", "openai"],
+            "body": {
+              "object": "list",
+              "data": [
+                {"id": "gpt-4o", "object": "model", "created": 1715367049, "owned_by": "system"},
+                {"id": "gpt-4o-mini", "object": "model", "created": 1721172741, "owned_by": "system"},
+                {"id": "text-embedding-3-small", "object": "model", "created": 1705948997, "owned_by": "system"}
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

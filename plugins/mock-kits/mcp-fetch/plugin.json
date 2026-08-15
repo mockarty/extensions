@@ -1,0 +1,154 @@
+{
+  "id": "mockarty.mcp-fetch",
+  "name": "MCP server: Fetch (web)",
+  "version": "1.0.0",
+  "description": "A mocked Fetch MCP server: retrieve a web page as markdown, with the failures an agent has to survive — 404, timeout, and a robots.txt refusal. Lets you test retrieval logic offline and deterministically.",
+  "author": {
+    "name": "Mockarty",
+    "url": "https://mockarty.ru"
+  },
+  "homepage": "https://mockarty.ru/docs/plugins-authoring",
+  "license": "MIT",
+  "min_mockarty_version": "1.0.0",
+  "contributes": {
+    "mock_kits": [
+      {
+        "key": "mcp_fetch",
+        "name": "Fetch MCP server",
+        "description": "Fetch a URL and return it as markdown. Use a url containing \"404\", \"timeout\" or \"robots\" to exercise the failure paths.",
+        "mocks": [
+          {
+            "protocol": "mcp",
+            "description": "Fetch a URL and return its contents converted to markdown",
+            "tags": [
+              "mcp"
+            ],
+            "mcp": {
+              "tool": "fetch",
+              "description": "Fetch a URL and return its contents converted to markdown.",
+              "input_schema": {
+                "type": "object",
+                "properties": {
+                  "url": {
+                    "type": "string",
+                    "description": "Absolute URL to fetch"
+                  },
+                  "max_length": {
+                    "type": "number",
+                    "description": "Maximum number of characters to return"
+                  },
+                  "start_index": {
+                    "type": "number",
+                    "description": "Start returning content from this character index"
+                  },
+                  "raw": {
+                    "type": "boolean",
+                    "description": "Return raw HTML instead of markdown"
+                  }
+                },
+                "required": [
+                  "url"
+                ]
+              }
+            },
+            "body": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Contents of $.req.url:\n\n# Example Domain\n\nThis domain is for use in illustrative examples in documents.\n\n[More information...](https://www.iana.org/domains/example)"
+                }
+              ]
+            }
+          },
+          {
+            "protocol": "mcp",
+            "description": "not-found",
+            "tags": [
+              "mcp",
+              "scenario:not-found"
+            ],
+            "priority": 90,
+            "mcp_is_error": true,
+            "conditions": [
+              {
+                "path": "$.url",
+                "assertAction": "contains",
+                "value": "404"
+              }
+            ],
+            "mcp": {
+              "tool": "fetch",
+              "description": "Fetch a URL and return its contents converted to markdown."
+            },
+            "body": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Error: Failed to fetch $.req.url — HTTP 404 Not Found"
+                }
+              ]
+            }
+          },
+          {
+            "protocol": "mcp",
+            "description": "timeout",
+            "tags": [
+              "mcp",
+              "scenario:timeout"
+            ],
+            "priority": 90,
+            "mcp_is_error": true,
+            "conditions": [
+              {
+                "path": "$.url",
+                "assertAction": "contains",
+                "value": "timeout"
+              }
+            ],
+            "mcp": {
+              "tool": "fetch",
+              "description": "Fetch a URL and return its contents converted to markdown."
+            },
+            "body": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Error: Timed out while fetching $.req.url after 30s"
+                }
+              ]
+            }
+          },
+          {
+            "protocol": "mcp",
+            "description": "robots",
+            "tags": [
+              "mcp",
+              "scenario:robots"
+            ],
+            "priority": 90,
+            "mcp_is_error": true,
+            "conditions": [
+              {
+                "path": "$.url",
+                "assertAction": "contains",
+                "value": "robots"
+              }
+            ],
+            "mcp": {
+              "tool": "fetch",
+              "description": "Fetch a URL and return its contents converted to markdown."
+            },
+            "body": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Error: The site's robots.txt forbids fetching $.req.url for autonomous agents."
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

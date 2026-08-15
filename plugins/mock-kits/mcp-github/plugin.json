@@ -1,0 +1,417 @@
+{
+  "id": "mockarty.mcp-github",
+  "name": "MCP server: GitHub",
+  "version": "1.0.0",
+  "description": "A mocked GitHub MCP server: search code, read files, open and comment on issues, list and create pull requests — with the failures an agent must handle (repository not found, insufficient permissions, rate limit). Drive an agent through a whole GitHub workflow without a token or a real repository.",
+  "author": {
+    "name": "Mockarty",
+    "url": "https://mockarty.ru"
+  },
+  "homepage": "https://mockarty.ru/docs/plugins-authoring",
+  "license": "MIT",
+  "min_mockarty_version": "1.0.0",
+  "contributes": {
+    "mock_kits": [
+      {
+        "key": "mcp_github",
+        "name": "GitHub MCP server",
+        "description": "Repository, issue and pull-request tools. Pass repo \"missing\" to exercise a 404 and owner \"forbidden\" to exercise a permissions failure.",
+        "mocks": [
+          {
+            "protocol": "mcp",
+            "description": "Search GitHub repositories by query",
+            "tags": [
+              "mcp"
+            ],
+            "mcp": {
+              "tool": "search_repositories",
+              "description": "Search GitHub repositories by query.",
+              "input_schema": {
+                "type": "object",
+                "properties": {
+                  "query": {
+                    "type": "string",
+                    "description": "Search query, e.g. 'mockarty language:go'"
+                  },
+                  "perPage": {
+                    "type": "number",
+                    "description": "Results per page (max 100)"
+                  }
+                },
+                "required": [
+                  "query"
+                ]
+              }
+            },
+            "body": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Found 2 repositories for \"$.req.query\":\n\n1. mockarty/mockarty — Backend testing platform (Go, 1240 stars)\n2. mockarty/extensions — Official plugin catalogue (JSON, 87 stars)"
+                }
+              ]
+            }
+          },
+          {
+            "protocol": "mcp",
+            "description": "Read a file or list a directory in a repository",
+            "tags": [
+              "mcp"
+            ],
+            "mcp": {
+              "tool": "get_file_contents",
+              "description": "Read a file or list a directory in a repository.",
+              "input_schema": {
+                "type": "object",
+                "properties": {
+                  "owner": {
+                    "type": "string",
+                    "description": "Repository owner"
+                  },
+                  "repo": {
+                    "type": "string",
+                    "description": "Repository name"
+                  },
+                  "path": {
+                    "type": "string",
+                    "description": "File or directory path"
+                  },
+                  "branch": {
+                    "type": "string",
+                    "description": "Branch name, defaults to the default branch"
+                  }
+                },
+                "required": [
+                  "owner",
+                  "repo",
+                  "path"
+                ]
+              }
+            },
+            "body": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Contents of $.req.owner/$.req.repo/$.req.path (branch: main):\n\n# Mockarty\n\nBackend testing platform: API mocking, load testing, fuzzing.\n"
+                }
+              ]
+            }
+          },
+          {
+            "protocol": "mcp",
+            "description": "not-found",
+            "tags": [
+              "mcp",
+              "scenario:not-found"
+            ],
+            "priority": 90,
+            "mcp_is_error": true,
+            "conditions": [
+              {
+                "path": "$.repo",
+                "assertAction": "equals",
+                "value": "missing"
+              }
+            ],
+            "mcp": {
+              "tool": "get_file_contents",
+              "description": "Read a file or list a directory in a repository."
+            },
+            "body": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Error: Not Found (404). Repository $.req.owner/$.req.repo does not exist or you do not have access to it."
+                }
+              ]
+            }
+          },
+          {
+            "protocol": "mcp",
+            "description": "forbidden",
+            "tags": [
+              "mcp",
+              "scenario:forbidden"
+            ],
+            "priority": 90,
+            "mcp_is_error": true,
+            "conditions": [
+              {
+                "path": "$.owner",
+                "assertAction": "equals",
+                "value": "forbidden"
+              }
+            ],
+            "mcp": {
+              "tool": "get_file_contents",
+              "description": "Read a file or list a directory in a repository."
+            },
+            "body": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Error: Resource not accessible by integration (403). The token lacks the 'contents: read' permission for this repository."
+                }
+              ]
+            }
+          },
+          {
+            "protocol": "mcp",
+            "description": "Open a new issue in a repository",
+            "tags": [
+              "mcp"
+            ],
+            "mcp": {
+              "tool": "create_issue",
+              "description": "Open a new issue in a repository.",
+              "input_schema": {
+                "type": "object",
+                "properties": {
+                  "owner": {
+                    "type": "string",
+                    "description": "Repository owner"
+                  },
+                  "repo": {
+                    "type": "string",
+                    "description": "Repository name"
+                  },
+                  "title": {
+                    "type": "string",
+                    "description": "Issue title"
+                  },
+                  "body": {
+                    "type": "string",
+                    "description": "Issue body in Markdown"
+                  },
+                  "labels": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "Labels to apply"
+                  }
+                },
+                "required": [
+                  "owner",
+                  "repo",
+                  "title"
+                ]
+              }
+            },
+            "body": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Created issue #142: \"$.req.title\"\nURL: https://github.com/$.req.owner/$.req.repo/issues/142\nState: open"
+                }
+              ]
+            }
+          },
+          {
+            "protocol": "mcp",
+            "description": "not-found",
+            "tags": [
+              "mcp",
+              "scenario:not-found"
+            ],
+            "priority": 90,
+            "mcp_is_error": true,
+            "conditions": [
+              {
+                "path": "$.repo",
+                "assertAction": "equals",
+                "value": "missing"
+              }
+            ],
+            "mcp": {
+              "tool": "create_issue",
+              "description": "Open a new issue in a repository."
+            },
+            "body": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Error: Not Found (404). Cannot create an issue in a repository that does not exist."
+                }
+              ]
+            }
+          },
+          {
+            "protocol": "mcp",
+            "description": "Add a comment to an issue or pull request",
+            "tags": [
+              "mcp"
+            ],
+            "mcp": {
+              "tool": "add_issue_comment",
+              "description": "Add a comment to an issue or pull request.",
+              "input_schema": {
+                "type": "object",
+                "properties": {
+                  "owner": {
+                    "type": "string",
+                    "description": "Repository owner"
+                  },
+                  "repo": {
+                    "type": "string",
+                    "description": "Repository name"
+                  },
+                  "issue_number": {
+                    "type": "number",
+                    "description": "Issue or pull-request number"
+                  },
+                  "body": {
+                    "type": "string",
+                    "description": "Comment body"
+                  }
+                },
+                "required": [
+                  "owner",
+                  "repo",
+                  "issue_number",
+                  "body"
+                ]
+              }
+            },
+            "body": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Comment added to $.req.owner/$.req.repo#$.req.issue_number\nURL: https://github.com/$.req.owner/$.req.repo/issues/$.req.issue_number#issuecomment-9001"
+                }
+              ]
+            }
+          },
+          {
+            "protocol": "mcp",
+            "description": "List pull requests in a repository",
+            "tags": [
+              "mcp"
+            ],
+            "mcp": {
+              "tool": "list_pull_requests",
+              "description": "List pull requests in a repository.",
+              "input_schema": {
+                "type": "object",
+                "properties": {
+                  "owner": {
+                    "type": "string",
+                    "description": "Repository owner"
+                  },
+                  "repo": {
+                    "type": "string",
+                    "description": "Repository name"
+                  },
+                  "state": {
+                    "type": "string",
+                    "description": "Filter by state: open, closed or all"
+                  }
+                },
+                "required": [
+                  "owner",
+                  "repo"
+                ]
+              }
+            },
+            "body": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Open pull requests in $.req.owner/$.req.repo:\n\n#87 Add MCP kit plugins — mockarty-bot (2 approvals, checks passing)\n#86 Fix inline templating inside arrays — mockarty-bot (1 approval, checks pending)"
+                }
+              ]
+            }
+          },
+          {
+            "protocol": "mcp",
+            "description": "Open a pull request",
+            "tags": [
+              "mcp"
+            ],
+            "mcp": {
+              "tool": "create_pull_request",
+              "description": "Open a pull request.",
+              "input_schema": {
+                "type": "object",
+                "properties": {
+                  "owner": {
+                    "type": "string",
+                    "description": "Repository owner"
+                  },
+                  "repo": {
+                    "type": "string",
+                    "description": "Repository name"
+                  },
+                  "title": {
+                    "type": "string",
+                    "description": "Pull-request title"
+                  },
+                  "head": {
+                    "type": "string",
+                    "description": "Source branch"
+                  },
+                  "base": {
+                    "type": "string",
+                    "description": "Target branch"
+                  },
+                  "body": {
+                    "type": "string",
+                    "description": "Description in Markdown"
+                  },
+                  "draft": {
+                    "type": "boolean",
+                    "description": "Open as a draft"
+                  }
+                },
+                "required": [
+                  "owner",
+                  "repo",
+                  "title",
+                  "head",
+                  "base"
+                ]
+              }
+            },
+            "body": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Created pull request #88: \"$.req.title\"\n$.req.head → $.req.base\nURL: https://github.com/$.req.owner/$.req.repo/pull/88"
+                }
+              ]
+            }
+          },
+          {
+            "protocol": "mcp",
+            "description": "conflict",
+            "tags": [
+              "mcp",
+              "scenario:conflict"
+            ],
+            "priority": 90,
+            "mcp_is_error": true,
+            "conditions": [
+              {
+                "path": "$.head",
+                "assertAction": "equals",
+                "value": "conflict"
+              }
+            ],
+            "mcp": {
+              "tool": "create_pull_request",
+              "description": "Open a pull request."
+            },
+            "body": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Error: Validation Failed (422). No commits between $.req.base and $.req.head, or the branch has conflicts that must be resolved first."
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

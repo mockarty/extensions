@@ -1,0 +1,289 @@
+{
+  "id": "mockarty.mcp-sqlite",
+  "name": "MCP server: SQLite",
+  "version": "1.0.0",
+  "description": "A mocked SQLite MCP server: list and describe tables, read and write rows, and record business insights — with genuine SQLite error text for the failure paths. Useful for testing an agent against a small embedded database it cannot corrupt.",
+  "author": {
+    "name": "Mockarty",
+    "url": "https://mockarty.ru"
+  },
+  "homepage": "https://mockarty.ru/docs/plugins-authoring",
+  "license": "MIT",
+  "min_mockarty_version": "1.0.0",
+  "contributes": {
+    "mock_kits": [
+      {
+        "key": "mcp_sqlite",
+        "name": "SQLite MCP server",
+        "description": "Query and modify a SQLite database. A query on table \"missing\" returns a real SQLite error.",
+        "mocks": [
+          {
+            "protocol": "mcp",
+            "description": "List all tables in the database",
+            "tags": [
+              "mcp"
+            ],
+            "mcp": {
+              "tool": "list_tables",
+              "description": "List all tables in the database.",
+              "input_schema": {
+                "type": "object",
+                "properties": {}
+              }
+            },
+            "body": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Tables:\nproducts\norders\ncustomers"
+                }
+              ]
+            }
+          },
+          {
+            "protocol": "mcp",
+            "description": "Show the schema of a table",
+            "tags": [
+              "mcp"
+            ],
+            "mcp": {
+              "tool": "describe_table",
+              "description": "Show the schema of a table.",
+              "input_schema": {
+                "type": "object",
+                "properties": {
+                  "table_name": {
+                    "type": "string",
+                    "description": "Table to describe"
+                  }
+                },
+                "required": [
+                  "table_name"
+                ]
+              }
+            },
+            "body": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "CREATE TABLE $.req.table_name (\n  id INTEGER PRIMARY KEY AUTOINCREMENT,\n  name TEXT NOT NULL,\n  price REAL,\n  created_at TEXT DEFAULT CURRENT_TIMESTAMP\n);"
+                }
+              ]
+            }
+          },
+          {
+            "protocol": "mcp",
+            "description": "not-found",
+            "tags": [
+              "mcp",
+              "scenario:not-found"
+            ],
+            "priority": 90,
+            "mcp_is_error": true,
+            "conditions": [
+              {
+                "path": "$.table_name",
+                "assertAction": "equals",
+                "value": "missing"
+              }
+            ],
+            "mcp": {
+              "tool": "describe_table",
+              "description": "Show the schema of a table."
+            },
+            "body": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Error: no such table: missing"
+                }
+              ]
+            }
+          },
+          {
+            "protocol": "mcp",
+            "description": "Run a SELECT and return the rows",
+            "tags": [
+              "mcp"
+            ],
+            "mcp": {
+              "tool": "read_query",
+              "description": "Run a SELECT and return the rows.",
+              "input_schema": {
+                "type": "object",
+                "properties": {
+                  "query": {
+                    "type": "string",
+                    "description": "A SELECT statement"
+                  }
+                },
+                "required": [
+                  "query"
+                ]
+              }
+            },
+            "body": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "[{\"id\": 1, \"name\": \"Widget\", \"price\": 9.99},\n {\"id\": 2, \"name\": \"Gadget\", \"price\": 24.50}]"
+                }
+              ]
+            }
+          },
+          {
+            "protocol": "mcp",
+            "description": "not-found",
+            "tags": [
+              "mcp",
+              "scenario:not-found"
+            ],
+            "priority": 90,
+            "mcp_is_error": true,
+            "conditions": [
+              {
+                "path": "$.query",
+                "assertAction": "contains",
+                "value": "missing"
+              }
+            ],
+            "mcp": {
+              "tool": "read_query",
+              "description": "Run a SELECT and return the rows."
+            },
+            "body": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Error: no such table: missing"
+                }
+              ]
+            }
+          },
+          {
+            "protocol": "mcp",
+            "description": "wrong-tool",
+            "tags": [
+              "mcp",
+              "scenario:wrong-tool"
+            ],
+            "priority": 90,
+            "mcp_is_error": true,
+            "conditions": [
+              {
+                "path": "$.query",
+                "assertAction": "contains",
+                "value": "INSERT"
+              }
+            ],
+            "mcp": {
+              "tool": "read_query",
+              "description": "Run a SELECT and return the rows."
+            },
+            "body": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Error: read_query only accepts SELECT statements — use write_query instead."
+                }
+              ]
+            }
+          },
+          {
+            "protocol": "mcp",
+            "description": "Run an INSERT, UPDATE or DELETE",
+            "tags": [
+              "mcp"
+            ],
+            "mcp": {
+              "tool": "write_query",
+              "description": "Run an INSERT, UPDATE or DELETE.",
+              "input_schema": {
+                "type": "object",
+                "properties": {
+                  "query": {
+                    "type": "string",
+                    "description": "A write statement; SELECT is refused"
+                  }
+                },
+                "required": [
+                  "query"
+                ]
+              }
+            },
+            "body": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "{\"affected_rows\": 1, \"last_insert_rowid\": 3}"
+                }
+              ]
+            }
+          },
+          {
+            "protocol": "mcp",
+            "description": "Create a new table",
+            "tags": [
+              "mcp"
+            ],
+            "mcp": {
+              "tool": "create_table",
+              "description": "Create a new table.",
+              "input_schema": {
+                "type": "object",
+                "properties": {
+                  "query": {
+                    "type": "string",
+                    "description": "A CREATE TABLE statement"
+                  }
+                },
+                "required": [
+                  "query"
+                ]
+              }
+            },
+            "body": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Table created successfully."
+                }
+              ]
+            }
+          },
+          {
+            "protocol": "mcp",
+            "description": "Record a business insight in the memo resource",
+            "tags": [
+              "mcp"
+            ],
+            "mcp": {
+              "tool": "append_insight",
+              "description": "Record a business insight in the memo resource.",
+              "input_schema": {
+                "type": "object",
+                "properties": {
+                  "insight": {
+                    "type": "string",
+                    "description": "The insight to record"
+                  }
+                },
+                "required": [
+                  "insight"
+                ]
+              }
+            },
+            "body": {
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Insight added to the memo:\n\"$.req.insight\""
+                }
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  }
+}
