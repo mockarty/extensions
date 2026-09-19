@@ -1,0 +1,254 @@
+{
+  "id": "mockarty.atlassian-teamwork-pack",
+  "name": "Atlassian teamwork pack",
+  "version": "1.0.0",
+  "description": "Everything a team migrating from Jira and Confluence needs on day one: connectors for both, a seeded project and wiki space, ready test cases, deep links back to the originals, and a macro that shows an issue's state on a wiki page. Declarative — no code runs.",
+  "author": {
+    "name": "Mockarty",
+    "url": "https://mockarty.ru"
+  },
+  "homepage": "https://mockarty.ru/docs/plugins",
+  "license": "MIT",
+  "min_mockarty_version": "1.0.0",
+  "settings_schema": {
+    "type": "object",
+    "properties": {
+      "site_url": {
+        "type": "string",
+        "title": "Atlassian site URL",
+        "description": "Your Atlassian site, e.g. https://your-org.atlassian.net. Used to build the deep links back to the original issues and pages.",
+        "default": "https://your-org.atlassian.net"
+      },
+      "api_token": {
+        "type": "string",
+        "format": "mockarty-secret-ref",
+        "title": "API token",
+        "description": "A reference to the secret holding your Atlassian API token. The token itself is never stored in the extension."
+      }
+    },
+    "required": [
+      "site_url"
+    ]
+  },
+  "contributes": {
+    "connectors": [
+      {
+        "key": "atlassian_jira",
+        "name": "Jira Cloud",
+        "kind": "jira",
+        "description": "Link Mockarty issues, test cases and runs to the Jira project you are migrating from.",
+        "icon": "bug-ant",
+        "docs_url": "https://mockarty.ru/docs/integrations",
+        "config_template": {
+          "base_url": "https://your-org.atlassian.net",
+          "project_key": "PROJ"
+        }
+      },
+      {
+        "key": "atlassian_confluence",
+        "name": "Confluence Cloud",
+        "kind": "webhook_generic",
+        "description": "Point Mockarty at a Confluence space so wiki pages can carry links back to the original documents.",
+        "icon": "book-open",
+        "docs_url": "https://mockarty.ru/docs/integrations",
+        "config_template": {
+          "url_template": "https://your-org.atlassian.net/wiki/spaces/{space}"
+        }
+      }
+    ],
+    "content_packs": [
+      {
+        "key": "atlassian_project",
+        "name": "Migrated project (epic, stories, bug)",
+        "kind": "issue",
+        "description": "A starter tracker project shaped the way a Jira project usually arrives: one epic, three stories under it, and a defect.",
+        "items": [
+          {
+            "name": "Migration pilot",
+            "keyPrefix": "MIGR",
+            "description": "The first project moved over from Jira. Use it to check that your workflow, fields and reports look right before moving the rest.",
+            "issues": [
+              {
+                "title": "[Epic] Move the payments team to Mockarty",
+                "type": "epic",
+                "priority": "high",
+                "description": "Everything needed before the payments team stops opening Jira."
+              },
+              {
+                "title": "Import the backlog",
+                "type": "task",
+                "priority": "high",
+                "description": "Bring issues across with their keys, so old links still resolve."
+              },
+              {
+                "title": "Recreate the release board",
+                "type": "task",
+                "priority": "medium",
+                "description": "Columns, swimlanes and the definition of done the team already agreed on."
+              },
+              {
+                "title": "Point CI at the new tracker",
+                "type": "task",
+                "priority": "medium",
+                "description": "Commits and merge requests should close issues here, not in Jira."
+              },
+              {
+                "title": "Status transitions lose the assignee",
+                "type": "bug",
+                "priority": "high",
+                "description": "Moving an imported issue to In Review clears who it was assigned to."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "key": "atlassian_space",
+        "name": "Team space (Confluence-style)",
+        "kind": "wiki",
+        "description": "The pages a team keeps in Confluence — a home page, a decision record and a runbook — as Mockarty wiki pages.",
+        "items": [
+          {
+            "title": "Team home",
+            "content": "# Team home\n\nWhat this team owns, who to ask, and where the important things live.\n\n## Services we own\n\n| Service | On call | Runbook |\n|---------|---------|---------|\n| payments-api | payments@example.org | [Runbook](/wiki) |\n\n## How we work\n\n- Every change goes through a merge request.\n- Anything user-visible needs a test case linked to its issue.\n"
+          },
+          {
+            "title": "Decision record: why we moved off Jira",
+            "content": "# Decision record: why we moved off Jira\n\n**Status:** accepted\n\n## Context\n\nIssues, test cases and the mocks they exercise lived in three products. Tracing a failing test back to the requirement meant three tabs and a guess.\n\n## Decision\n\nKeep the tracker, the test cases and the mocks in one place, and link them to each other.\n\n## Consequences\n\n- Old Jira links must keep resolving — hence the deep links this pack installs.\n- The team learns one search box instead of three.\n"
+          },
+          {
+            "title": "Runbook: payments-api is failing",
+            "content": "# Runbook: payments-api is failing\n\n1. Check the dashboard for the error rate and which endpoint is failing.\n2. Replay the failing request against the mock to see whether the contract changed.\n3. If the contract changed, open a defect and link it to the contract.\n4. If it did not, escalate to the on-call engineer for payments.\n"
+          }
+        ]
+      },
+      {
+        "key": "atlassian_migration_checks",
+        "name": "Migration acceptance cases",
+        "kind": "tcm",
+        "description": "The checks that tell you a migration actually worked, rather than merely finished.",
+        "items": [
+          {
+            "name": "An imported issue keeps its original key",
+            "priority": "high",
+            "tags": [
+              "migration"
+            ],
+            "expectedResult": "The issue opens under its imported key and the old Jira link resolves to it.",
+            "steps": [
+              {
+                "action": "Open an issue that was imported from Jira",
+                "expectedResult": "The issue opens."
+              },
+              {
+                "action": "Follow the deep link back to the original",
+                "expectedResult": "The original Jira issue opens in a new tab."
+              }
+            ]
+          },
+          {
+            "name": "A wiki page renders the issue macro",
+            "priority": "medium",
+            "tags": [
+              "migration",
+              "wiki"
+            ],
+            "expectedResult": "The macro shows the issue key and its current state, not raw text.",
+            "steps": [
+              {
+                "action": "Open the team home page",
+                "expectedResult": "The page renders."
+              },
+              {
+                "action": "Insert the issue-status macro for a migrated issue",
+                "expectedResult": "The badge shows the issue key and state."
+              }
+            ]
+          },
+          {
+            "name": "Attachments survived the import",
+            "priority": "medium",
+            "tags": [
+              "migration"
+            ],
+            "expectedResult": "Every attachment opens and matches the original file.",
+            "steps": [
+              {
+                "action": "Open an imported issue that had attachments",
+                "expectedResult": "The attachments are listed."
+              },
+              {
+                "action": "Open each attachment",
+                "expectedResult": "The file opens and is not truncated."
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "links": [
+      {
+        "key": "atlassian_jira_issue",
+        "name": "Original Jira issue",
+        "from_entity": "issue",
+        "to_entity": "external",
+        "description": "Points a migrated issue at the Jira issue it came from, so old bookmarks and references still work.",
+        "url_template": "https://your-org.atlassian.net/browse/{key}",
+        "icon": "arrow-top-right-on-square"
+      },
+      {
+        "key": "atlassian_confluence_page",
+        "name": "Original Confluence page",
+        "from_entity": "wiki",
+        "to_entity": "external",
+        "description": "Points a migrated wiki page at the Confluence page it came from.",
+        "url_template": "https://your-org.atlassian.net/wiki/spaces/{space}/pages/{id}",
+        "icon": "book-open"
+      }
+    ],
+    "wiki_macros": [
+      {
+        "name": "plugin-jira-issue",
+        "title": "Jira issue badge",
+        "description": "Shows a migrated issue's key and state inline on a wiki page, with a link back to the original.",
+        "icon": "bug-ant",
+        "params": [
+          {
+            "name": "key",
+            "title": "Issue key",
+            "description": "The issue key, e.g. MIGR-12.",
+            "default": "MIGR-1"
+          },
+          {
+            "name": "state",
+            "title": "State",
+            "description": "The state to display.",
+            "default": "In progress"
+          },
+          {
+            "name": "site",
+            "title": "Atlassian site",
+            "description": "The site the link points at. Defaults to the one this extension is configured with.",
+            "default": "https://your-org.atlassian.net"
+          }
+        ],
+        "template": "**[{{.key}}]({{.site}}/browse/{{.key}})** — {{.state}}"
+      }
+    ],
+    "event_types": [
+      {
+        "type": "plugin.atlassian.import_finished",
+        "title": "Atlassian import finished",
+        "severity": "success",
+        "description": "Raised when a batch of issues or pages has finished importing, so a team can be told without watching the screen."
+      },
+      {
+        "type": "plugin.atlassian.import_conflict",
+        "title": "Atlassian import conflict",
+        "severity": "warning",
+        "description": "Raised when an imported item collides with something that already exists and was left untouched."
+      }
+    ]
+  },
+  "permissions": []
+}

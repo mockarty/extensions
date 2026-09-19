@@ -10,16 +10,32 @@
       "description": "Two ready-made whiteboard templates — a Start/Stop/Continue retrospective board and a C4-style container sketch. Instantiate the pack and the boards appear in your namespace, ready to edit.",
       "author_name": "Mockarty",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/community.board-templates-1.0.0.zip",
-      "sha256": "7155c24902be16b8dc45545d83307937fd42a620f0ee18a859e0f3a75900b0b0"
+      "sha256": "329de23ef6191cd6f7f6f63bc24fc649a8493049b3fdc4b8f133bdf221f756f8",
+      "namespace_installable": true
     },
     {
       "id": "community.n8n-connectors",
       "name": "Community connectors (n8n import)",
       "version": "1.0.0",
       "category": "connectors",
-      "description": "Nine integration presets (Slack, Telegram, Discord, Notion, GitHub, Jira, Trello, Asana, Mattermost) converted from n8n community nodes with 'mockarty-cli plugin import --from n8n'.",
+      "description": "Nine integration presets (Slack, Telegram, Discord, Notion, GitHub, Jira, Trello, Asana, Mattermost) converted from n8n community nodes. They give Mockarty pre-filled CONNECTIONS to those services — they do not run n8n workflows.",
+      "author_name": "Mockarty community",
+      "homepage": "https://mockarty.ru/docs/plugins",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/community.n8n-connectors-1.0.0.zip",
-      "sha256": "823d68db9b3bf02b66ea34d620ba153429416a2bfe8f5344f6bef0d877bf7912"
+      "sha256": "fce333c36839cd1359ce30f07174b068cb284870137f751817688fee2379c335",
+      "namespace_installable": false
+    },
+    {
+      "id": "mockarty.agent-sdlc-pack",
+      "name": "Agent SDLC pack",
+      "version": "1.0.0",
+      "category": "content-packs",
+      "description": "Turns an empty namespace into one an autonomous tester can work in: the knowledge it reads, the workflow it follows, the checks it runs, the events it reports and the links it leaves behind. Everything a person sees, the agent can reach too.",
+      "author_name": "Mockarty",
+      "homepage": "https://mockarty.ru/docs/plugins",
+      "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.agent-sdlc-pack-1.0.0.zip",
+      "sha256": "255eb308df8a13750b845f3c02ce920ead5cf0986efca99360af2fa4b0abd522",
+      "namespace_installable": false
     },
     {
       "id": "mockarty.allure-connector",
@@ -30,7 +46,8 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.allure-connector-1.0.0.zip",
-      "sha256": "e7dd21c19e65fda2ad8d9539a8ec7de0256e0f94122a0261a4fe61409a41b600"
+      "sha256": "14fa476e9f73a20cd05f4266f121199559122d6628af11eada065c239ab161ee",
+      "namespace_installable": true
     },
     {
       "id": "mockarty.analytics-kit",
@@ -41,7 +58,8 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.analytics-kit-1.0.0.zip",
-      "sha256": "8b48021409ef470aa7dd4cf52e145cbbb34934c64eaf186a6dceff971196c18c"
+      "sha256": "e0fffcbf86ab35b7f1bf7ca5b75cfb937ae8280064ca0657d10aa3d86c6576ae",
+      "namespace_installable": true
     },
     {
       "id": "mockarty.api-collection-pack",
@@ -52,7 +70,20 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.api-collection-pack-1.0.0.zip",
-      "sha256": "d01f5e1e6897d5a2096dbf004f53fcaeb4d173107aa6bf0a6ff4fa064057f90c"
+      "sha256": "759770d69ca332e9b88586cb128e7dfd56749959903855a9f8e1fe226c7f1930",
+      "namespace_installable": true
+    },
+    {
+      "id": "mockarty.atlassian-teamwork-pack",
+      "name": "Atlassian teamwork pack",
+      "version": "1.0.0",
+      "category": "connectors",
+      "description": "Everything a team migrating from Jira and Confluence needs on day one: connectors for both, a seeded project and wiki space, ready test cases, deep links back to the originals, and a macro that shows an issue's state on a wiki page. Declarative — no code runs.",
+      "author_name": "Mockarty",
+      "homepage": "https://mockarty.ru/docs/plugins",
+      "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.atlassian-teamwork-pack-1.0.0.zip",
+      "sha256": "c17c7d5f05bc8941f69741c426c9f316ca6acd59c82a52c98f5bb5174604fe89",
+      "namespace_installable": false
     },
     {
       "id": "mockarty.ats-kit",
@@ -63,7 +94,8 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.ats-kit-1.0.0.zip",
-      "sha256": "92546f0f2fe58647c734da0da66995cad798c2d60a31d9746cda374ac4ce8ed7"
+      "sha256": "0e1501dc5103a884e9e2f5b807ca75887c7bdba113a79e9f61fcc2f5c3bac197",
+      "namespace_installable": true
     },
     {
       "id": "mockarty.auth-oidc-kit",
@@ -74,7 +106,8 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.auth-oidc-kit-1.0.0.zip",
-      "sha256": "84c205dc7700b4212b70c1fa331beeb0c38d39bc73a760502c0119dd0102123c"
+      "sha256": "b684243c0886f51f1a84f48f7d9ad15830f3d5591bab9f4c8552f9dcd1f03ec2",
+      "namespace_installable": true
     },
     {
       "id": "mockarty.banking-kit",
@@ -85,7 +118,8 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.banking-kit-1.0.0.zip",
-      "sha256": "954292856c79236b86736d52e61609fc22a7f23113e841efec624aae2e850a13"
+      "sha256": "906f8b6e6d352aa9fe9fe828efb2469f57e590149fb849ed33df2bb8a5260323",
+      "namespace_installable": true
     },
     {
       "id": "mockarty.barcode-fakers",
@@ -96,7 +130,8 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.barcode-fakers-1.0.0.zip",
-      "sha256": "08f80e991fdf769ca2e0374e2a202d05f91786850453d4f13d13b5330c2aa614"
+      "sha256": "f5d47e936dd14a177d596fbe9b9edf4ea80de468a6115ea5fe0c6ee6db52945c",
+      "namespace_installable": false
     },
     {
       "id": "mockarty.billing-kit",
@@ -107,7 +142,8 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.billing-kit-1.0.0.zip",
-      "sha256": "d47fc5c4057fcf8e24a006380c9ea6f012dbc76f1d949bb58f7a0c530b20b91b"
+      "sha256": "b7ede37b9f767809ba1a7752dfd047db7ef62f418418c95b856939087b031a62",
+      "namespace_installable": true
     },
     {
       "id": "mockarty.booking-kit",
@@ -118,7 +154,8 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.booking-kit-1.0.0.zip",
-      "sha256": "e9dfd44c248f97da51d806acae84b484354418c1168f56950b0a008aea79cf09"
+      "sha256": "710e0082a3fe5e242769d352260cd418ad030818ed603045c71b238c5380b8a5",
+      "namespace_installable": true
     },
     {
       "id": "mockarty.contract-starter-pack",
@@ -129,7 +166,8 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.contract-starter-pack-1.0.0.zip",
-      "sha256": "18631ca42802c363eb8fa6331fdfcaf301dbd9a01919f0acb854cf6b11f1f3e6"
+      "sha256": "65d27d04ef428ba32e1138b93ed296efcc66e6307fe83fd9fd619ba2b1330435",
+      "namespace_installable": true
     },
     {
       "id": "mockarty.crm-kit",
@@ -140,7 +178,8 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.crm-kit-1.0.0.zip",
-      "sha256": "5f15e6106d66df3e1ebd784451868ee6805230c13d9c2a66788ad2af503c2684"
+      "sha256": "a5de8d6a17b162edbf18ae278baaa33cf4b709845defc1c9f00c28fd483260cc",
+      "namespace_installable": true
     },
     {
       "id": "mockarty.crypto-fakers",
@@ -151,7 +190,8 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.crypto-fakers-1.0.0.zip",
-      "sha256": "4a89d6a93003f0f0ff729b7b5e3d440e91a033d2a2ecbb1d61a80d1587ca6ea9"
+      "sha256": "00a652acab58db61d3dda7494493875ae56cd3393d681a7f63cc1fa0075523af",
+      "namespace_installable": false
     },
     {
       "id": "mockarty.custom-runner-tasks",
@@ -162,7 +202,8 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.custom-runner-tasks-1.0.0.zip",
-      "sha256": "4d93dc3855d917e3dc3c64d24697c13a14122b19e2f7ba85784ac323b6171ef5"
+      "sha256": "70ab8d2c5aa7cde2f1c97faecbf897719dd15c6faa94d3e21ad3a5404cc24567",
+      "namespace_installable": false
     },
     {
       "id": "mockarty.datetime-fakers",
@@ -173,7 +214,8 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.datetime-fakers-1.0.0.zip",
-      "sha256": "0e6b021ed72de4af712835a20149c943a53644606451c25f13128a558ee3d608"
+      "sha256": "d469dff8c10f7ea94231c30fed96c1e3505aa99fc67db9cc2c21834dd5bf244b",
+      "namespace_installable": false
     },
     {
       "id": "mockarty.demo-mock-kit",
@@ -184,7 +226,8 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.demo-mock-kit-1.0.0.zip",
-      "sha256": "407966103baee7bbfe6637e11e14ff427da25cf078d0dd8c0969cf51d884a918"
+      "sha256": "8244879f5231ca0a68f11e24ac1e3216a574270a5ca0ce59c1cd11225b5bcd73",
+      "namespace_installable": true
     },
     {
       "id": "mockarty.deploy-events",
@@ -195,7 +238,8 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.deploy-events-1.0.0.zip",
-      "sha256": "8ef48a309ac6de559a08b59f9e042b0f04856c844e22b6198857b6f1fd22b1b0"
+      "sha256": "3439bb84af6fb94c45e9d9bca5a1dfb74ed7162f23cd05a4919fe8ecbadc9700",
+      "namespace_installable": false
     },
     {
       "id": "mockarty.ecommerce-kit",
@@ -206,7 +250,8 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.ecommerce-kit-1.0.0.zip",
-      "sha256": "a4f8b019b367c772e852775103736636f23b633f5141fc3d741cd4860063dc47"
+      "sha256": "046159eb84322372644bf922e2aea69c9a9765a6a8b6927111da8bb4b07a048f",
+      "namespace_installable": true
     },
     {
       "id": "mockarty.esign-kit",
@@ -217,7 +262,8 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.esign-kit-1.0.0.zip",
-      "sha256": "3abefc1ecca704a946d6a4f5018cd4ca7a8f8b9a5c8c9fe2d65231dad0b97dcf"
+      "sha256": "ea0137b2857828db30591adeca954d5c1534b4dad79511ca981d393d123567f6",
+      "namespace_installable": true
     },
     {
       "id": "mockarty.eu-fakers",
@@ -228,7 +274,8 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.eu-fakers-1.0.0.zip",
-      "sha256": "2ad866951af19fa98b9f20baf7040ecdfc675a21cfdba2aeae323899a4b1de2a"
+      "sha256": "6fca690c530a6ffc6f76439c209abd8b8a6fd911c6a5206e146b56f7b7b57587",
+      "namespace_installable": false
     },
     {
       "id": "mockarty.feature-flags-kit",
@@ -239,7 +286,8 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.feature-flags-kit-1.0.0.zip",
-      "sha256": "75e263addf55f19fd403727bfcc588bd295f44566fe55104d2e259be6bec2e40"
+      "sha256": "ce701ff4b3d0ea57a16b80c3055d4f0e026455d4955897f17bfabad369a917ac",
+      "namespace_installable": true
     },
     {
       "id": "mockarty.finance-fakers",
@@ -250,7 +298,8 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.finance-fakers-1.0.0.zip",
-      "sha256": "a21ac7a1341f6d9ad048301209445b86d66ce75ae8905eb732e283bc583951c0"
+      "sha256": "a09a2b04aedd48c55d4339f54620c2ef924f7ca21c6ed7e0f569d34ad83aa51e",
+      "namespace_installable": false
     },
     {
       "id": "mockarty.fitness-kit",
@@ -261,7 +310,8 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.fitness-kit-1.0.0.zip",
-      "sha256": "fc97afec5b83a2fefe5d723f7d0ffb41527f9e1e89e0bfa2796f141527543009"
+      "sha256": "6db3aa4e30c5b69b1247cb97b27da2e6d9fcd0e2846539c0927fb24bed7e25e8",
+      "namespace_installable": true
     },
     {
       "id": "mockarty.food-delivery-kit",
@@ -272,7 +322,8 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.food-delivery-kit-1.0.0.zip",
-      "sha256": "538bfef83fcc4858f5908476da12e5d730e778c655500e28c063dbc7aced81b3"
+      "sha256": "9c7b1df12a27f65a3bea1c9b9f8b977171a4e91e3161e9220baf0b333b0c2300",
+      "namespace_installable": true
     },
     {
       "id": "mockarty.format-matchers",
@@ -283,7 +334,8 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.format-matchers-1.0.0.zip",
-      "sha256": "4b56706e022cb2dd1f814ca39b762aa0688265aa86975da156ba00c2770b0b93"
+      "sha256": "dd99ad4f51492dbd795e6f980dfe030a375b9f4f49b45ce9ded0c7f955f40c0e",
+      "namespace_installable": false
     },
     {
       "id": "mockarty.gaming-kit",
@@ -294,7 +346,8 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.gaming-kit-1.0.0.zip",
-      "sha256": "164ee3e49b4bdca89f24198fb5c53f8532522e6ae4d57f0f2869bdcf29ff374e"
+      "sha256": "6a7bd06dbe74d544daefdddc739bf19c7d3cb87174aca158a8269b7bc6b49c34",
+      "namespace_installable": true
     },
     {
       "id": "mockarty.geocoding-kit",
@@ -305,7 +358,8 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.geocoding-kit-1.0.0.zip",
-      "sha256": "f0ec24180cd11423c7081c1f32f79076e9c886bfad2fc1db3ebea16ad87356e6"
+      "sha256": "76e8d268f1824d9c7e7cfb0f11e8f5bdf5c7d5b7bccb2355d3ad1c0644d9f76b",
+      "namespace_installable": true
     },
     {
       "id": "mockarty.github-connector",
@@ -316,7 +370,8 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.github-connector-1.0.0.zip",
-      "sha256": "967cc4e99126f197922755f5d3cdce8c61c291c26bc754741ab5c9b9114d8fa6"
+      "sha256": "05ea65792aa40d55283a1a5fae158a841b05d0aaf804b06e0a8b8fc7fd100214",
+      "namespace_installable": true
     },
     {
       "id": "mockarty.gitlab-connector",
@@ -327,7 +382,20 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.gitlab-connector-1.0.0.zip",
-      "sha256": "5f6fc2085e1535bf7ceade4a9baf44faccae069248db30a36a62f501a849259a"
+      "sha256": "2d112fe91db5933c29593f370658f2ada48836bf89bafa2c93a89f39f288b5a7",
+      "namespace_installable": true
+    },
+    {
+      "id": "mockarty.gitlab-dev-test-kit",
+      "name": "GitLab dev/test kit",
+      "version": "1.0.0",
+      "category": "mock-kits",
+      "description": "A GitLab API v4 contour you can develop and test against without a GitLab: projects, branches, commits, merge requests with approvals and conflicts, pipelines with jobs and logs, issues, the registry — plus the pagination, rate limits and error codes real integrations trip over.",
+      "author_name": "Mockarty",
+      "homepage": "https://mockarty.ru/docs/plugins",
+      "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.gitlab-dev-test-kit-1.0.0.zip",
+      "sha256": "9ba52459b98fecac39d19acc62e942724aac55027aa1acac83655fd497d9caf6",
+      "namespace_installable": false
     },
     {
       "id": "mockarty.healthcare-fhir-kit",
@@ -338,7 +406,8 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.healthcare-fhir-kit-1.0.0.zip",
-      "sha256": "77fd7b2ab1ac73a3b9156a692871a2631ddb73d0d08cf1101172da098ec756ef"
+      "sha256": "688487926c1aa4876ffbddc54e1e281c171851a2d2f402e074b4cc461b31f0f2",
+      "namespace_installable": true
     },
     {
       "id": "mockarty.helpdesk-kit",
@@ -349,7 +418,8 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.helpdesk-kit-1.0.0.zip",
-      "sha256": "a289a1cae45ca71083bdb8bd7f7732b9ee1c5e307dc78193972ada4cb5539f5a"
+      "sha256": "3e27730a3600a76f2bda5423b97d1451aa0f2db2f15c4662f4a5d5c49cc9f719",
+      "namespace_installable": true
     },
     {
       "id": "mockarty.hr-payroll-kit",
@@ -360,7 +430,8 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.hr-payroll-kit-1.0.0.zip",
-      "sha256": "2bf5f009f1f63d90c1d6acd47c117ba7286b65d574deae8511834628253f29cc"
+      "sha256": "e52281d37b8965d9c67888214a1a20469a02111599dd2f9497eb60e75d04be47",
+      "namespace_installable": true
     },
     {
       "id": "mockarty.identifier-fakers",
@@ -371,7 +442,8 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.identifier-fakers-1.0.0.zip",
-      "sha256": "c2783e6271f05fe747fa7dac6dc138a121188aef97d8fc27d4809d11a78f3d94"
+      "sha256": "7a28f75a759f487b7a49b4e486e067633bf138c6fea3b14d02752ce47d9aafbb",
+      "namespace_installable": false
     },
     {
       "id": "mockarty.insurance-kit",
@@ -382,7 +454,8 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.insurance-kit-1.0.0.zip",
-      "sha256": "80b7d748279fd8c05e792a4e86c516157782f60a14e2eb1130d703f3fc50f048"
+      "sha256": "1e769ed19372412a984cfb40847ac6c927c8b752240c8c9eddc3f23f19a788ce",
+      "namespace_installable": true
     },
     {
       "id": "mockarty.inventory-kit",
@@ -393,7 +466,8 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.inventory-kit-1.0.0.zip",
-      "sha256": "b332822f975c84a497f9acea1a8e16cf07d3b85ae1eb9e56c3a81066cf35c9c8"
+      "sha256": "043025d6d6942b45701adcc2f9b83382f8508054ed9403ee1dd88ee8d608902b",
+      "namespace_installable": true
     },
     {
       "id": "mockarty.iot-kit",
@@ -404,7 +478,8 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.iot-kit-1.0.0.zip",
-      "sha256": "c974edd6bd8a3351606a4146f576d717241028a08ac13545fd7bd4ea0ac2973f"
+      "sha256": "c8533c00c74cd85b0d151e20a1814e54593f97f449de0f73470c9725baa183b9",
+      "namespace_installable": true
     },
     {
       "id": "mockarty.jenkins-connector",
@@ -415,7 +490,8 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.jenkins-connector-1.0.0.zip",
-      "sha256": "7fdb33d29acfa005d1e92084b2953290422494624c4cb2f4d2e4c6544d9e11aa"
+      "sha256": "64c54fb2f08aff0474dd237e9e1712e1e52b1fdb15ff527ef68dc0834021cb24",
+      "namespace_installable": true
     },
     {
       "id": "mockarty.jira-connector",
@@ -426,7 +502,8 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.jira-connector-1.0.0.zip",
-      "sha256": "160a1c771a1e2a09f05ea0748f76f2e1c84464d8a025a52c004ef8cf86326ffc"
+      "sha256": "9a5ee0e62fd44304205fc9d7a274ee35317c59330cd9beb61c7a6b56a8ca27bb",
+      "namespace_installable": true
     },
     {
       "id": "mockarty.jira-starter-pack",
@@ -437,7 +514,8 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.jira-starter-pack-1.0.0.zip",
-      "sha256": "d79a4d3b918f31fbe42c4a9da717d62990b0256383c72262a3c3c48d3563f751"
+      "sha256": "a3c4a24c54054a9c8bfe922713374532ead9970fc4b6252293096d8c44992489",
+      "namespace_installable": true
     },
     {
       "id": "mockarty.linear-connector",
@@ -448,7 +526,8 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.linear-connector-1.0.0.zip",
-      "sha256": "7989111259068894a648d10ed6bd311fd0bf45e0a3b058712a9c9e3d40cc4ae4"
+      "sha256": "1356de40b804144b59a314ea1621d5f743e31fdc3b998e10c668c11d428af92e",
+      "namespace_installable": true
     },
     {
       "id": "mockarty.llm-anthropic",
@@ -459,7 +538,8 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.llm-anthropic-1.0.0.zip",
-      "sha256": "2a544acbb5453d80563bd49616642d0c8aa0dc187c20ed625a32c58eab16d0a2"
+      "sha256": "3cf78e1767ed8beac680fd5d3f6d9049e7958433a58fb1bdc3a092e219ce096d",
+      "namespace_installable": true
     },
     {
       "id": "mockarty.llm-deepseek",
@@ -470,7 +550,8 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.llm-deepseek-1.0.0.zip",
-      "sha256": "e80131be035d015be215ab09c69494ca76a1b48a85716314101ae13f7c1e080d"
+      "sha256": "f0a876b064a158f1cd4c4a46cd23db48e8561ab715ea7d7ee37075fddcb056de",
+      "namespace_installable": true
     },
     {
       "id": "mockarty.llm-ollama",
@@ -481,7 +562,8 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.llm-ollama-1.0.0.zip",
-      "sha256": "5b2568aa6773e10f9f2e9cc018c6d98b8aea79c9c6b1604a8466cadaa0ecda4a"
+      "sha256": "12b40e76201f8eac65c9604a624179ee7760910554d2cbf48f144f2e89e90c89",
+      "namespace_installable": true
     },
     {
       "id": "mockarty.llm-openai",
@@ -492,7 +574,8 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.llm-openai-1.0.0.zip",
-      "sha256": "b1717e6fe8d1acf49c6ecc406c4ec2dfbf8e6519d3c4ca258e99bcf25170e3d3"
+      "sha256": "1c35a64be0e7309832783849e9b6053595dc98abe4decd02889509f460e0c1da",
+      "namespace_installable": true
     },
     {
       "id": "mockarty.llm-qwen",
@@ -503,7 +586,8 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.llm-qwen-1.0.0.zip",
-      "sha256": "7700212a51c5aed1055abf0b8d1da0f08704523399c996cfbc0743504c107a73"
+      "sha256": "47aec6f0ba77018b783787d2c6f34642e0924b97ba627e22198635e4c168fbef",
+      "namespace_installable": true
     },
     {
       "id": "mockarty.lms-kit",
@@ -514,7 +598,8 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.lms-kit-1.0.0.zip",
-      "sha256": "0cad7323c692d050852f2ae5ee9bb3e73ea22a1f3b3eefbfb2f927d187450d5f"
+      "sha256": "4a9d72fd1421fa46b97bf1dd9640392bc31a2f1745c359f1545f8a3461673a3c",
+      "namespace_installable": true
     },
     {
       "id": "mockarty.loyalty-kit",
@@ -525,7 +610,8 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.loyalty-kit-1.0.0.zip",
-      "sha256": "917dc0b4a41cc96f1d30be87e173656c6a91005d34b91aa545d973b3d24aafe8"
+      "sha256": "7f89a407131cc680327ec18859d39be89eb9c53e33c69e652b9eb1451bcf2fee",
+      "namespace_installable": true
     },
     {
       "id": "mockarty.matchers",
@@ -536,7 +622,8 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.matchers-1.0.0.zip",
-      "sha256": "60f3ca54e35ee10c56b5b426fa8c980a774217ec6e8ffe2a30503e6089c63b79"
+      "sha256": "7ccf69ba38949c808e14e19b2c1ad071624dd0b19ebad17acdb3ef4815c0467c",
+      "namespace_installable": false
     },
     {
       "id": "mockarty.mcp-brave-search",
@@ -547,7 +634,8 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.mcp-brave-search-1.0.0.zip",
-      "sha256": "5f278b62dcf8f1e79998df12df90b85391c9a085f4d614d9d5ba3af9721340cc"
+      "sha256": "5ba69b72cd9dd1b3930a388060aa8fb6382bb162d6b38175e037ac62ac77c669",
+      "namespace_installable": true
     },
     {
       "id": "mockarty.mcp-fetch",
@@ -558,7 +646,8 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.mcp-fetch-1.0.0.zip",
-      "sha256": "308f6c6e49a16e59624ee902803b7a397786221a6ea33bce1abbf8f1e3efe18c"
+      "sha256": "2e1a04e6fd52c7f818080a269171edd7069d6df9d40f860bfcadb653a29fb606",
+      "namespace_installable": true
     },
     {
       "id": "mockarty.mcp-filesystem",
@@ -569,7 +658,8 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.mcp-filesystem-1.0.0.zip",
-      "sha256": "242948879a14b7752db63bf205c9ae438f3770000432898b12ae4d448c3f39e4"
+      "sha256": "0c6645629beeeb2cf1aca4a726ae4dba7c10603343810b148d4a697d1cd124bc",
+      "namespace_installable": true
     },
     {
       "id": "mockarty.mcp-git",
@@ -580,7 +670,8 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.mcp-git-1.0.0.zip",
-      "sha256": "4c0e19f88ed8063aa72c93fe507c30ff3171ac92e9248f08721331d16a7d0878"
+      "sha256": "83cfd3caf1492f96044fbb96dd524d1696b3fbc073ffc46919456fbf428afdb3",
+      "namespace_installable": true
     },
     {
       "id": "mockarty.mcp-github",
@@ -591,7 +682,8 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.mcp-github-1.0.0.zip",
-      "sha256": "33dc0101f411d43b9bc93e53f5d1be06f57f75d9263995069a759df2a1741bca"
+      "sha256": "390e7eb6fa278548881b885798402fb70371ea961a2143df358a97df9500a0e2",
+      "namespace_installable": true
     },
     {
       "id": "mockarty.mcp-memory",
@@ -602,7 +694,8 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.mcp-memory-1.0.0.zip",
-      "sha256": "4c7b4b64f80414b48d1a9ab04eae1273ee560976114703b244782ef3d1eefab0"
+      "sha256": "7252a5f4ce885e8107d79c3baa29ea8b71385cc2599682fca0637953034a82b5",
+      "namespace_installable": true
     },
     {
       "id": "mockarty.mcp-playwright",
@@ -613,7 +706,8 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.mcp-playwright-1.0.0.zip",
-      "sha256": "588b92f87064a28d039141538a297f738d512b6c0483b0ed5cbcc4397bcb7670"
+      "sha256": "a193dba9364adef0574d0101f9bb028ee810dc3a6de93aef7604cd89da29d371",
+      "namespace_installable": true
     },
     {
       "id": "mockarty.mcp-postgres",
@@ -624,7 +718,8 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.mcp-postgres-1.0.0.zip",
-      "sha256": "0fb236ad88ee659eeb9b465e66d6253d69f693ea4b572a1460e502ebba46d462"
+      "sha256": "0b35ae6108987d05f7860f405b8a9746233e5a6f719478394b2b335be26b14fb",
+      "namespace_installable": true
     },
     {
       "id": "mockarty.mcp-slack",
@@ -635,7 +730,8 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.mcp-slack-1.0.0.zip",
-      "sha256": "6cd03a90c0af8598007a580e8f13a86455111915bee5b9305a882bf7ffb25217"
+      "sha256": "12998f34d2f1f6c942c93676dedcedddf79b18f716bd679fed12b2fd0c1a67e9",
+      "namespace_installable": true
     },
     {
       "id": "mockarty.mcp-sqlite",
@@ -646,7 +742,8 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.mcp-sqlite-1.0.0.zip",
-      "sha256": "197b44fe01dc20d44c5990dd857b52c8cf6591424633af85f45ff878cf9396d1"
+      "sha256": "2143732698ca6fae7356401405433afae0031556f73247207095d31337e5163e",
+      "namespace_installable": true
     },
     {
       "id": "mockarty.messaging-kit",
@@ -657,7 +754,8 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.messaging-kit-1.0.0.zip",
-      "sha256": "75dfbd90d1df2860f11f060821725a8f790b93c099f1b6372ff0477e8401c9df"
+      "sha256": "2266fc295d48db5194cfad2e3b803816854da52d86b9f1a6af9005fd77728e36",
+      "namespace_installable": true
     },
     {
       "id": "mockarty.network-fakers",
@@ -668,7 +766,8 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.network-fakers-1.0.0.zip",
-      "sha256": "967511169c370a3995dc71d5b3211201f9e27be43f224bfa45a4851b05d147a7"
+      "sha256": "853150a0284f660b86976aaff25d55051068d9ab3138d806f95727d89c930c29",
+      "namespace_installable": false
     },
     {
       "id": "mockarty.notifications-kit",
@@ -679,7 +778,8 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.notifications-kit-1.0.0.zip",
-      "sha256": "f4fb420a27c685b87da0fc86133afb6919f65003db970cfae71bf54a92fde476"
+      "sha256": "d1d8bc767bfd8a1994b33d25b2a675d2da317feb61c32e46852d0ba42798f170",
+      "namespace_installable": true
     },
     {
       "id": "mockarty.ops-dashboard-pack",
@@ -690,7 +790,8 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.ops-dashboard-pack-1.0.0.zip",
-      "sha256": "7bfde06c98cfdd641fd4d543ed20ca6ad19c17e509d01f91a663acabc4dbb451"
+      "sha256": "0ffba306f6679587d096f817d79c8fe7fdd14823ff9a33229b022ee6d8180be1",
+      "namespace_installable": true
     },
     {
       "id": "mockarty.ops-panel",
@@ -701,7 +802,8 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.ops-panel-1.0.0.zip",
-      "sha256": "2bcbcded10841c621a96903fe2cea7894afaf9e98625aaa7e3bed69983042b5d"
+      "sha256": "a8216f95aec65733d4e9bccc11f74420dcb81337a33d30c8f267d4d4d5ddb5ee",
+      "namespace_installable": false
     },
     {
       "id": "mockarty.payments-kit",
@@ -712,7 +814,20 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.payments-kit-1.0.0.zip",
-      "sha256": "659d4d8ad8d9c8db4102c092814b6e4b04f881db89cee87cb52f87dd4db6e9ce"
+      "sha256": "94623e81f5ff5857568a2f6316c71667d763df9bf67243f70ed8768b384a9eec",
+      "namespace_installable": true
+    },
+    {
+      "id": "mockarty.perf-xk6-worker",
+      "name": "Performance worker (xk6-style)",
+      "version": "1.0.0",
+      "category": "events-and-tasks",
+      "description": "Runs load scripts in a program of its own, supervised by Mockarty. Install it and a new task type appears — there is no runner to deploy, no queue to configure and no sidecar to wire.",
+      "author_name": "Mockarty",
+      "homepage": "https://mockarty.ru/docs/plugins",
+      "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.perf-xk6-worker-1.0.0.zip",
+      "sha256": "51a9f8867bf05ea2039b3dc0a5be238106ada1bbdd1f280e3e63d6eed138ffaf",
+      "namespace_installable": false
     },
     {
       "id": "mockarty.procurement-kit",
@@ -723,7 +838,8 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.procurement-kit-1.0.0.zip",
-      "sha256": "41fa4062d9e18a653ec7ff276426fc19bd3a6bd297fd3d07e07f0110d45ad998"
+      "sha256": "a401e4f9965a769cb20662f668fb5850e987a02ca7c1d8aa19821e51f3db5a1f",
+      "namespace_installable": true
     },
     {
       "id": "mockarty.realestate-kit",
@@ -734,7 +850,8 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.realestate-kit-1.0.0.zip",
-      "sha256": "295dc3cd96ca7e08a126cfe17a7e407b666d9385c6ccee4eea47923340bd5094"
+      "sha256": "533b2e3824bbbe4f4792691231a98fad211b6485eaf7f1f98fe22f2d7253069d",
+      "namespace_installable": true
     },
     {
       "id": "mockarty.redaction-transformer",
@@ -745,7 +862,8 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.redaction-transformer-1.0.0.zip",
-      "sha256": "b804de7649e4337f4da0ab9378a349be0ae725d80a51af3efc1a2bea4ad8fa25"
+      "sha256": "1e8361e5a148b18dbf0c2fd44e44f65eef4b8a7ad212d3d0a2998f1a53a77983",
+      "namespace_installable": false
     },
     {
       "id": "mockarty.response-envelope",
@@ -756,7 +874,8 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.response-envelope-1.0.0.zip",
-      "sha256": "e391ef71ddac4a191f2bf413a76f5fdc13df15c86dc3359d9abacacd8985cf3f"
+      "sha256": "2a2120f9d1903381602d5f25c1cd9bfd74bb2811ca786663fd897cf3ee3387e5",
+      "namespace_installable": false
     },
     {
       "id": "mockarty.ru-fakers",
@@ -767,7 +886,8 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.ru-fakers-1.0.0.zip",
-      "sha256": "dc92eb9e1dc50ac75082e296f8299b8598964d88fd567b4a46525d5339a65a73"
+      "sha256": "9f5cdd296efe626ac8abfcc99da7c7a1476120984f1ef1290ba37a1d9e5426a9",
+      "namespace_installable": false
     },
     {
       "id": "mockarty.shipping-kit",
@@ -778,7 +898,8 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.shipping-kit-1.0.0.zip",
-      "sha256": "d43b98e032b4548d042bbfcb6bc578ad03ea4795713f5e6823207c7baba79b6c"
+      "sha256": "e01c154a079bc9dc15e3df1f0ed7d68354e902dc11419dd8d03a6f4869c7862b",
+      "namespace_installable": true
     },
     {
       "id": "mockarty.smart-home-kit",
@@ -789,7 +910,8 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.smart-home-kit-1.0.0.zip",
-      "sha256": "13c30ccbefa77800e0a184ff179a49945e20cc224cf17f907fd5e191a913c9da"
+      "sha256": "a65c10df91f719441609f43a881a6e874796adf8b247bff7e00b3bcf7b6b338f",
+      "namespace_installable": true
     },
     {
       "id": "mockarty.social-kit",
@@ -800,7 +922,8 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.social-kit-1.0.0.zip",
-      "sha256": "8a889bf0a43cab8754442acab45ce2cb3ada64d4ed6d05b75b4b8da3bbfa251f"
+      "sha256": "1bd7b7a56956e0f2593152980fc024bab445a570762df7fdb7ff04e25e48d079",
+      "namespace_installable": true
     },
     {
       "id": "mockarty.storage-kit",
@@ -811,7 +934,8 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.storage-kit-1.0.0.zip",
-      "sha256": "21923e20d582ee20c5d84f3c459c3d3d1d9b0bfdb16535c75ebcb2734bb2947b"
+      "sha256": "c59f1690f4e4e278e49f1747cde584a177932d0e8171b4907d8f185a37e71c87",
+      "namespace_installable": true
     },
     {
       "id": "mockarty.streaming-kit",
@@ -822,7 +946,8 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.streaming-kit-1.0.0.zip",
-      "sha256": "c6e674e440f108537d9652879819e92e74ecd60b8380ec0f185089fd6c0e6fb0"
+      "sha256": "4fd878557275ac4c47f0a8a6fc52914ed93c0bd0837e4e00c72d14599d566b5b",
+      "namespace_installable": true
     },
     {
       "id": "mockarty.survey-kit",
@@ -833,7 +958,8 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.survey-kit-1.0.0.zip",
-      "sha256": "5d5338d173dc0088477a8fc3b7bc0ddc8394a9714be70dcf4c98cd50a973ce29"
+      "sha256": "c80112c6ceeaaff2a5f0f1c177ea631d0385591d86452878cd91db86c52705a7",
+      "namespace_installable": true
     },
     {
       "id": "mockarty.team-wiki-pack",
@@ -844,7 +970,8 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.team-wiki-pack-1.0.0.zip",
-      "sha256": "f0b064a038ac23c87bb171714a17ee85cc3a8d37b6f20834bdfdf5f5ac5578fa"
+      "sha256": "79f4959a794ea5232eace7392db93fb40b8e3aa2635f67ab87a270378afb288c",
+      "namespace_installable": true
     },
     {
       "id": "mockarty.test-cases-pack",
@@ -855,7 +982,8 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.test-cases-pack-1.0.0.zip",
-      "sha256": "67712d2040352da02a3104b1c9cfb9c8c5090e72bd92d25d91f4c18f2f82997b"
+      "sha256": "a02c01861a131282eb62d7356931ceef07700bc4b86051886165a9734d66df7a",
+      "namespace_installable": true
     },
     {
       "id": "mockarty.testrail-connector",
@@ -866,7 +994,8 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.testrail-connector-1.0.0.zip",
-      "sha256": "0ec7b6ea7639dd68694149763a0aff6cb094e2c8c2b85bff9b20e5b40c47f6b0"
+      "sha256": "4cc79ca9945048f507d34d7219f1da90e293fc34817f0bfc80858533dfd68f7e",
+      "namespace_installable": true
     },
     {
       "id": "mockarty.ticketing-kit",
@@ -877,7 +1006,8 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.ticketing-kit-1.0.0.zip",
-      "sha256": "dfaf790811b453018bee54582f7dba21473894dfa79c153b8d2ea81f4825bed1"
+      "sha256": "a7f59695ef2b589218a8d9555c167a3bc00e93a18c443bd256bd7673b5e3bfb9",
+      "namespace_installable": true
     },
     {
       "id": "mockarty.tracker-links",
@@ -888,7 +1018,8 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.tracker-links-1.0.0.zip",
-      "sha256": "db148367e6c8d6502acaaba97cac9dafc1ab2200ead9f472c69cc7e56aa82cdf"
+      "sha256": "572aec298d3e98f57065f8aeb0701cd1e62dc63dfa4b20d192eae7bde017c265",
+      "namespace_installable": true
     },
     {
       "id": "mockarty.translation-kit",
@@ -899,7 +1030,8 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.translation-kit-1.0.0.zip",
-      "sha256": "3e1e4ab926468be3f559e029221d8ee1ac349191bbdee5c1e4706c00c8be3327"
+      "sha256": "ccefa600dffd6f6fd1512841024927fc9cb8834b3c0afe7a2687e852d4fe4211",
+      "namespace_installable": true
     },
     {
       "id": "mockarty.url-shortener-kit",
@@ -910,7 +1042,8 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.url-shortener-kit-1.0.0.zip",
-      "sha256": "b2ca64baedeef0f9cf599cc12da701ed8d5bdea6aceda83cdda7df03abd09e02"
+      "sha256": "c7b2d9107cf1f96db8bcd31dabc2313f0d51ef8a81a7c1dddee9856038060ec2",
+      "namespace_installable": true
     },
     {
       "id": "mockarty.us-fakers",
@@ -921,7 +1054,8 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.us-fakers-1.0.0.zip",
-      "sha256": "c87281728a28f7f1fa95da3a705a8f394690afcbb4876620f3bc0ed2a666b09f"
+      "sha256": "0417d12caaace8275f974cbbdb74d369a7ce134b4159992810db93e6c87c5ecf",
+      "namespace_installable": false
     },
     {
       "id": "mockarty.weather-kit",
@@ -932,7 +1066,8 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.weather-kit-1.0.0.zip",
-      "sha256": "fa38a2439011682dd99a2af6670f6861a11c8c0eda46f565d9f93e383b3d8955"
+      "sha256": "0373ddd7bff7c91d50fe3a40dcc18fadb8458a0c2cc884167be0e4be2fffafbd",
+      "namespace_installable": true
     },
     {
       "id": "mockarty.webhook-connector",
@@ -943,7 +1078,8 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.webhook-connector-1.0.0.zip",
-      "sha256": "9d693d38203b6e9db042b47a7660ac1a9c3328d70a0efa550565b399ae12fd8b"
+      "sha256": "624d851532938e8c7f7e47a9faf9418ae7219f875b0b1eea975b6b006f93fd5b",
+      "namespace_installable": true
     },
     {
       "id": "mockarty.wiki-status-macros",
@@ -953,7 +1089,8 @@
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.wiki-status-macros-1.0.0.zip",
-      "sha256": "481468c07905beb5f0ccc2cc61e9c9ee2c186802cbbc1b1eeae12056bcab830a"
+      "sha256": "c66f89c95351982629d5300fec4f9ff787f6470894c7f40848f371cf9f5656b8",
+      "namespace_installable": true
     }
   ]
 }

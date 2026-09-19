@@ -1,0 +1,45 @@
+{
+  "id": "mockarty.wiki-status-macros",
+  "name": "Wiki status lozenges",
+  "version": "1.0.0",
+  "description": "Confluence-style status lozenges for wiki pages: !plugin-status:colour=green SHIPPED renders a coloured pill. Colours: grey, green, red, yellow, blue. Declarative template — no code.",
+  "author": {
+    "name": "Mockarty",
+    "url": "https://mockarty.ru"
+  },
+  "homepage": "https://mockarty.ru/docs/plugins-authoring",
+  "license": "MIT",
+  "contributes": {
+    "wiki_macros": [
+      {
+        "name": "plugin-status",
+        "title": "Status lozenge",
+        "description": "A coloured status pill, like Confluence's {status}. Usage: !plugin-status:colour=green SHIPPED",
+        "icon": "tag",
+        "params": [
+          {
+            "name": "colour",
+            "title": "Colour",
+            "description": "grey | green | red | yellow | blue",
+            "default": "grey"
+          }
+        ],
+        "template": "<span data-macro=\"plugin-status\" data-macro-args=\"{{.colour}}\">{{.text}}</span>"
+      },
+      {
+        "name": "plugin-decision",
+        "title": "Decision panel",
+        "description": "A DECISION callout with an owner. Usage: !plugin-decision:owner=alice We ship on Friday",
+        "icon": "check-badge",
+        "params": [
+          {
+            "name": "owner",
+            "title": "Owner",
+            "default": ""
+          }
+        ],
+        "template": ":::success\n**DECISION{{if .owner}} — {{.owner}}{{end}}:** {{.text}}\n:::"
+      }
+    ]
+  }
+}

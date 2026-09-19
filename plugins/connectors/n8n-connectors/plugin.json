@@ -2,8 +2,10 @@
   "id": "community.n8n-connectors",
   "name": "Community connectors (n8n import)",
   "version": "1.0.0",
-  "description": "Nine integration presets (Slack, Telegram, Discord, Notion, GitHub, Jira, Trello, Asana, Mattermost) converted from n8n community nodes with 'mockarty-cli plugin import --from n8n'.",
-  "author": {},
+  "description": "Nine integration presets (Slack, Telegram, Discord, Notion, GitHub, Jira, Trello, Asana, Mattermost) converted from n8n community nodes. They give Mockarty pre-filled CONNECTIONS to those services — they do not run n8n workflows.",
+  "author": {
+    "name": "Mockarty community"
+  },
   "contributes": {
     "connectors": [
       {
@@ -81,6 +83,58 @@
         "icon": "bolt",
         "docs_url": "https://docs.n8n.io/integrations/builtin/app-nodes/n8n-nodes-base.trello/"
       }
+    ],
+    "event_types": [
+      {
+        "type": "plugin.n8n.preset_used",
+        "title": "Community preset used",
+        "severity": "info",
+        "description": "Raised the first time a namespace configures one of these presets, so an operator can see which integrations a team actually adopted."
+      }
     ]
+  },
+  "homepage": "https://mockarty.ru/docs/plugins",
+  "license": "MIT",
+  "settings_schema": {
+    "type": "object",
+    "description": "Credentials for the presets you actually use. Each field holds a REFERENCE to an entry in your secret store — the token itself is never stored here.",
+    "properties": {
+      "slack_token": {
+        "type": "string",
+        "format": "mockarty-secret-ref",
+        "title": "Slack bot token",
+        "description": "Reference to the secret holding the Slack bot token."
+      },
+      "telegram_token": {
+        "type": "string",
+        "format": "mockarty-secret-ref",
+        "title": "Telegram bot token",
+        "description": "Reference to the secret holding the Telegram bot token."
+      },
+      "github_token": {
+        "type": "string",
+        "format": "mockarty-secret-ref",
+        "title": "GitHub token",
+        "description": "Reference to the secret holding a GitHub personal access token."
+      },
+      "jira_token": {
+        "type": "string",
+        "format": "mockarty-secret-ref",
+        "title": "Jira API token",
+        "description": "Reference to the secret holding the Jira API token."
+      },
+      "notion_token": {
+        "type": "string",
+        "format": "mockarty-secret-ref",
+        "title": "Notion integration token",
+        "description": "Reference to the secret holding the Notion integration token."
+      },
+      "default_connection": {
+        "type": "string",
+        "format": "mockarty-connection-ref",
+        "title": "Default connection",
+        "description": "An existing connection to reuse when a preset does not name its own."
+      }
+    }
   }
 }

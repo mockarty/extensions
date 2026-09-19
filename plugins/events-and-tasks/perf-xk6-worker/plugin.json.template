@@ -1,0 +1,67 @@
+{
+  "id": "mockarty.perf-xk6-worker",
+  "name": "Performance worker (xk6-style)",
+  "version": "1.0.0",
+  "description": "Runs load scripts in a program of its own, supervised by Mockarty. Install it and a new task type appears — there is no runner to deploy, no queue to configure and no sidecar to wire.",
+  "author": { "name": "Mockarty", "url": "https://mockarty.ru" },
+  "homepage": "https://mockarty.ru/docs/plugins",
+  "license": "MIT",
+  "min_mockarty_version": "1.0.0",
+  "permissions": ["runtime:managed-worker"],
+  "settings_schema": {
+    "type": "object",
+    "properties": {
+      "default_vus": {
+        "type": "integer",
+        "title": "Default virtual users",
+        "description": "Used when a task does not say. Kept small on purpose — raise it deliberately.",
+        "minimum": 1,
+        "maximum": 500,
+        "default": 5
+      },
+      "default_seconds": {
+        "type": "integer",
+        "title": "Default duration (seconds)",
+        "minimum": 1,
+        "maximum": 3600,
+        "default": 30
+      }
+    }
+  },
+  "contributes": {
+    "task_types": [
+      {
+        "type": "plugin-xk6-run",
+        "name": "Load script run",
+        "description": "Runs one load script and returns the request count, failures and p95."
+      }
+    ],
+    "workers": [
+      {
+        "key": "engine",
+        "name": "Load engine",
+        "description": "The program that executes the script. Mockarty starts it, watches it and restarts it inside the limits below.",
+        "task_types": ["plugin-xk6-run"],
+        "limits": { "max_concurrent": 2, "memory_mb": 1024, "queue_depth": 20 },
+        "health": { "path": "/healthz", "timeout_seconds": 30 },
+        "artifacts": [
+          { "os": "__OS__", "arch": "__ARCH__", "path": "bin/engine", "sha256": "__SHA256__" }
+        ]
+      }
+    ],
+    "event_types": [
+      {
+        "type": "plugin.xk6.run_finished",
+        "title": "Load run finished",
+        "severity": "success",
+        "description": "Raised when a load run ends, so a team hears the result without watching the screen."
+      },
+      {
+        "type": "plugin.xk6.threshold_breached",
+        "title": "Load threshold breached",
+        "severity": "error",
+        "description": "Raised when a run crosses a threshold the script declared — the signal a release gate should listen to."
+      }
+    ]
+  }
+}

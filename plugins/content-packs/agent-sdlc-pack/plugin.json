@@ -1,0 +1,224 @@
+{
+  "id": "mockarty.agent-sdlc-pack",
+  "name": "Agent SDLC pack",
+  "version": "1.0.0",
+  "description": "Turns an empty namespace into one an autonomous tester can work in: the knowledge it reads, the workflow it follows, the checks it runs, the events it reports and the links it leaves behind. Everything a person sees, the agent can reach too.",
+  "author": {
+    "name": "Mockarty",
+    "url": "https://mockarty.ru"
+  },
+  "homepage": "https://mockarty.ru/docs/plugins",
+  "license": "MIT",
+  "min_mockarty_version": "1.0.0",
+  "settings_schema": {
+    "type": "object",
+    "properties": {
+      "review_required": {
+        "type": "boolean",
+        "title": "Require human review before an agent closes an issue",
+        "description": "When on, the workflow keeps a review column the agent cannot skip.",
+        "default": true
+      },
+      "agent_label": {
+        "type": "string",
+        "title": "Label for agent-authored work",
+        "description": "Applied to everything the agent creates, so a person can always tell where it came from.",
+        "default": "agent"
+      }
+    }
+  },
+  "contributes": {
+    "content_packs": [
+      {
+        "key": "agent_knowledge",
+        "name": "Agent knowledge base",
+        "kind": "wiki",
+        "description": "The pages an agent reads before it acts: what this product is, what 'done' means here, and what it must never do on its own.",
+        "items": [
+          {
+            "title": "How we test here",
+            "content": "# How we test here\n\nRead this before changing anything.\n\n## The order of work\n\n1. A requirement becomes an issue.\n2. The issue gets at least one test case linked to it.\n3. The test case runs against a mock before it runs against a real service.\n4. A failure becomes a defect linked back to the issue.\n\n## What 'done' means\n\n- The test case passes twice in a row, not once.\n- The evidence is attached to the run, not described in a comment.\n- The issue links to the change that closed it.\n"
+          },
+          {
+            "title": "What an agent must not do alone",
+            "content": "# What an agent must not do alone\n\nThese need a person, every time:\n\n- deleting data that is not test data;\n- changing a mock another team depends on;\n- anything that spends money or sends a message outside this instance;\n- closing an issue whose test case has never passed.\n\nWhen you hit one of these, stop and ask. An agent that asks is working correctly.\n"
+          },
+          {
+            "title": "Reading a failed run",
+            "content": "# Reading a failed run\n\nA failed run is one of four things. Decide which before filing anything.\n\n| What you see | What it usually is | What to do |\n|--------------|--------------------|------------|\n| The same step fails every time | a real defect | file it, link the run |\n| It fails only in parallel | a test that shares state | fix the test, do not file |\n| It fails after a deploy | a contract change | check the contract first |\n| It fails once, then passes | flaky | mark it flaky, do not file |\n"
+          }
+        ]
+      },
+      {
+        "key": "agent_workflow",
+        "name": "Agent SDLC workflow",
+        "kind": "issue",
+        "description": "A project laid out the way the loop above expects, so an agent has somewhere to put its work from the first minute.",
+        "items": [
+          {
+            "name": "Agent SDLC",
+            "keyPrefix": "ASDLC",
+            "description": "Where autonomous work lands. Every item here was either created by an agent or is waiting for one.",
+            "issues": [
+              {
+                "title": "[Epic] Autonomous regression loop",
+                "type": "epic",
+                "priority": "high",
+                "description": "The agent runs the suite, triages what failed, and files only what is real."
+              },
+              {
+                "title": "Cover the checkout flow with cases",
+                "type": "task",
+                "priority": "high",
+                "description": "Every branch of checkout needs a case linked to its requirement."
+              },
+              {
+                "title": "Record a browser scenario for sign-up",
+                "type": "task",
+                "priority": "medium",
+                "description": "Record it once, then replay it on every release."
+              },
+              {
+                "title": "Triage yesterday's failures",
+                "type": "task",
+                "priority": "high",
+                "description": "Separate real defects from flakes using the table in the knowledge base."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "key": "agent_smoke",
+        "name": "Agent smoke checks",
+        "kind": "tcm",
+        "description": "The small suite an agent runs first, to find out whether anything is worth running at all.",
+        "items": [
+          {
+            "name": "The service answers at all",
+            "priority": "high",
+            "tags": [
+              "smoke",
+              "agent"
+            ],
+            "expectedResult": "The health endpoint answers 200 within a second.",
+            "steps": [
+              {
+                "action": "Call the health endpoint",
+                "expectedResult": "200 and a body that names the version."
+              }
+            ]
+          },
+          {
+            "name": "A known-good request still works",
+            "priority": "high",
+            "tags": [
+              "smoke",
+              "agent"
+            ],
+            "expectedResult": "The response matches the recorded contract.",
+            "steps": [
+              {
+                "action": "Send the recorded request",
+                "expectedResult": "200."
+              },
+              {
+                "action": "Compare the body against the contract",
+                "expectedResult": "No differences."
+              }
+            ]
+          },
+          {
+            "name": "An unknown request is refused cleanly",
+            "priority": "medium",
+            "tags": [
+              "smoke",
+              "agent"
+            ],
+            "expectedResult": "A 4xx with a message that names the problem — not a 500.",
+            "steps": [
+              {
+                "action": "Send a request with a field the contract does not define",
+                "expectedResult": "4xx naming the field."
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "task_types": [
+      {
+        "type": "plugin-agent-triage",
+        "name": "Triage failed runs",
+        "description": "Reads the failures of a run group and separates real defects from flakes using the rules in the knowledge base."
+      },
+      {
+        "type": "plugin-agent-cover",
+        "name": "Propose missing cases",
+        "description": "Reads a requirement and proposes the test cases it is missing, for a person to accept or reject."
+      }
+    ],
+    "event_types": [
+      {
+        "type": "plugin.agent.review_requested",
+        "title": "Agent asked for review",
+        "severity": "warning",
+        "description": "Raised when the agent reached something it must not do alone. Somebody needs to answer."
+      },
+      {
+        "type": "plugin.agent.defect_filed",
+        "title": "Agent filed a defect",
+        "severity": "info",
+        "description": "Raised when the agent filed a defect it believes is real, with the evidence attached."
+      },
+      {
+        "type": "plugin.agent.loop_finished",
+        "title": "Agent loop finished",
+        "severity": "success",
+        "description": "Raised when a full pass finished, with what it ran and what it found."
+      }
+    ],
+    "links": [
+      {
+        "key": "agent_evidence",
+        "name": "Evidence for this decision",
+        "from_entity": "issue",
+        "to_entity": "case",
+        "description": "Points a defect at the case whose run produced it, so a reviewer sees the evidence rather than a claim.",
+        "icon": "clipboard-document-check"
+      },
+      {
+        "key": "agent_source_requirement",
+        "name": "Requirement this came from",
+        "from_entity": "case",
+        "to_entity": "wiki",
+        "description": "Points a case back at the requirement page it was written for.",
+        "icon": "book-open"
+      }
+    ],
+    "wiki_macros": [
+      {
+        "name": "plugin-agent-rule",
+        "title": "Agent rule",
+        "icon": "shield-check",
+        "description": "Marks a paragraph as a rule the agent must follow, so it stands out on the page and is easy to quote.",
+        "params": [
+          {
+            "name": "text",
+            "title": "Rule",
+            "description": "The rule, in one sentence.",
+            "default": "Ask before deleting anything that is not test data."
+          },
+          {
+            "name": "severity",
+            "title": "Severity",
+            "description": "must / should / may.",
+            "default": "must"
+          }
+        ],
+        "template": ":::warning\n**Rule ({{.severity}}):** {{.text}}\n:::"
+      }
+    ]
+  },
+  "permissions": []
+}

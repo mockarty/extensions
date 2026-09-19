@@ -62,6 +62,13 @@
         "panel": "panel.html"
       },
       {
+        "point": "settings-section",
+        "id": "ops_settings_help",
+        "title": "Ops preview",
+        "icon": "wrench-screwdriver",
+        "panel": "panel.html"
+      },
+      {
         "point": "entity-tab",
         "id": "ops_issue_tab",
         "title": "Ops",

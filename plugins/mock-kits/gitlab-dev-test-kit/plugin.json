@@ -1,0 +1,920 @@
+{
+  "id": "mockarty.gitlab-dev-test-kit",
+  "name": "GitLab dev/test kit",
+  "version": "1.0.0",
+  "description": "A GitLab API v4 contour you can develop and test against without a GitLab: projects, branches, commits, merge requests with approvals and conflicts, pipelines with jobs and logs, issues, the registry — plus the pagination, rate limits and error codes real integrations trip over.",
+  "author": {
+    "name": "Mockarty",
+    "url": "https://mockarty.ru"
+  },
+  "homepage": "https://mockarty.ru/docs/plugins",
+  "license": "MIT",
+  "min_mockarty_version": "1.0.0",
+  "settings_schema": {
+    "type": "object",
+    "properties": {
+      "gitlab_base_url": {
+        "type": "string",
+        "title": "GitLab base URL",
+        "description": "The GitLab this contour stands in for. Used by the connector preset and the deep links.",
+        "default": "https://gitlab.example.com"
+      },
+      "api_token": {
+        "type": "string",
+        "format": "mockarty-secret-ref",
+        "title": "GitLab token",
+        "description": "Reference to the secret holding a GitLab token, for when you point the connector at a real instance."
+      }
+    }
+  },
+  "contributes": {
+    "mock_kits": [
+      {
+        "key": "gitlab_api_v4",
+        "name": "GitLab API v4",
+        "description": "The endpoints an integration actually calls, including the ones that fail.",
+        "mocks": [
+          {
+            "route": "/api/v4/projects",
+            "method": "GET",
+            "status_code": 200,
+            "description": "List projects — page 1 of 2.",
+            "body": [
+              {
+                "id": 42,
+                "name": "payments-api",
+                "path": "payments-api",
+                "path_with_namespace": "platform/payments-api",
+                "default_branch": "main",
+                "visibility": "private",
+                "web_url": "https://gitlab.example.com/platform/payments-api",
+                "created_at": "$.fake.Timestamp",
+                "last_activity_at": "$.fake.Timestamp"
+              }
+            ],
+            "tags": [
+              "projects",
+              "pagination"
+            ],
+            "headers": {
+              "X-Total": [
+                "2"
+              ],
+              "X-Page": [
+                "1"
+              ],
+              "X-Total-Pages": [
+                "2"
+              ],
+              "X-Per-Page": [
+                "1"
+              ],
+              "Link": [
+                "<https://gitlab.example.com/api/v4/projects?page=2>; rel=\"next\""
+              ]
+            },
+            "query_conditions": [
+              {
+                "path": "$.page",
+                "assertAction": "equals",
+                "value": "1"
+              }
+            ],
+            "priority": 10
+          },
+          {
+            "route": "/api/v4/projects",
+            "method": "GET",
+            "status_code": 200,
+            "description": "List projects — page 2 of 2 (the last page carries no next link).",
+            "body": [
+              {
+                "id": 43,
+                "name": "checkout-web",
+                "path": "checkout-web",
+                "path_with_namespace": "platform/checkout-web",
+                "default_branch": "main",
+                "visibility": "private",
+                "web_url": "https://gitlab.example.com/platform/payments-api",
+                "created_at": "$.fake.Timestamp",
+                "last_activity_at": "$.fake.Timestamp"
+              }
+            ],
+            "tags": [
+              "projects",
+              "pagination"
+            ],
+            "headers": {
+              "X-Total": [
+                "2"
+              ],
+              "X-Page": [
+                "2"
+              ],
+              "X-Total-Pages": [
+                "2"
+              ],
+              "X-Per-Page": [
+                "1"
+              ]
+            },
+            "query_conditions": [
+              {
+                "path": "$.page",
+                "assertAction": "equals",
+                "value": "2"
+              }
+            ],
+            "priority": 10
+          },
+          {
+            "route": "/api/v4/projects/42",
+            "method": "GET",
+            "status_code": 200,
+            "description": "One project.",
+            "body": {
+              "id": 42,
+              "name": "payments-api",
+              "path": "payments-api",
+              "path_with_namespace": "platform/payments-api",
+              "default_branch": "main",
+              "visibility": "private",
+              "web_url": "https://gitlab.example.com/platform/payments-api",
+              "created_at": "$.fake.Timestamp",
+              "last_activity_at": "$.fake.Timestamp"
+            },
+            "tags": [
+              "projects"
+            ]
+          },
+          {
+            "route": "/api/v4/projects/99",
+            "method": "GET",
+            "status_code": 404,
+            "description": "A project that does not exist — or that the token cannot see. GitLab does not distinguish the two, and neither does this.",
+            "body": {
+              "message": "404 Project Not Found"
+            },
+            "tags": [
+              "projects",
+              "errors"
+            ]
+          },
+          {
+            "route": "/api/v4/user",
+            "method": "GET",
+            "status_code": 200,
+            "description": "The token's own user.",
+            "body": {
+              "id": 7,
+              "username": "$.fake.Username",
+              "name": "$.fake.Name",
+              "state": "active",
+              "avatar_url": "https://gitlab.example.com/uploads/avatar.png"
+            },
+            "tags": [
+              "users"
+            ]
+          },
+          {
+            "route": "/api/v4/projects/42/repository/branches",
+            "method": "GET",
+            "status_code": 200,
+            "description": "Branches of the project.",
+            "body": [
+              {
+                "name": "main",
+                "default": true,
+                "protected": true,
+                "commit": {
+                  "id": "$.fake.UUID",
+                  "short_id": "a1b2c3d4",
+                  "title": "Merge branch 'release'"
+                }
+              },
+              {
+                "name": "feature/checkout-retry",
+                "default": false,
+                "protected": false,
+                "commit": {
+                  "id": "$.fake.UUID",
+                  "short_id": "e5f6a7b8",
+                  "title": "Retry a failed capture once"
+                }
+              }
+            ],
+            "tags": [
+              "repository"
+            ]
+          },
+          {
+            "route": "/api/v4/projects/42/repository/commits",
+            "method": "GET",
+            "status_code": 200,
+            "description": "Recent commits.",
+            "body": [
+              {
+                "id": "$.fake.UUID",
+                "short_id": "e5f6a7b8",
+                "title": "Retry a failed capture once",
+                "author_name": "$.fake.Name",
+                "created_at": "$.fake.Timestamp"
+              }
+            ],
+            "tags": [
+              "repository"
+            ]
+          },
+          {
+            "route": "/api/v4/projects/42/merge_requests",
+            "method": "GET",
+            "status_code": 200,
+            "description": "Open merge requests.",
+            "body": [
+              {
+                "iid": 17,
+                "title": "Retry a failed capture once",
+                "state": "opened",
+                "source_branch": "feature/checkout-retry",
+                "target_branch": "main",
+                "author": {
+                  "id": 7,
+                  "username": "$.fake.Username",
+                  "name": "$.fake.Name",
+                  "state": "active",
+                  "avatar_url": "https://gitlab.example.com/uploads/avatar.png"
+                },
+                "draft": false,
+                "has_conflicts": false,
+                "detailed_merge_status": "mergeable",
+                "web_url": "https://gitlab.example.com/platform/payments-api/-/merge_requests/17"
+              }
+            ],
+            "tags": [
+              "merge-requests"
+            ]
+          },
+          {
+            "route": "/api/v4/projects/42/merge_requests/17",
+            "method": "GET",
+            "status_code": 200,
+            "description": "One merge request, mergeable.",
+            "body": {
+              "iid": 17,
+              "title": "Retry a failed capture once",
+              "state": "opened",
+              "detailed_merge_status": "mergeable",
+              "has_conflicts": false,
+              "source_branch": "feature/checkout-retry",
+              "target_branch": "main",
+              "author": {
+                "id": 7,
+                "username": "$.fake.Username",
+                "name": "$.fake.Name",
+                "state": "active",
+                "avatar_url": "https://gitlab.example.com/uploads/avatar.png"
+              }
+            },
+            "tags": [
+              "merge-requests"
+            ]
+          },
+          {
+            "route": "/api/v4/projects/42/merge_requests/18",
+            "method": "GET",
+            "status_code": 200,
+            "description": "A merge request blocked on conflicts — the state a release job must not merge.",
+            "body": {
+              "iid": 18,
+              "title": "Change the capture payload",
+              "state": "opened",
+              "detailed_merge_status": "broken_status",
+              "has_conflicts": true,
+              "source_branch": "feature/capture-shape",
+              "target_branch": "main",
+              "author": {
+                "id": 7,
+                "username": "$.fake.Username",
+                "name": "$.fake.Name",
+                "state": "active",
+                "avatar_url": "https://gitlab.example.com/uploads/avatar.png"
+              }
+            },
+            "tags": [
+              "merge-requests",
+              "errors"
+            ]
+          },
+          {
+            "route": "/api/v4/projects/42/merge_requests/17/changes",
+            "method": "GET",
+            "status_code": 200,
+            "description": "The diff of a merge request.",
+            "body": {
+              "iid": 17,
+              "changes": [
+                {
+                  "old_path": "capture.go",
+                  "new_path": "capture.go",
+                  "new_file": false,
+                  "deleted_file": false,
+                  "renamed_file": false,
+                  "diff": "@@ -1,3 +1,7 @@\n+// retry once before giving up\n"
+                }
+              ]
+            },
+            "tags": [
+              "merge-requests"
+            ]
+          },
+          {
+            "route": "/api/v4/projects/42/merge_requests/17/approvals",
+            "method": "GET",
+            "status_code": 200,
+            "description": "Approval state — one of two approvals given.",
+            "body": {
+              "iid": 17,
+              "approvals_required": 2,
+              "approvals_left": 1,
+              "approved_by": [
+                {
+                  "user": {
+                    "id": 7,
+                    "username": "$.fake.Username",
+                    "name": "$.fake.Name",
+                    "state": "active",
+                    "avatar_url": "https://gitlab.example.com/uploads/avatar.png"
+                  }
+                }
+              ]
+            },
+            "tags": [
+              "merge-requests",
+              "approvals"
+            ]
+          },
+          {
+            "route": "/api/v4/projects/42/merge_requests/17/approve",
+            "method": "POST",
+            "status_code": 201,
+            "description": "Approving the merge request.",
+            "body": {
+              "iid": 17,
+              "approvals_required": 2,
+              "approvals_left": 0,
+              "state": "opened"
+            },
+            "tags": [
+              "merge-requests",
+              "approvals"
+            ]
+          },
+          {
+            "route": "/api/v4/projects/42/merge_requests/17/merge",
+            "method": "PUT",
+            "status_code": 200,
+            "description": "Merging it.",
+            "body": {
+              "iid": 17,
+              "state": "merged",
+              "merge_commit_sha": "$.fake.UUID"
+            },
+            "tags": [
+              "merge-requests"
+            ]
+          },
+          {
+            "route": "/api/v4/projects/42/merge_requests/18/merge",
+            "method": "PUT",
+            "status_code": 405,
+            "description": "Merging a conflicted merge request is refused — the case a release job must handle.",
+            "body": {
+              "message": "405 Method Not Allowed"
+            },
+            "tags": [
+              "merge-requests",
+              "errors"
+            ]
+          },
+          {
+            "route": "/api/v4/projects/42/merge_requests/17/discussions",
+            "method": "GET",
+            "status_code": 200,
+            "description": "Review discussions, one unresolved.",
+            "body": [
+              {
+                "id": "$.fake.UUID",
+                "individual_note": false,
+                "notes": [
+                  {
+                    "id": 1,
+                    "body": "Does this retry on a 5xx only?",
+                    "author": {
+                      "id": 7,
+                      "username": "$.fake.Username",
+                      "name": "$.fake.Name",
+                      "state": "active",
+                      "avatar_url": "https://gitlab.example.com/uploads/avatar.png"
+                    },
+                    "resolvable": true,
+                    "resolved": false
+                  }
+                ]
+              }
+            ],
+            "tags": [
+              "merge-requests",
+              "review"
+            ]
+          },
+          {
+            "route": "/api/v4/projects/42/merge_requests/17/notes",
+            "method": "POST",
+            "status_code": 201,
+            "description": "Leaving a review comment.",
+            "body": {
+              "id": 2,
+              "body": "$.fake.Sentence",
+              "author": {
+                "id": 7,
+                "username": "$.fake.Username",
+                "name": "$.fake.Name",
+                "state": "active",
+                "avatar_url": "https://gitlab.example.com/uploads/avatar.png"
+              }
+            },
+            "tags": [
+              "merge-requests",
+              "review"
+            ]
+          },
+          {
+            "route": "/api/v4/projects/42/pipelines",
+            "method": "GET",
+            "status_code": 200,
+            "description": "Pipelines, newest first.",
+            "body": [
+              {
+                "id": 900,
+                "iid": 12,
+                "sha": "$.fake.UUID",
+                "ref": "feature/checkout-retry",
+                "status": "running",
+                "web_url": "https://gitlab.example.com/platform/payments-api/-/pipelines/900"
+              }
+            ],
+            "tags": [
+              "pipelines"
+            ]
+          },
+          {
+            "route": "/api/v4/projects/42/pipelines/900",
+            "method": "GET",
+            "status_code": 200,
+            "description": "A pipeline still running.",
+            "body": {
+              "id": 900,
+              "status": "running",
+              "ref": "feature/checkout-retry",
+              "sha": "$.fake.UUID",
+              "created_at": "$.fake.Timestamp"
+            },
+            "tags": [
+              "pipelines"
+            ]
+          },
+          {
+            "route": "/api/v4/projects/42/pipelines/901",
+            "method": "GET",
+            "status_code": 200,
+            "description": "A pipeline that failed — the branch a release gate must take.",
+            "body": {
+              "id": 901,
+              "status": "failed",
+              "ref": "main",
+              "sha": "$.fake.UUID",
+              "created_at": "$.fake.Timestamp"
+            },
+            "tags": [
+              "pipelines",
+              "errors"
+            ]
+          },
+          {
+            "route": "/api/v4/projects/42/pipelines/900/jobs",
+            "method": "GET",
+            "status_code": 200,
+            "description": "The jobs of a pipeline.",
+            "body": [
+              {
+                "id": 5001,
+                "name": "unit",
+                "stage": "test",
+                "status": "success"
+              },
+              {
+                "id": 5002,
+                "name": "integration",
+                "stage": "test",
+                "status": "running"
+              },
+              {
+                "id": 5003,
+                "name": "deploy",
+                "stage": "deploy",
+                "status": "created"
+              }
+            ],
+            "tags": [
+              "pipelines"
+            ]
+          },
+          {
+            "route": "/api/v4/projects/42/jobs/5001/trace",
+            "method": "GET",
+            "status_code": 200,
+            "description": "A job log.",
+            "body": {
+              "log": "Running with gitlab-runner 16.11.0\n$ go test ./...\nok  \tpayments/capture\t0.42s\n"
+            },
+            "tags": [
+              "pipelines",
+              "artifacts"
+            ]
+          },
+          {
+            "route": "/api/v4/projects/42/jobs/5001/artifacts",
+            "method": "GET",
+            "status_code": 200,
+            "description": "A job's artifact archive, described the way a downstream job consumes it.",
+            "body": {
+              "url": "https://gitlab.example.com/platform/payments-api/-/jobs/5001/artifacts/download",
+              "size": 20480,
+              "filename": "artifacts.zip"
+            },
+            "tags": [
+              "artifacts"
+            ]
+          },
+          {
+            "route": "/api/v4/projects/42/pipeline",
+            "method": "POST",
+            "status_code": 201,
+            "description": "Triggering a pipeline.",
+            "body": {
+              "id": 902,
+              "status": "created",
+              "ref": "main"
+            },
+            "tags": [
+              "pipelines",
+              "ci"
+            ]
+          },
+          {
+            "route": "/api/v4/projects/42/issues",
+            "method": "GET",
+            "status_code": 200,
+            "description": "Open issues.",
+            "body": [
+              {
+                "iid": 4,
+                "title": "Capture fails on a slow acquirer",
+                "state": "opened",
+                "labels": [
+                  "bug",
+                  "payments"
+                ],
+                "author": {
+                  "id": 7,
+                  "username": "$.fake.Username",
+                  "name": "$.fake.Name",
+                  "state": "active",
+                  "avatar_url": "https://gitlab.example.com/uploads/avatar.png"
+                },
+                "web_url": "https://gitlab.example.com/platform/payments-api/-/issues/4"
+              }
+            ],
+            "tags": [
+              "issues"
+            ]
+          },
+          {
+            "route": "/api/v4/projects/42/issues",
+            "method": "POST",
+            "status_code": 201,
+            "description": "Creating an issue.",
+            "body": {
+              "iid": 5,
+              "title": "$.fake.Sentence",
+              "state": "opened",
+              "author": {
+                "id": 7,
+                "username": "$.fake.Username",
+                "name": "$.fake.Name",
+                "state": "active",
+                "avatar_url": "https://gitlab.example.com/uploads/avatar.png"
+              }
+            },
+            "tags": [
+              "issues"
+            ]
+          },
+          {
+            "route": "/api/v4/projects/42/issues/4/notes",
+            "method": "GET",
+            "status_code": 200,
+            "description": "Issue comments.",
+            "body": [
+              {
+                "id": 11,
+                "body": "Reproduced on staging.",
+                "author": {
+                  "id": 7,
+                  "username": "$.fake.Username",
+                  "name": "$.fake.Name",
+                  "state": "active",
+                  "avatar_url": "https://gitlab.example.com/uploads/avatar.png"
+                }
+              }
+            ],
+            "tags": [
+              "issues"
+            ]
+          },
+          {
+            "route": "/api/v4/projects/42/registry/repositories",
+            "method": "GET",
+            "status_code": 200,
+            "description": "Container registry repositories.",
+            "body": [
+              {
+                "id": 3,
+                "name": "payments-api",
+                "path": "platform/payments-api",
+                "location": "registry.example.com/platform/payments-api"
+              }
+            ],
+            "tags": [
+              "registry"
+            ]
+          },
+          {
+            "route": "/api/v4/projects/42/registry/repositories/3/tags",
+            "method": "GET",
+            "status_code": 200,
+            "description": "Tags of a registry repository.",
+            "body": [
+              {
+                "name": "latest",
+                "location": "registry.example.com/platform/payments-api:latest"
+              },
+              {
+                "name": "1.4.2",
+                "location": "registry.example.com/platform/payments-api:1.4.2"
+              }
+            ],
+            "tags": [
+              "registry"
+            ]
+          },
+          {
+            "route": "/api/v4/projects/42/unauthorized",
+            "method": "GET",
+            "status_code": 401,
+            "description": "No token, or an expired one.",
+            "body": {
+              "message": "401 Unauthorized"
+            },
+            "tags": [
+              "errors"
+            ]
+          },
+          {
+            "route": "/api/v4/projects/42/forbidden",
+            "method": "GET",
+            "status_code": 403,
+            "description": "A valid token without the scope the call needs.",
+            "body": {
+              "message": "403 Forbidden"
+            },
+            "tags": [
+              "errors"
+            ]
+          },
+          {
+            "route": "/api/v4/projects/42/conflict",
+            "method": "POST",
+            "status_code": 409,
+            "description": "The branch already exists — the retry-safe case.",
+            "body": {
+              "message": "Branch already exists"
+            },
+            "tags": [
+              "errors"
+            ]
+          },
+          {
+            "route": "/api/v4/projects/42/unprocessable",
+            "method": "POST",
+            "status_code": 422,
+            "description": "A payload GitLab accepts syntactically and refuses semantically.",
+            "body": {
+              "message": {
+                "base": [
+                  "Target branch is protected"
+                ]
+              }
+            },
+            "tags": [
+              "errors"
+            ]
+          },
+          {
+            "route": "/api/v4/projects/42/rate_limited",
+            "method": "GET",
+            "status_code": 429,
+            "description": "Rate limited, with the Retry-After a client must honour.",
+            "body": {
+              "message": "Retry later"
+            },
+            "tags": [
+              "errors",
+              "rate-limit"
+            ],
+            "headers": {
+              "Retry-After": [
+                "30"
+              ],
+              "RateLimit-Remaining": [
+                "0"
+              ],
+              "RateLimit-Limit": [
+                "600"
+              ]
+            }
+          },
+          {
+            "route": "/api/v4/projects/42/server_error",
+            "method": "GET",
+            "status_code": 500,
+            "description": "An upstream failure, slow enough to exercise a client timeout.",
+            "body": {
+              "message": "500 Internal Server Error"
+            },
+            "tags": [
+              "errors"
+            ],
+            "delay": 1500
+          }
+        ]
+      }
+    ],
+    "connectors": [
+      {
+        "key": "gitlab_devtest",
+        "name": "GitLab (dev/test contour)",
+        "kind": "gitlab",
+        "description": "Points Mockarty at this mocked contour, so a team can wire the integration before it has access to the real GitLab.",
+        "icon": "code-bracket-square",
+        "docs_url": "https://mockarty.ru/docs/integrations",
+        "config_template": {
+          "base_url": "https://gitlab.example.com",
+          "project": "platform/payments-api"
+        }
+      }
+    ],
+    "content_packs": [
+      {
+        "key": "gitlab_contract_cases",
+        "name": "GitLab integration checks",
+        "kind": "tcm",
+        "description": "The checks that tell you an integration handles GitLab's awkward paths, not just its happy one.",
+        "items": [
+          {
+            "name": "Pagination is followed to the last page",
+            "priority": "high",
+            "tags": [
+              "gitlab",
+              "pagination"
+            ],
+            "expectedResult": "The client collects both pages and stops when the next link is absent.",
+            "steps": [
+              {
+                "action": "Request page 1 of projects",
+                "expectedResult": "One project and a Link header with rel=\"next\"."
+              },
+              {
+                "action": "Follow the next link",
+                "expectedResult": "The second project and NO next link."
+              }
+            ]
+          },
+          {
+            "name": "A 429 is retried after Retry-After",
+            "priority": "high",
+            "tags": [
+              "gitlab",
+              "rate-limit"
+            ],
+            "expectedResult": "The client waits the advertised seconds instead of retrying immediately.",
+            "steps": [
+              {
+                "action": "Call the rate-limited endpoint",
+                "expectedResult": "429 with Retry-After: 30."
+              },
+              {
+                "action": "Observe the client",
+                "expectedResult": "It waits before the next attempt."
+              }
+            ]
+          },
+          {
+            "name": "A conflicted merge request is never merged",
+            "priority": "high",
+            "tags": [
+              "gitlab",
+              "merge-requests"
+            ],
+            "expectedResult": "The job stops with a clear message instead of forcing the merge.",
+            "steps": [
+              {
+                "action": "Read merge request 18",
+                "expectedResult": "has_conflicts is true."
+              },
+              {
+                "action": "Attempt the merge",
+                "expectedResult": "405, and the job reports the conflict."
+              }
+            ]
+          },
+          {
+            "name": "A failed pipeline blocks the release",
+            "priority": "high",
+            "tags": [
+              "gitlab",
+              "pipelines"
+            ],
+            "expectedResult": "The gate refuses to promote a build whose pipeline failed.",
+            "steps": [
+              {
+                "action": "Read pipeline 901",
+                "expectedResult": "status is failed and the gate stops."
+              }
+            ]
+          },
+          {
+            "name": "A 500 with a slow response does not hang the client",
+            "priority": "medium",
+            "tags": [
+              "gitlab",
+              "errors"
+            ],
+            "expectedResult": "The client times out and reports the endpoint, not a generic failure.",
+            "steps": [
+              {
+                "action": "Call the failing endpoint",
+                "expectedResult": "The client gives up within its own timeout."
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "links": [
+      {
+        "key": "gitlab_merge_request",
+        "name": "GitLab merge request",
+        "from_entity": "issue",
+        "to_entity": "external",
+        "description": "Points an issue at the merge request that closes it.",
+        "url_template": "https://gitlab.example.com/platform/payments-api/-/merge_requests/{iid}",
+        "icon": "code-bracket-square"
+      },
+      {
+        "key": "gitlab_pipeline",
+        "name": "GitLab pipeline",
+        "from_entity": "case",
+        "to_entity": "external",
+        "description": "Points a test case at the pipeline run that exercised it.",
+        "url_template": "https://gitlab.example.com/platform/payments-api/-/pipelines/{id}",
+        "icon": "play-circle"
+      }
+    ],
+    "event_types": [
+      {
+        "type": "plugin.gitlab.pipeline_failed",
+        "title": "GitLab pipeline failed",
+        "severity": "error",
+        "description": "Raised when the mocked contour reports a failed pipeline, so a gate can be tested end to end."
+      },
+      {
+        "type": "plugin.gitlab.merge_request_blocked",
+        "title": "GitLab merge request blocked",
+        "severity": "warning",
+        "description": "Raised when a merge request cannot be merged — conflicts, or approvals still missing."
+      }
+    ]
+  },
+  "permissions": []
+}
