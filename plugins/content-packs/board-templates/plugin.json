@@ -1,7 +1,7 @@
 {
   "id": "community.board-templates",
   "name": "Board templates: retro + C4 sketch",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Two ready-made whiteboard templates — a Start/Stop/Continue retrospective board and a C4-style container sketch. Instantiate the pack and the boards appear in your namespace, ready to edit.",
   "author": {
     "name": "Mockarty"
@@ -333,5 +333,6 @@
         ]
       }
     ]
-  }
+  },
+  "license": "MIT"
 }

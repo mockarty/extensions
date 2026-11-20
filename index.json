@@ -5,13 +5,14 @@
     {
       "id": "community.board-templates",
       "name": "Board templates: retro + C4 sketch",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "category": "content-packs",
       "description": "Two ready-made whiteboard templates — a Start/Stop/Continue retrospective board and a C4-style container sketch. Instantiate the pack and the boards appear in your namespace, ready to edit.",
       "author_name": "Mockarty",
-      "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/community.board-templates-1.0.0.zip",
-      "sha256": "329de23ef6191cd6f7f6f63bc24fc649a8493049b3fdc4b8f133bdf221f756f8",
-      "namespace_installable": true
+      "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.1/community.board-templates-1.0.1.zip",
+      "sha256": "859423fc1324aa301e7835505372d8b5fd7e5196768ebdbeabd821aafe154704",
+      "namespace_installable": true,
+      "license": "MIT"
     },
     {
       "id": "community.n8n-connectors",
@@ -423,7 +424,7 @@
     },
     {
       "id": "mockarty.hr-payroll-kit",
-      "name": "HR \u0026 payroll API mock kit",
+      "name": "HR & payroll API mock kit",
       "version": "1.0.0",
       "category": "mock-kits",
       "description": "An HR/payroll contour (employees, payslips, time-off) — mock an HRIS backend.",
@@ -870,7 +871,7 @@
       "name": "Response envelope transformer",
       "version": "1.0.0",
       "category": "transformers",
-      "description": "A WASM response-transformer example: any mock tagged transform:envelope has its rendered body wrapped as {\"data\":\u003cbody\u003e,\"transformedBy\":\"plugin\"}. Sandboxed WASM, runs inline on the response path.",
+      "description": "A WASM response-transformer example: any mock tagged transform:envelope has its rendered body wrapped as {\"data\":<body>,\"transformedBy\":\"plugin\"}. Sandboxed WASM, runs inline on the response path.",
       "author_name": "Mockarty",
       "homepage": "https://mockarty.ru/docs/plugins-authoring",
       "download_url": "https://github.com/mockarty/extensions/releases/download/v1.0.0/mockarty.response-envelope-1.0.0.zip",
